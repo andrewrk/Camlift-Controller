@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dict>
+  <string name="ObjectivesFile" value="%global%\objectives.xml" />
+  <string name="PositionManagerFile" value="%user%\position manager.xml" />
+  <string name="SilverpakFile" value="%global%\motor.xml" />
+  <string name="WindowFile" value="%user%\window.xml" />
+</dict>

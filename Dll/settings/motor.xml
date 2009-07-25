@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<dict>
+  <int name="Acceleration" value="500" />
+  <int name="RunningCurrent" value="50" />
+  <int name="Velocity" value="230000" />
+</dict>
