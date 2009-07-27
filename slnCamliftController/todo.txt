@@ -1,0 +1,20 @@
+﻿* fix auto run
+
+
+* auto download
+
+  desired: every time you take a picture the pic is saved to a 
+folder on your hard drive instead of to the memory card
+src->cannoncamera->download.vb
+
+* live view
+
+  desired: new window with live video stream coming from the 
+camera. ITS BROKEN FIX IT
+
+  - sub features
+
+    DONE: show a grid overlayed on view
+    
+    zoom - supported by camera. once zoomed, move zoom around. 
+2 levels of zoom. 3 including not zoomed. 0, 100, 200
