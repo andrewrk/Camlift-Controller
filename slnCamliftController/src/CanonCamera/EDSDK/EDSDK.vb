@@ -1265,7 +1265,7 @@ Namespace CanonCamera.Sdk
         '-----------------------------------------------------------------------------*/
         Public Declare Function EdsSetObjectEventHandler Lib "EDSDK" ( _
             ByVal inCameraRef As IntPtr, _
-            ByVal inEvnet As Integer, _
+            ByVal inEvent As Integer, _
             ByVal inObjectEventHandler As EdsObjectEventHandler, _
             ByVal inContext As IntPtr) As Integer
 

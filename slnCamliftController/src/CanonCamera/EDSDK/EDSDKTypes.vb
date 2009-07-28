@@ -785,7 +785,7 @@ Namespace CanonCamera.Sdk
 
 
         '/******************************************************************************
-        ' Camera Detect Evnet Handler
+        ' Camera Detect Event Handler
         '******************************************************************************/
         Public Delegate Function EdsCameraAddedHandler( _
              ByVal inContext As IntPtr) As Long
@@ -801,7 +801,7 @@ Namespace CanonCamera.Sdk
 
 
         '/******************************************************************************
-        ' Evnet Handler
+        ' Event Handler
         '******************************************************************************/
         Public Delegate Function EdsPropertyEventHandler( _
             ByVal inEvent As Integer, _
