@@ -1,9 +1,10 @@
-﻿* take picture does not save the picture anywhere on the computer OR the camera memory card
-* if you click take picture with live view on, pause live view, snap the picture, and then resume live view smoothly
+﻿* if you click take picture with live view on, pause live view, snap the picture, and then resume live view smoothly
 * settings -> edit step settings is broken
 * settigs -> advanced, OK button doesn't close dialog
 * help-> user's guide, broken link
-* if you take successive pictures too quickly it causes an exception
+* Camera class, automatically attempt to reestablish session on fail
+* camera class, make sure disconnects are handled
+* save picture to a specified folder in settings
 
 --OFFICIAL--
 * fix auto run
@@ -29,3 +30,37 @@ camera. ITS BROKEN FIX IT
     zoom - supported by camera. once zoomed, move zoom around. 
 
 2 levels of zoom. 3 including not zoomed. 0, 100, 200
+
+--NOTES--
+
+Autorun Dialog:
+
+Add an "Adjust overlap" setting where the user can adjust the percentage of overlap between slices. 
+ Default 10%
+ min 0%
+ max ?%.
+ The user might see "0%" when it's really 10% and "-10%" when it's really 0%.
+
+Have radio buttons instead of combo boxes for Objective, Mag, and Iris.
+
+
+Main Window:
+
+Have "Set Autorun Start/Stop" (probably with fewer words) buttons near "Autorun..." button so that the user doesn't need to go through the "Store" menu.
+
+Have a "Live View" button or menu item that opens the Live View Window. 
+
+Needs a way to specify where the camera is storing the images it takes ("My Pictures" etc.).
+
+
+Live View Window:
+
+Area with the live view in it (obviously). 
+
+WhiteBalance settings similar to Canon's.
+
+Dragable white box in the view area for determining the WhiteBalance and zoom location.
+
+"Grid" button similar to Canon's.
+
+"Actual Size"/zoom button similar to Canon's.

@@ -29,7 +29,7 @@ Namespace CamliftController
         Private m_smartStepsManager As SmartStepsManager
 
         'resources without settings
-        Private m_camera As CanonCamera.Camera
+        Private m_cam As Camera
         Private WithEvents m_autorunStepper As AsyncStepper = Nothing
 
         Public Shared ReadOnly Property DefaultStepSizes() As Integer()
@@ -61,7 +61,7 @@ Namespace CamliftController
         End Property
 
         'Constructor
-        Public Sub New(ByVal settings As AllSettings, ByVal silverpakManager As SilverpakManager, ByVal camera As CanonCamera.Camera)
+        Public Sub New(ByVal settings As AllSettings, ByVal silverpakManager As Silverpak, ByVal camera As Camera)
             InitializeComponent() ' This call is required by the Windows Form Designer.
 
             'all settings
@@ -78,7 +78,7 @@ Namespace CamliftController
             m_positionManager = New PositionManager(settings.PositionManager, m_smartStepsManager)
 
             'resources
-            m_camera = camera
+            m_cam = camera
 
         End Sub
 
@@ -210,18 +210,18 @@ Namespace CamliftController
             If m_isLiveViewActive Then m_frmLiveView.Close()
 
             Try
-                Using session = m_camera.BeginSession
-                    session.TakePicture()
-                End Using
+                m_cam.TakePicture("C:\temptest\out.jpg")
             Catch ex As SdkException When ex.Message = SdkErrors.TakePictureAfNg
                 MsgBox("Autofocus failed!" & vbCrLf & vbCrLf & "NOTE: This software is intended to be used with the camera in manual focus mode", MsgBoxStyle.Exclamation)
+            Catch ex As CameraIsBusyException
+                ' do nothing
             End Try
         End Sub
 
         Private Sub btnLiveView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLiveView.Click
             If Not m_isLiveViewActive Then
                 Try
-                    m_frmLiveView = New frmLiveView(m_camera)
+                    m_frmLiveView = New frmLiveView(m_cam)
                     m_frmLiveView.Show()
                     m_isLiveViewActive = True
                 Catch ex As SdkException When ex.SdkError = SdkErrors.CommPortIsInUse

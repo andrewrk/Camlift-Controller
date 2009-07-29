@@ -25,7 +25,7 @@
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel
-            Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel
+            Me.tlpMain = New System.Windows.Forms.TableLayoutPanel
             Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel
             Me.GroupBox1 = New System.Windows.Forms.GroupBox
             Me.cboWhiteBalance = New System.Windows.Forms.ComboBox
@@ -33,24 +33,26 @@
             Me.FlowLayoutPanel3 = New System.Windows.Forms.FlowLayoutPanel
             Me.btnGrid = New System.Windows.Forms.Button
             Me.btnZoomOut = New System.Windows.Forms.Button
+            Me.lblZoom = New System.Windows.Forms.Label
+            Me.btnZoomIn = New System.Windows.Forms.Button
             Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
             Me.btnClose = New System.Windows.Forms.Button
-            Me.btnZoomIn = New System.Windows.Forms.Button
-            Me.lblZoom = New System.Windows.Forms.Label
+            Me.picLiveView = New System.Windows.Forms.PictureBox
             Me.TableLayoutPanel1.SuspendLayout()
-            Me.TableLayoutPanel2.SuspendLayout()
+            Me.tlpMain.SuspendLayout()
             Me.FlowLayoutPanel2.SuspendLayout()
             Me.GroupBox1.SuspendLayout()
             Me.TableLayoutPanel3.SuspendLayout()
             Me.FlowLayoutPanel3.SuspendLayout()
             Me.FlowLayoutPanel1.SuspendLayout()
+            CType(Me.picLiveView, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'TableLayoutPanel1
             '
             Me.TableLayoutPanel1.ColumnCount = 1
             Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel2, 0, 0)
+            Me.TableLayoutPanel1.Controls.Add(Me.tlpMain, 0, 0)
             Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel3, 0, 1)
             Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
             Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
@@ -61,19 +63,20 @@
             Me.TableLayoutPanel1.Size = New System.Drawing.Size(577, 429)
             Me.TableLayoutPanel1.TabIndex = 1
             '
-            'TableLayoutPanel2
+            'tlpMain
             '
-            Me.TableLayoutPanel2.ColumnCount = 2
-            Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-            Me.TableLayoutPanel2.Controls.Add(Me.FlowLayoutPanel2, 1, 0)
-            Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 3)
-            Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-            Me.TableLayoutPanel2.RowCount = 1
-            Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.TableLayoutPanel2.Size = New System.Drawing.Size(571, 382)
-            Me.TableLayoutPanel2.TabIndex = 0
+            Me.tlpMain.ColumnCount = 2
+            Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
+            Me.tlpMain.Controls.Add(Me.FlowLayoutPanel2, 1, 0)
+            Me.tlpMain.Controls.Add(Me.picLiveView, 0, 0)
+            Me.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.tlpMain.Location = New System.Drawing.Point(3, 3)
+            Me.tlpMain.Name = "tlpMain"
+            Me.tlpMain.RowCount = 1
+            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Me.tlpMain.Size = New System.Drawing.Size(571, 382)
+            Me.tlpMain.TabIndex = 0
             '
             'FlowLayoutPanel2
             '
@@ -154,6 +157,25 @@
             Me.btnZoomOut.Text = "Zoom Out"
             Me.btnZoomOut.UseVisualStyleBackColor = True
             '
+            'lblZoom
+            '
+            Me.lblZoom.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.lblZoom.Location = New System.Drawing.Point(165, 0)
+            Me.lblZoom.Name = "lblZoom"
+            Me.lblZoom.Size = New System.Drawing.Size(33, 29)
+            Me.lblZoom.TabIndex = 3
+            Me.lblZoom.Text = "100%"
+            Me.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+            '
+            'btnZoomIn
+            '
+            Me.btnZoomIn.Location = New System.Drawing.Point(204, 3)
+            Me.btnZoomIn.Name = "btnZoomIn"
+            Me.btnZoomIn.Size = New System.Drawing.Size(75, 23)
+            Me.btnZoomIn.TabIndex = 2
+            Me.btnZoomIn.Text = "Zoom In"
+            Me.btnZoomIn.UseVisualStyleBackColor = True
+            '
             'FlowLayoutPanel1
             '
             Me.FlowLayoutPanel1.AutoSize = True
@@ -175,24 +197,15 @@
             Me.btnClose.Text = "Close"
             Me.btnClose.UseVisualStyleBackColor = True
             '
-            'btnZoomIn
+            'picLiveView
             '
-            Me.btnZoomIn.Location = New System.Drawing.Point(204, 3)
-            Me.btnZoomIn.Name = "btnZoomIn"
-            Me.btnZoomIn.Size = New System.Drawing.Size(75, 23)
-            Me.btnZoomIn.TabIndex = 2
-            Me.btnZoomIn.Text = "Zoom In"
-            Me.btnZoomIn.UseVisualStyleBackColor = True
-            '
-            'lblZoom
-            '
-            Me.lblZoom.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblZoom.Location = New System.Drawing.Point(165, 0)
-            Me.lblZoom.Name = "lblZoom"
-            Me.lblZoom.Size = New System.Drawing.Size(33, 29)
-            Me.lblZoom.TabIndex = 3
-            Me.lblZoom.Text = "100%"
-            Me.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+            Me.picLiveView.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.picLiveView.Location = New System.Drawing.Point(3, 3)
+            Me.picLiveView.Name = "picLiveView"
+            Me.picLiveView.Size = New System.Drawing.Size(395, 376)
+            Me.picLiveView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+            Me.picLiveView.TabIndex = 2
+            Me.picLiveView.TabStop = False
             '
             'frmLiveView
             '
@@ -205,19 +218,20 @@
             Me.Text = "Live View"
             Me.TableLayoutPanel1.ResumeLayout(False)
             Me.TableLayoutPanel1.PerformLayout()
-            Me.TableLayoutPanel2.ResumeLayout(False)
-            Me.TableLayoutPanel2.PerformLayout()
+            Me.tlpMain.ResumeLayout(False)
+            Me.tlpMain.PerformLayout()
             Me.FlowLayoutPanel2.ResumeLayout(False)
             Me.GroupBox1.ResumeLayout(False)
             Me.TableLayoutPanel3.ResumeLayout(False)
             Me.TableLayoutPanel3.PerformLayout()
             Me.FlowLayoutPanel3.ResumeLayout(False)
             Me.FlowLayoutPanel1.ResumeLayout(False)
+            CType(Me.picLiveView, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
 
         End Sub
         Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
-        Friend WithEvents TableLayoutPanel2 As System.Windows.Forms.TableLayoutPanel
+        Friend WithEvents tlpMain As System.Windows.Forms.TableLayoutPanel
         Friend WithEvents FlowLayoutPanel2 As System.Windows.Forms.FlowLayoutPanel
         Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
         Friend WithEvents cboWhiteBalance As System.Windows.Forms.ComboBox
@@ -229,5 +243,6 @@
         Friend WithEvents btnZoomOut As System.Windows.Forms.Button
         Friend WithEvents btnZoomIn As System.Windows.Forms.Button
         Friend WithEvents lblZoom As System.Windows.Forms.Label
+        Friend WithEvents picLiveView As System.Windows.Forms.PictureBox
     End Class
 End Namespace

@@ -4,29 +4,36 @@ Imports System.Runtime.InteropServices
 Public Class Camera
     Implements IDisposable
 
-    Private cam As IntPtr
+    Private m_cam As IntPtr
     Private m_oeh As EdsObjectEventHandler
     Private m_seh As EdsStateEventHandler
+    Private m_peh As EdsPropertyEventHandler
 
-    Private Shared instance As Camera = Nothing
+    Private Shared s_instance As Camera = Nothing
 
-    Private WaitingOnPic As Boolean
-    Private PicOutFile As String
+    Private m_waitingOnPic As Boolean
+    Private m_picOutFile As String
+
+    Private m_liveViewOn As Boolean
+    Private m_waitingToStartLiveView As Boolean
+    Private m_liveViewPicBox As PictureBox
 
 
     Public Sub New()
-        If instance Is Nothing Then
-            WaitingOnPic = False
-            instance = Me
+        If s_instance Is Nothing Then
+            s_instance = Me
+            m_waitingOnPic = False
+            m_liveViewOn = False
+            m_waitingToStartLiveView = False
+            m_liveViewPicBox = Nothing
 
             CheckError(EdsInitializeSDK())
-            EstablishSession()
         Else
             Throw New OnlyOneInstanceAllowedException
         End If
     End Sub
 
-    Private Sub EstablishSession()
+    Public Sub EstablishSession()
         Dim camList As IntPtr
         Dim numCams As Integer
 
@@ -34,35 +41,50 @@ Public Class Camera
         CheckError(EdsGetChildCount(camList, numCams))
 
         If numCams > 1 Then
+            CheckError(EdsRelease(camList))
             Throw New TooManyCamerasFoundException
         ElseIf numCams = 0 Then
+            CheckError(EdsRelease(camList))
             Throw New NoCameraFoundException
         End If
 
         'get the only camera
-        CheckError(EdsGetChildAtIndex(camList, 0, cam))
+        CheckError(EdsGetChildAtIndex(camList, 0, m_cam))
 
         'release the camera list data
         CheckError(EdsRelease(camList))
 
         'open a session
-        CheckError(EdsOpenSession(cam))
+        CheckError(EdsOpenSession(m_cam))
 
-        'STATE event handler for this camera
-        m_seh = New EdsStateEventHandler(AddressOf StateEventHandler)
-        CheckError(EdsSetCameraStateEventHandler(cam, kEdsStateEvent_All, m_seh, New IntPtr(0)))
+        ' handlers
+        m_seh = New EdsStateEventHandler(AddressOf StaticStateEventHandler)
+        CheckError(EdsSetCameraStateEventHandler(m_cam, kEdsStateEvent_All, m_seh, New IntPtr(0)))
 
-        'OBJECT event handler for this camera
         m_oeh = New EdsObjectEventHandler(AddressOf StaticObjectEventHandler)
-        CheckError(EdsSetObjectEventHandler(cam, kEdsObjectEvent_DirItemRequestTransfer, m_oeh, New IntPtr(0)))
+        CheckError(EdsSetObjectEventHandler(m_cam, kEdsObjectEvent_All, m_oeh, New IntPtr(0)))
 
+        m_peh = New EdsPropertyEventHandler(AddressOf StaticPropertyEventHandler)
+        CheckError(EdsSetPropertyEventHandler(m_cam, kEdsPropertyEvent_All, m_peh, New IntPtr(0)))
+
+        'set default options
         'save to computer, not memory card
-        CheckError(EdsSetPropertyData(cam, kEdsPropID_SaveTo, 0, Marshal.SizeOf(GetType(Integer)), CType(EdsSaveTo.kEdsSaveTo_Host, Integer)))
+        CheckError(EdsSetPropertyData(m_cam, kEdsPropID_SaveTo, 0, Marshal.SizeOf(GetType(Integer)), CType(EdsSaveTo.kEdsSaveTo_Host, Integer)))
+
+        ' enforce JPEG format
+        Dim qs As New StructurePointer(Of UInt32)
+        CheckError(EdsGetPropertyData(m_cam, kEdsPropID_ImageQuality, 0, qs.Size, qs.Pointer))
+        ' clear the old image type setting and set the new one
+        qs.Value = qs.Value And &HFF0FFFFFL Or (EdsImageType.kEdsImageType_Jpeg << 20)
+        CheckError(EdsSetPropertyData(m_cam, kEdsPropID_ImageQuality, 0, qs.Size, qs.Value))
     End Sub
 
     Public Sub Dispose() Implements System.IDisposable.Dispose
-        CheckError(EdsCloseSession(cam))
+        CheckError(EdsCloseSession(m_cam))
+        CheckError(EdsRelease(m_cam))
         CheckError(EdsTerminateSDK())
+
+        s_instance = Nothing
     End Sub
 
     Private Sub CheckError(ByVal Err As Integer)
@@ -72,15 +94,24 @@ Public Class Camera
 
     Private Shared Function StaticObjectEventHandler(ByVal inEvent As Integer, ByVal inRef As IntPtr, ByVal inContext As IntPtr) As Long
         'transfer from static to member
-        instance.ObjectEventHandler(inEvent, inRef, inContext)
+        s_instance.ObjectEventHandler(inEvent, inRef, inContext)
+        Return 0
     End Function
 
     Private Shared Function StaticStateEventHandler(ByVal inEvent As Integer, ByVal inParameter As Integer, ByVal inContext As IntPtr) As Long
         'transfer from static to member
-        instance.StateEventHandler(inEvent, inParameter, inContext)
+        s_instance.StateEventHandler(inEvent, inParameter, inContext)
+        Return 0
     End Function
 
-    Private Function ObjectEventHandler(ByVal inEvent As Integer, ByVal inRef As IntPtr, ByVal inContext As IntPtr) As Long
+    Private Shared Function StaticPropertyEventHandler(ByVal inEvent As Integer, ByVal inPropertyID As Integer, ByVal inParam As Integer, ByVal inContext As IntPtr) As Long
+        'transfer from static to member
+        s_instance.PropertyEventHandler(inEvent, inPropertyID, inParam, inContext)
+        Return 0
+    End Function
+
+
+    Private Sub ObjectEventHandler(ByVal inEvent As Integer, ByVal inRef As IntPtr, ByVal inContext As IntPtr)
         Select Case inEvent
             Case kEdsObjectEvent_DirItemRequestTransfer
                 ' transfer the image in memory to disk
@@ -90,7 +121,7 @@ Public Class Camera
 
                 'This creates the outStream that is used by EdsDownload to actually grab and write out the file.
                 Dim outStream As IntPtr
-                CheckError(EdsCreateFileStream(PicOutFile, EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways, EdsAccess.kEdsAccess_Write, outStream))
+                CheckError(EdsCreateFileStream(m_picOutFile, EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways, EdsAccess.kEdsAccess_Write, outStream))
 
 
                 CheckError(EdsDownload(inRef, dirItemInfo.size, outStream))
@@ -98,16 +129,15 @@ Public Class Camera
                 CheckError(EdsRelease(outStream))
 
 
-                WaitingOnPic = False ' allow other thread to continue
+                m_waitingOnPic = False ' allow other thread to continue
             Case Else
                 Debug.Print(String.Format("ObjectEventHandler: event {0}", inEvent))
 
         End Select
 
-        Return 0
-    End Function
+    End Sub
 
-    Private Function StateEventHandler(ByVal inEvent As Integer, ByVal inParameter As Integer, ByVal inContext As IntPtr) As Long
+    Private Sub StateEventHandler(ByVal inEvent As Integer, ByVal inParameter As Integer, ByVal inContext As IntPtr)
         'Debug.Print("state event handler called")
 
         Select Case inEvent
@@ -119,17 +149,27 @@ Public Class Camera
             Case Else
                 Debug.Print(String.Format("stateEventHandler: event {0}, parameter {1}", inEvent, inParameter))
         End Select
-        Return 0
-    End Function
+    End Sub
 
-    ' snap a photo with the camera and write it to outfile
+    Private Sub PropertyEventHandler(ByVal inEvent As Integer, ByVal inPropertyID As Integer, ByVal inParam As Integer, ByVal inContext As IntPtr)
+        Debug.Print("property event handler called, propid = " & inPropertyID)
+    End Sub
+
+    '''<summary>snap a photo with the camera and write it to outfile</summary> 
+    ''' <param name="OutFile">the file to save the picture to</param>
     Public Sub TakePicture(ByVal OutFile As String)
+        If m_waitingOnPic Then
+            ' bad programmer. should have disabled user controls
+            Throw New CameraIsBusyException
+            Exit Sub
+        End If
+
         ' set flag indicating we are waiting on a callback call
-        WaitingOnPic = True
-        PicOutFile = OutFile
+        m_waitingOnPic = True
+        m_picOutFile = OutFile
 
         ' take a picture with the camera and save it to outfile
-        CheckError(EdsSendCommand(cam, EdsCameraCommand.kEdsCameraCommand_TakePicture, 0))
+        CheckError(EdsSendCommand(m_cam, EdsCameraCommand.kEdsCameraCommand_TakePicture, 0))
 
         Const SleepTimeout = 5000 ' how many milliseconds to wait before giving up
         Const SleepAmount = 50 ' how many milliseconds to sleep before doing the event pump
@@ -138,24 +178,24 @@ Public Class Camera
             System.Threading.Thread.Sleep(SleepAmount)
             Application.DoEvents()
 
-            If Not WaitingOnPic Then Exit Sub 'success 
+            If Not m_waitingOnPic Then Exit Sub 'success 
         Next I
 
         ' we never got a callback. throw an error
-        WaitingOnPic = False
+        m_waitingOnPic = False
         Throw New TakePictureFailedException
     End Sub
 
     Private Sub StartBulb()
         Dim err As Integer
 
-        CheckError(EdsSendStatusCommand(cam, EdsCameraStatusCommand.kEdsCameraStatusCommand_UILock, 0))
+        CheckError(EdsSendStatusCommand(m_cam, EdsCameraStatusCommand.kEdsCameraStatusCommand_UILock, 0))
 
-        err = EdsSendCommand(cam, EdsCameraCommand.kEdsCameraCommand_BulbStart, 0)
+        err = EdsSendCommand(m_cam, EdsCameraCommand.kEdsCameraCommand_BulbStart, 0)
 
         ' call ui unlock if bulbstart fails
         If err <> EDS_ERR_OK Then
-            EdsSendStatusCommand(cam, EdsCameraStatusCommand.kEdsCameraStatusCommand_UIUnLock, 0)
+            EdsSendStatusCommand(m_cam, EdsCameraStatusCommand.kEdsCameraStatusCommand_UIUnLock, 0)
             CheckError(err)
         End If
     End Sub
@@ -164,12 +204,121 @@ Public Class Camera
         Dim err As Integer, err2 As Integer
 
         ' call ui unlock even if bulb end fails
-        err = EdsSendCommand(cam, EdsCameraCommand.kEdsCameraCommand_BulbEnd, 0)
-        err2 = EdsSendCommand(cam, EdsCameraStatusCommand.kEdsCameraStatusCommand_UIUnLock, 0)
+        err = EdsSendCommand(m_cam, EdsCameraCommand.kEdsCameraCommand_BulbEnd, 0)
+        err2 = EdsSendCommand(m_cam, EdsCameraStatusCommand.kEdsCameraStatusCommand_UIUnLock, 0)
 
         CheckError(err)
         CheckError(err2)
     End Sub
+
+    '''<summary>start streaming live video to pbox</summary>
+    '''<param name="pbox">the picture box to send live video to</param>
+    ''' <remarks>you can only have one live view going at a time.</remarks>
+    Public Sub StartLiveView(ByVal pbox As PictureBox)
+        If m_waitingToStartLiveView Then
+            m_liveViewPicBox = pbox
+            Return
+        ElseIf m_liveViewOn Then
+            StopLiveView()
+        End If
+
+        Dim device As New StructurePointer(Of UInt32)
+
+        ' tell the camera to send live data to the computer
+        CheckError(EdsGetPropertyData(m_cam, kEdsPropID_Evf_OutputDevice, 0, device.Size, device.Pointer))
+        device.Value = device.Value Or EdsEvfOutputDevice.kEdsEvfOutputDevice_PC
+        CheckError(EdsSetPropertyData(m_cam, kEdsPropID_Evf_OutputDevice, 0, device.Size, device.Value))
+
+        ' get ready to stream
+        m_liveViewPicBox = pbox
+        m_waitingToStartLiveView = True
+    End Sub
+
+    ''' <summary>
+    ''' stop streaming live video
+    ''' </summary>
+    ''' <remarks></remarks>
+    Public Sub StopLiveView()
+        Dim device As New StructurePointer(Of UInt32)
+
+        ' tell the camera not to send live data to the computer
+        CheckError(EdsGetPropertyData(m_cam, kEdsPropID_Evf_OutputDevice, 0, device.Size, device.Pointer))
+        device.Value = device.Value And Not EdsEvfOutputDevice.kEdsEvfOutputDevice_PC
+        CheckError(EdsSetPropertyData(m_cam, kEdsPropID_Evf_OutputDevice, 0, device.Size, device.Value))
+
+        m_liveViewOn = False
+        m_waitingToStartLiveView = False
+        m_liveViewPicBox = Nothing
+    End Sub
+
+    'Private Sub setImage(ByVal canonImg As EvfImageInfo)
+    '    Dim oldImg = m_PictureBox.Image
+    '    m_PictureBox.Image = canonImg.Image
+    '    If oldImg IsNot Nothing Then oldImg.Dispose() ' really is required.
+
+    'End Sub
+    'Private Sub m_liveView_ImageUpdated(ByVal sender As Object, ByVal e As ImageUpdatedEventArgs) Handles m_liveView.ImageUpdated
+    '    Try
+    '        If m_PictureBox.InvokeRequired Then
+    '            m_PictureBox.Invoke(New Action(Of EvfImageInfo)(AddressOf setImage), e.CanonImage)
+    '        Else
+    '            setImage(e.CanonImage)
+    '        End If
+    '    Catch ex As ObjectDisposedException
+    '    Catch ex As InvalidOperationException
+    '    Catch ex As System.ComponentModel.InvalidAsynchronousStateException
+    '    End Try
+    'End Sub
+
+    Protected Overrides Sub Finalize()
+        Dispose()
+        MyBase.Finalize()
+    End Sub
+
+
+    Private Class StructurePointer(Of T As Structure)
+        Implements IDisposable
+
+        Private m_Size As Integer 'in bytes
+        Private m_ptr As IntPtr
+
+        Public ReadOnly Property Size() As Integer
+            Get
+                Return m_Size
+            End Get
+        End Property
+
+        Public ReadOnly Property Pointer() As IntPtr
+            Get
+                Return m_ptr
+            End Get
+        End Property
+
+        Public Property Value() As T
+            Get
+                Return Marshal.PtrToStructure(m_ptr, GetType(T))
+            End Get
+            Set(ByVal value As T)
+                Marshal.StructureToPtr(value, m_ptr, True)
+            End Set
+        End Property
+
+        Public Sub New()
+            m_Size = Marshal.SizeOf(GetType(T))
+            m_ptr = Marshal.AllocHGlobal(m_Size)
+        End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            Marshal.FreeHGlobal(m_ptr)
+        End Sub
+
+        Protected Overrides Sub Finalize()
+            Dispose()
+            MyBase.Finalize()
+        End Sub
+    End Class
+
+
 End Class
 
 Public Class SdkException
@@ -518,5 +667,8 @@ Public Class OnlyOneInstanceAllowedException
 End Class
 
 Public Class TakePictureFailedException
+    Inherits Exception
+End Class
+Public Class CameraIsBusyException
     Inherits Exception
 End Class

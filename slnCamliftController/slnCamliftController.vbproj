@@ -25,6 +25,7 @@
     <TargetZone>LocalIntranet</TargetZone>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
     <SignManifests>true</SignManifests>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -38,7 +39,6 @@
     <ApplicationRevision>22</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -49,6 +49,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>Camlift Controller 2.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DefineConstants>USE_FAKE_SILVERPAK=True,USE_GLOBAL_CATCH=False,LAST_STABLE=True</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -58,6 +59,7 @@
     <OutputPath>bin\Release\</OutputPath>
     <DocumentationFile>Camlift Controller 2.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <DefineConstants>USE_FAKE_SILVERPAK=True,USE_GLOBAL_CATCH=False,LAST_STABLE=True</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
@@ -96,88 +98,27 @@
     <Compile Include="src\CamliftController\PositionManager.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\CanonCamera\Camera.vb" />
     <Compile Include="src\CanonCamera\Download.vb" />
-    <Compile Include="src\CanonCamera\frmLiveView.Designer.vb">
+    <Compile Include="src\CamliftController\frmLiveView.Designer.vb">
       <DependentUpon>frmLiveView.vb</DependentUpon>
     </Compile>
-    <Compile Include="src\CanonCamera\frmLiveView.vb">
+    <Compile Include="src\CamliftController\frmLiveView.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\CanonCamera\LiveView.vb" />
-    <Compile Include="src\CanonCamera\Sample\CameraControl\CameraControlDlg.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Camera\CameraController.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Camera\CameraEventListener.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Camera\CameraModel.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Camera\CameraModelLegacy.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Command\CloseSessionCommand.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Command\Command.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Command\DownloadCommand.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Command\GetPropertyCommand.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Command\GetPropertyDescCommand.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Command\OpenSessionCommand.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Command\SaveSettingCommand.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Command\SetPropertyCommand.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Command\TakePictureCommand.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Common\EDSDK.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Common\EDSDKErrors.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Common\EDSDKTypes.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Observer.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\Processor.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="src\CanonCamera\Sample\CameraControl\property\Property.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="src\CanonCamera\Sdk.vb" />
     <Compile Include="src\CanonCamera\EDSDK\EDSDK.vb" />
     <Compile Include="src\CanonCamera\EDSDK\EDSDKErrors.vb" />
     <Compile Include="src\CanonCamera\EDSDK\EDSDKTypes.vb" />
-    <Compile Include="src\DebuggStuff.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="src\Settings\Serializer.vb" />
     <Compile Include="src\Settings\Settings.vb" />
-    <Compile Include="src\SmartSteps\frmAutoRun.Designer.vb">
+    <Compile Include="src\Silverpak.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\CamliftController\frmAutoRun.Designer.vb">
       <DependentUpon>frmAutoRun.vb</DependentUpon>
     </Compile>
-    <Compile Include="src\SmartSteps\frmAutoRun.vb">
+    <Compile Include="src\CamliftController\frmAutoRun.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="src\CamliftController\frmAdvanced.Designer.vb">
@@ -223,18 +164,14 @@
     <Compile Include="src\Silverpak23CE\Silverpak23CE.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\SmartSteps\SmartSteps.vb" />
+    <Compile Include="src\SmartSteps.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="src\CanonCamera\frmLiveView.resx">
+    <EmbeddedResource Include="src\CamliftController\frmLiveView.resx">
       <DependentUpon>frmLiveView.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\CanonCamera\Sample\CameraControl\CameraControlDlg.resx">
-      <DependentUpon>CameraControlDlg.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="src\SmartSteps\frmAutoRun.resx">
+    <EmbeddedResource Include="src\CamliftController\frmAutoRun.resx">
       <DependentUpon>frmAutoRun.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -286,11 +223,6 @@
     <None Include="src\Silverpak23CE\README.txt" />
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -305,11 +237,6 @@
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5</ProductName>
       <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>

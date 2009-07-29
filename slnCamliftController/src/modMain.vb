@@ -6,22 +6,22 @@ Imports VisionaryDigital.CamliftController
 Imports VisionaryDigital.SmartSteps
 Imports VisionaryDigital.Settings
 
-#Const USE_FAKE_SILVERPAK = True
-#Const LAST_STABLE = True
-#Const USE_GLOBAL_CATCH = False
+'#Const USE_FAKE_SILVERPAK = True
+'#Const LAST_STABLE = True
+'#Const USE_GLOBAL_CATCH = False
 
 Public Module modMain
 
     Public Const MicrostepsPerMm As Integer = 1250
 
-    Private Const MsgBoxSilverpakNotFoundMessage As String = "Camlift motor not found. Please check all connections."
-    Private Const MsgBoxCameraNotFoundMessage = "No Camera Found. Please check all connections."
-    Private Const MsgBoxTooManyCamerasMessage = "More than one camera found. Please make sure no other cameras are connected."
+    Public Const MsgBoxSilverpakNotFoundMessage As String = "Camlift motor not found. Please check all connections."
+    Public Const MsgBoxCameraNotFoundMessage = "No Camera Found. Please check all connections."
+    Public Const MsgBoxTooManyCamerasMessage = "More than one camera found. Please make sure no other cameras are connected."
 
     Public Const ConnectionLostResult = "Connection Lost"
     Public Const MsgBoxTitle As String = "Camlift Controller"
     Public Const MsgBoxInitializationAbortedMessage As String = "Initialization was interrupted." & vbCrLf & vbCrLf & "Continue initialization?"
-    Private Const MsgBoxInitializeCoordinatesMessage As String = "Initializing will raise the carriage of the P-51 Camlift to its upper most position." & vbCrLf & vbCrLf & "Continue?"
+    Public Const MsgBoxInitializeCoordinatesMessage As String = "Initializing will raise the carriage of the P-51 Camlift to its upper most position." & vbCrLf & vbCrLf & "Continue?"
     Public Const MsgBoxEditAdvancedSettingsMessage As String = "WARNING: changing the values in this ""Advanced Settings"" dialog box will alter the way the P-51 CamLift operates." & vbCrLf & vbCrLf & _
                                                                "These adjustments are recommended for advanced users only are you sure you want to prodeed?"
     Public Const MsgBoxShutDownMessage As String = "After parking the carriage slide the lower limit switch to the upper most position and secure it." & vbCrLf & vbCrLf & _
@@ -49,24 +49,33 @@ Public Module modMain
 #End If
         Application.EnableVisualStyles()
 
-        'Main_3_Silverpak(New AllSettings, New Camera)
+        Dim settings As New AllSettings
         Dim cam As New Camera
+        Dim spm As New Silverpak(settings.Silverpak)
 
-        'take 10 pictures
+        While True
+            Try
+                cam.EstablishSession()
+                Exit While
+            Catch ex As NoCameraFoundException
+                If MsgBox(MsgBoxCameraNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
+            Catch ex As TooManyCamerasFoundException
+                If MsgBox(MsgBoxTooManyCamerasMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
+            End Try
+        End While
 
-        Dim start As DateTime
-        Dim stoptime As DateTime
-        Dim elapsed As TimeSpan
+        While True
+            Try
+                spm.EstablishConnection()
+                Exit While
+            Catch ex As SilverpakNotFoundException
+                If MsgBox(MsgBoxSilverpakNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
+            End Try
+        End While
 
-        start = Now
-        Dim i As Integer
-        For i = 1 To 10
-            cam.TakePicture("C:\temptest\out" & i & ".cr2")
-        Next i
-        stoptime = Now
+        Dim form As New CamliftController.frmControls(settings, spm, cam)
 
-        elapsed = stoptime.Subtract(start)
-        Debug.Print("elapsed: " & elapsed.TotalSeconds.ToString("0.0000"))
+        form.ShowDialog()
 
 #If USE_GLOBAL_CATCH Then
         Catch ex As Exception
@@ -74,84 +83,6 @@ Public Module modMain
         End Try
 #End If
     End Sub
-
-    Private Sub Main_3_Silverpak(ByVal settings As AllSettings, ByVal cam As CanonCamera.Camera)
-
-        Using spmMain = makeSilverpakManager()
-
-            Dim silverpakSettings = settings.Silverpak
-            spmMain.Velocity = silverpakSettings.Velocity
-            spmMain.Acceleration = silverpakSettings.Acceleration
-            spmMain.RunningCurrent = silverpakSettings.RunningCurrent
-
-            GoTo Connect
-
-Connect:
-            spmMain.PortName = SilverpakManager.DefaultPortname
-            If spmMain.FindAndConnect Then
-                GoTo ConnecttionEstablished
-            Else
-                If MsgBox(MsgBoxSilverpakNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Retry Then
-                    GoTo Connect
-                Else
-                    GoTo ShutDown
-                End If
-            End If
-
-ConnecttionEstablished:
-            Try
-                spmMain.InitializeMotorSettings()
-                spmMain.InitializeSmoothMotion()
-            Catch ex As InvalidSilverpakOperationException
-                GoTo ConnectionLost
-            End Try
-
-            Dim dlgResult As DialogResult
-
-            dlgResult = MsgBox(MsgBoxInitializeCoordinatesMessage, MsgBoxStyle.OkCancel, MsgBoxTitle)
-            Select Case dlgResult
-                Case DialogResult.OK
-                    GoTo InitializeCoordinates
-                Case Else
-                    GoTo ShutDown
-            End Select
-
-InitializeCoordinates:
-            Try
-                spmMain.InitializeCoordinates()
-            Catch ex As InvalidSilverpakOperationException
-                GoTo ConnectionLost
-            End Try
-            GoTo Main_4_ShowControls
-
-Main_4_ShowControls:
-            Using f As New CamliftController.frmControls(settings, spmMain, cam)
-                f.ShowDialog()
-                Select Case f.Tag
-                    Case ConnectionLostResult
-                        GoTo ConnectionLost
-                    Case Else
-                        GoTo ShutDown
-                End Select
-            End Using
-
-ConnectionLost:
-            'MsgBox("Connetion was lost", MsgBoxStyle.Critical, MsgBoxTitle)
-            If spmMain.IsActive Then spmMain.Disconnect()
-            GoTo Connect
-
-ShutDown:
-            If spmMain.IsActive Then spmMain.StopMotor()
-        End Using
-    End Sub
-
-    Private Function makeSilverpakManager() As SilverpakManager
-#If USE_FAKE_SILVERPAK Then
-        Return New DebugSilverpakManager
-#Else
-        Return New SilverpakManager With {.BaudRate = 9600, .DriverAddress = DriverAddresses.Driver1}
-#End If
-    End Function
 
     Public Function MicrostepsToMilimeters(ByVal microsteps As Integer) As String
         Return Format(microsteps / MicrostepsPerMm, "0.00")
@@ -192,7 +123,7 @@ ShutDown:
         outStr &= vbCrLf
         My.Computer.FileSystem.WriteAllText(globalErrorLogFile, outStr, True)
 
-        MsgBox("An unexpected error occurred! An report has been made at """ & globalErrorLogFile & """.", MsgBoxStyle.Critical, MsgBoxTitle)
+        MsgBox("An unexpected error occurred! A report has been made at """ & globalErrorLogFile & """.", MsgBoxStyle.Critical, MsgBoxTitle)
     End Sub
 
 End Module

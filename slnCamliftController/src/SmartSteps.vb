@@ -1,7 +1,4 @@
-﻿
-Imports System.Threading
-
-Imports VisionaryDigital.CanonCamera
+﻿Imports System.Threading
 Imports VisionaryDigital.Settings
 
 Namespace SmartSteps
@@ -54,7 +51,7 @@ Namespace SmartSteps
         Private Const PostDwell = 100
 
         'Private ReadOnly m_f_takePicture As Action
-        Private ReadOnly m_camera As CanonCamera.Camera
+        Private ReadOnly m_camera As Camera
         Private ReadOnly m_f_goToLocation As Action(Of Integer)
         Private ReadOnly m_f_isMoveFinished As Func(Of Boolean)
         Private ReadOnly m_locations As IEnumerable(Of Integer)
@@ -74,7 +71,7 @@ Namespace SmartSteps
         Public Event Finished As EventHandler
         Public Event Aborted As EventHandler(Of AbortedEventArgs)
 
-        Public Sub New(ByVal _camera As CanonCamera.Camera, ByVal f_goToLocation As Action(Of Integer), ByVal f_isMoveFinished As Func(Of Boolean), _
+        Public Sub New(ByVal _camera As Camera, ByVal f_goToLocation As Action(Of Integer), ByVal f_isMoveFinished As Func(Of Boolean), _
                        ByVal locations As IEnumerable(Of Integer), ByVal dwell As Integer, ByVal returnToTop As Boolean)
             m_camera = _camera
             m_f_goToLocation = f_goToLocation
@@ -95,70 +92,80 @@ Namespace SmartSteps
             m_break = True
         End Sub
 
+        Private Sub AbortRun(ByVal abortException As Exception)
+            m_Progress = AbortedProgress
+            RaiseEvent Aborted(Me, New AbortedEventArgs(abortException))
+        End Sub
+
         Private Sub execute_run()
 #If USE_GLOBAL_CATCH Then
             Try
 #End If
-                Dim abortException As Exception = Nothing
-                Using session = m_camera.BeginSession
-                    Dim total = m_locations.Count()
-                    m_Progress = 0
-                    RaiseEvent ProgressReported(Me, New EventArgs)
 
-                    'go to first location (indefinite wait)
-                    m_f_goToLocation.Invoke(m_locations.First)
-                    Do
-                        Thread.Sleep(100)
-                    Loop Until m_f_isMoveFinished.Invoke
-                    'Check for Abort before beginning the loop
-                    If m_break Then GoTo Abort
-                    'reached first location
+            Dim total = m_locations.Count()
+            m_Progress = 0
+            RaiseEvent ProgressReported(Me, New EventArgs)
 
-                    Dim soFar = 0
-                    For Each location In m_locations
-                        'Move
-                        m_f_goToLocation.Invoke(location)
-
-                        'Report Progress
-                        m_Progress = 100 * soFar / total
-                        RaiseEvent ProgressReported(Me, New EventArgs)
-
-                        'Sleep
-                        Thread.Sleep(m_dwell)
-
-                        'Check for Abort before Take Picture
-                        If m_break Then GoTo Abort
-
-                        'Take Picture
-                        Try
-                            session.TakePicture()
-                        Catch ex As SdkException
-                            abortException = ex
-                            GoTo Abort
-                        End Try
-
-                        'Sleep
-                        Thread.Sleep(PostDwell)
-
-                        'Check for Abort before next move
-                        If m_break Then GoTo Abort
-
-                        'Next
-                        soFar += 1
-                    Next
-                    If m_returnToTop Then
-                        m_f_goToLocation.Invoke(m_locations.First)
-                    End If
-                    GoTo Finished
-                End Using
-Finished:
-                m_Progress = 100 ' complete
-                RaiseEvent Finished(Me, New EventArgs)
+            'go to first location (indefinite wait)
+            m_f_goToLocation.Invoke(m_locations.First)
+            Do
+                Thread.Sleep(100)
+            Loop Until m_f_isMoveFinished.Invoke
+            'Check for Abort before beginning the loop
+            If m_break Then
+                AbortRun(Nothing)
                 Exit Sub
-Abort:
-                m_Progress = AbortedProgress
-                RaiseEvent Aborted(Me, New AbortedEventArgs(abortException))
-                Exit Sub
+            End If
+
+            'reached first location
+
+            Dim soFar = 0
+            For Each location In m_locations
+                'Move
+                m_f_goToLocation.Invoke(location)
+
+                'Report Progress
+                m_Progress = 100 * soFar / total
+                RaiseEvent ProgressReported(Me, New EventArgs)
+
+                'Sleep
+                Thread.Sleep(m_dwell)
+
+                'Check for Abort before Take Picture
+                If m_break Then
+                    AbortRun(Nothing)
+                    Exit Sub
+                End If
+
+
+                'Take Picture
+                Try
+                    ' TODO: replace folder with folder from settings
+                    m_camera.TakePicture("C:\temptest\out.jpg")
+                Catch ex As SdkException
+                    AbortRun(ex)
+                    Exit Sub
+                End Try
+
+                'Sleep
+                Thread.Sleep(PostDwell)
+
+                'Check for Abort before next move
+                If m_break Then
+                    AbortRun(Nothing)
+                    Exit Sub
+                End If
+
+                'Next
+                soFar += 1
+            Next
+            If m_returnToTop Then
+                m_f_goToLocation.Invoke(m_locations.First)
+            End If
+
+            m_Progress = 100 ' complete
+            RaiseEvent Finished(Me, New EventArgs)
+            Exit Sub
 #If USE_GLOBAL_CATCH Then
             Catch ex As Exception
                 GlobalCatch(ex)
@@ -187,7 +194,7 @@ Abort:
         Public Const DefaultPostDwell = 100
 
         Private m_f_moveTo As Action(Of Integer)
-        Private m_camera As CanonCamera.Camera
+        Private m_camera As Camera
         Private m_f_isMoveFinished As Func(Of Boolean)
 
         Private m_settings As SmartStepsSettings
@@ -233,7 +240,7 @@ Abort:
         End Property
 
         Public Sub New(ByVal settings As SmartStepsSettings, ByVal f_moveTo As Action(Of Integer), _
-                       ByVal _camera As CanonCamera.Camera, ByVal f_isMoveFinished As Func(Of Boolean))
+                       ByVal _camera As Camera, ByVal f_isMoveFinished As Func(Of Boolean))
             m_f_moveTo = f_moveTo
             m_camera = _camera
             m_f_isMoveFinished = f_isMoveFinished

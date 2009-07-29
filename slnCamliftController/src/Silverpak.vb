@@ -1,8 +1,75 @@
-﻿
+﻿Imports VisionaryDigital.Silverpak23CE
+Imports VisionaryDigital.Settings
 Imports System.Threading
 
+Public Class Silverpak
+#If USE_FAKE_SILVERPAK Then
+    inherits DebugSilverpakManager
+#Else
+    Inherits SilverpakManager
+#End If
+    Implements IDisposable
+
+
+    Public Sub New(ByVal settings As SilverpakSettings)
+        MyBase.New()
+        Me.BaudRate = 9600
+        Me.DriverAddress = DriverAddresses.Driver1
+        Me.Velocity = settings.Velocity
+        Me.Acceleration = settings.Acceleration
+        Me.RunningCurrent = settings.RunningCurrent
+
+    End Sub
+
+    Public Shadows Sub Dispose()
+        If Me.IsActive Then Me.StopMotor()
+        MyBase.Dispose()
+    End Sub
+
+    Public Sub EstablishConnection()
+        Me.PortName = SilverpakManager.DefaultPortname
+        If Me.FindAndConnect() Then
+            InitializeMotor()
+            If MsgBox(MsgBoxInitializeCoordinatesMessage, MsgBoxStyle.OkCancel, MsgBoxTitle) = MsgBoxResult.Ok Then TryInitializeCoordinates()
+        Else
+            Throw New SilverpakNotFoundException
+        End If
+    End Sub
+
+    Private Sub InitializeMotor()
+        Try
+            Me.InitializeMotorSettings()
+            Me.InitializeSmoothMotion()
+        Catch ex As InvalidSilverpakOperationException
+            Reconnect()
+            Exit Sub
+        End Try
+    End Sub
+
+    Private Sub Reconnect()
+        If Me.IsActive Then Me.Disconnect()
+        EstablishConnection()
+    End Sub
+
+    Private Sub TryInitializeCoordinates()
+        Try
+            Me.InitializeCoordinates()
+        Catch ex As InvalidSilverpakOperationException
+            Reconnect()
+        End Try
+    End Sub
+
+    Protected Overrides Sub Finalize()
+        Dispose()
+        MyBase.Finalize()
+    End Sub
+End Class
+
+#If USE_FAKE_SILVERPAK Then
+
+
 Public Class DebugSilverpakManager
-    Inherits Silverpak23CE.SilverpakManager
+    Inherits SilverpakManager
 
     Private m_breakMotion As Boolean = False
     Private m_moving As Boolean = False
@@ -93,4 +160,10 @@ Public Class DebugSilverpakManager
         m_breakMotion = True
         'do nothing
     End Sub
+End Class
+
+#End If
+
+Public Class SilverpakNotFoundException
+    Inherits Exception
 End Class
