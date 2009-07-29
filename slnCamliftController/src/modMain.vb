@@ -8,14 +8,9 @@ Imports VisionaryDigital.Settings
 
 #Const USE_FAKE_SILVERPAK = True
 #Const LAST_STABLE = True
+#Const USE_GLOBAL_CATCH = False
 
 Public Module modMain
-#If USE_FAKE_SILVERPAK Then
-    Private Const useFakeSilverpak = False
-#End If
-
-    Public Const UseGlobalCatch As Boolean = False
-
 
     Public Const MicrostepsPerMm As Integer = 1250
 
@@ -47,45 +42,40 @@ Public Module modMain
     Public ReadOnly HelpFileName As String = Application.StartupPath & "\help.html"
 
     Public Sub Main()
-
+#If USE_GLOBAL_CATCH Then
         Try
-            If UseGlobalCatch Then
                 AddHandler Application.ThreadException, AddressOf applicationExceptionHandler
                 AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf appDomainExceptionHandler
-            End If
-            Application.EnableVisualStyles()
-            Main_1_Settings()
-        Catch ex As Exception When UseGlobalCatch
+#End If
+        Application.EnableVisualStyles()
+
+        'Main_3_Silverpak(New AllSettings, New Camera)
+        Dim cam As New Camera
+
+        'take 10 pictures
+
+        Dim start As DateTime
+        Dim stoptime As DateTime
+        Dim elapsed As TimeSpan
+
+        start = Now
+        Dim i As Integer
+        For i = 1 To 10
+            cam.TakePicture("C:\temptest\out" & i & ".cr2")
+        Next i
+        stoptime = Now
+
+        elapsed = stoptime.Subtract(start)
+        Debug.Print("elapsed: " & elapsed.TotalSeconds.ToString("0.0000"))
+
+#If USE_GLOBAL_CATCH Then
+        Catch ex As Exception
             GlobalCatch(ex)
         End Try
+#End If
     End Sub
-    Private Sub Main_1_Settings()
-        Dim settings = New AllSettings
-        Main_2_Camera(settings)
-    End Sub
-    Private Sub Main_2_Camera(ByVal settings As AllSettings)
-        Using sdk = Edsdk.Init
-            'get only camera
-            While True
-                Try
-                    Using cam = sdk.GetOnlyCamera
-                        Main_3_Silverpak(settings, cam)
-                    End Using
-                Catch ex As GetOnlyCameraException
-                    Dim errMsg As String
-                    If TypeOf ex Is NoCameraFoundException Then
-                        errMsg = MsgBoxCameraNotFoundMessage
-                    Else 'TypeOf ex Is TooManyCamerasFoundException
-                        errMsg = MsgBoxTooManyCamerasMessage
-                    End If
-                    'prompt to retry
-                    If MsgBox(errMsg, MsgBoxStyle.RetryCancel, MsgBoxTitle) = MsgBoxResult.Retry Then Continue While
-                End Try
-                Exit While
-            End While
-        End Using
-    End Sub
-    Private Sub Main_3_Silverpak(ByVal settings As AllSettings, ByVal cam As Camera)
+
+    Private Sub Main_3_Silverpak(ByVal settings As AllSettings, ByVal cam As CanonCamera.Camera)
 
         Using spmMain = makeSilverpakManager()
 
@@ -157,13 +147,9 @@ ShutDown:
 
     Private Function makeSilverpakManager() As SilverpakManager
 #If USE_FAKE_SILVERPAK Then
-        If useFakeSilverpak Then
-            Return New DebugSilverpakManager
-        Else
-#End If
-            Return New SilverpakManager With {.BaudRate = 9600, .DriverAddress = DriverAddresses.Driver1}
-#If USE_FAKE_SILVERPAK Then
-        End If
+        Return New DebugSilverpakManager
+#Else
+        Return New SilverpakManager With {.BaudRate = 9600, .DriverAddress = DriverAddresses.Driver1}
 #End If
     End Function
 

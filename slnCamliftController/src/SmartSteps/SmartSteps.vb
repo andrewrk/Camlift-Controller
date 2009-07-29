@@ -54,7 +54,7 @@ Namespace SmartSteps
         Private Const PostDwell = 100
 
         'Private ReadOnly m_f_takePicture As Action
-        Private ReadOnly m_camera As Camera
+        Private ReadOnly m_camera As CanonCamera.Camera
         Private ReadOnly m_f_goToLocation As Action(Of Integer)
         Private ReadOnly m_f_isMoveFinished As Func(Of Boolean)
         Private ReadOnly m_locations As IEnumerable(Of Integer)
@@ -74,7 +74,7 @@ Namespace SmartSteps
         Public Event Finished As EventHandler
         Public Event Aborted As EventHandler(Of AbortedEventArgs)
 
-        Public Sub New(ByVal _camera As Camera, ByVal f_goToLocation As Action(Of Integer), ByVal f_isMoveFinished As Func(Of Boolean), _
+        Public Sub New(ByVal _camera As CanonCamera.Camera, ByVal f_goToLocation As Action(Of Integer), ByVal f_isMoveFinished As Func(Of Boolean), _
                        ByVal locations As IEnumerable(Of Integer), ByVal dwell As Integer, ByVal returnToTop As Boolean)
             m_camera = _camera
             m_f_goToLocation = f_goToLocation
@@ -96,7 +96,9 @@ Namespace SmartSteps
         End Sub
 
         Private Sub execute_run()
+#If USE_GLOBAL_CATCH Then
             Try
+#End If
                 Dim abortException As Exception = Nothing
                 Using session = m_camera.BeginSession
                     Dim total = m_locations.Count()
@@ -157,9 +159,11 @@ Abort:
                 m_Progress = AbortedProgress
                 RaiseEvent Aborted(Me, New AbortedEventArgs(abortException))
                 Exit Sub
-            Catch ex As Exception When UseGlobalCatch
+#If USE_GLOBAL_CATCH Then
+            Catch ex As Exception
                 GlobalCatch(ex)
             End Try
+#End If
         End Sub
 
     End Class
@@ -183,7 +187,7 @@ Abort:
         Public Const DefaultPostDwell = 100
 
         Private m_f_moveTo As Action(Of Integer)
-        Private m_camera As Camera
+        Private m_camera As CanonCamera.Camera
         Private m_f_isMoveFinished As Func(Of Boolean)
 
         Private m_settings As SmartStepsSettings
@@ -229,7 +233,7 @@ Abort:
         End Property
 
         Public Sub New(ByVal settings As SmartStepsSettings, ByVal f_moveTo As Action(Of Integer), _
-                       ByVal _camera As Camera, ByVal f_isMoveFinished As Func(Of Boolean))
+                       ByVal _camera As CanonCamera.Camera, ByVal f_isMoveFinished As Func(Of Boolean))
             m_f_moveTo = f_moveTo
             m_camera = _camera
             m_f_isMoveFinished = f_isMoveFinished

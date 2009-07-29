@@ -29,7 +29,7 @@ Namespace CamliftController
         Private m_smartStepsManager As SmartStepsManager
 
         'resources without settings
-        Private m_camera As Camera
+        Private m_camera As CanonCamera.Camera
         Private WithEvents m_autorunStepper As AsyncStepper = Nothing
 
         Public Shared ReadOnly Property DefaultStepSizes() As Integer()
@@ -61,7 +61,7 @@ Namespace CamliftController
         End Property
 
         'Constructor
-        Public Sub New(ByVal settings As AllSettings, ByVal silverpakManager As SilverpakManager, ByVal camera As Camera)
+        Public Sub New(ByVal settings As AllSettings, ByVal silverpakManager As SilverpakManager, ByVal camera As CanonCamera.Camera)
             InitializeComponent() ' This call is required by the Windows Form Designer.
 
             'all settings

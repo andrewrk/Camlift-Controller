@@ -3,6 +3,7 @@
 * settings -> edit step settings is broken
 * settigs -> advanced, OK button doesn't close dialog
 * help-> user's guide, broken link
+* if you take successive pictures too quickly it causes an exception
 
 --OFFICIAL--
 * fix auto run

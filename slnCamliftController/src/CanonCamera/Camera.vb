@@ -121,8 +121,8 @@ Namespace CanonCamera
 
             Friend Sub New(ByVal cam As Camera)
                 m_cam = cam
-                Edsdk.SetSaveToHost(cam)
                 m_downloadListener = Edsdk.MakeDownloadListener(cam, "C:\temptest\")
+                Edsdk.SetSaveToHost(cam)
             End Sub
 
             Public Sub TakePicture()

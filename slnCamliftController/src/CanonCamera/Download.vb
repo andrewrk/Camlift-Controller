@@ -18,7 +18,7 @@ Namespace CanonCamera
             ReDim m_buffer(BufferSize)
             m_bufferHandle = GCHandle.Alloc(m_buffer, GCHandleType.Pinned)
 
-            m_memStream = Edsdk.CreatStream(m_bufferHandle.AddrOfPinnedObject, BufferSize)
+            m_memStream = Edsdk.CreateStream(m_bufferHandle.AddrOfPinnedObject, BufferSize)
         End Sub
 
 #Region "IDisposable"

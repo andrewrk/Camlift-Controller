@@ -101,7 +101,7 @@ Namespace CanonCamera
             Return DownloadListener.Begin(cam, folderName)
         End Function
 
-        Friend Shared Function CreatStream(ByVal bufferPointer As IntPtr, ByVal size As Integer) As MemStream
+        Friend Shared Function CreateStream(ByVal bufferPointer As IntPtr, ByVal size As Integer) As MemStream
             Dim ptr As IntPtr
             verifyNoError(Sdk.EdsCreateMemoryStreamFromPointer(bufferPointer, size, ptr))
             Return New MemStream(ptr)
@@ -158,6 +158,7 @@ Namespace CanonCamera
 
             Private Shared s_lock As New Object
             Private Shared s_instance As DownloadListener = Nothing
+            Private Shared f_object_listener As New Sdk.EdsObjectEventHandler(AddressOf object_listener)
 
             Public Shared Function Begin(ByVal cam As Camera, ByVal folderName As String) As DownloadListener
                 SyncLock s_lock
@@ -167,8 +168,8 @@ Namespace CanonCamera
                     Return s_instance
                 End SyncLock
             End Function
-            Private Shared ReadOnly f_object_listener As New Sdk.EdsObjectEventHandler(AddressOf object_listener)
-            Private Shared Function object_listener(ByVal inEvent As Integer, ByVal inRef As IntPtr, ByVal inContext As IntPtr) As Long
+
+            Public Shared Function object_listener(ByVal inEvent As Integer, ByVal inRef As IntPtr, ByVal inContext As IntPtr) As Long
                 s_instance.handle_event(inEvent, inRef, inContext)
             End Function
 
