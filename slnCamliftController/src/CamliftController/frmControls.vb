@@ -207,8 +207,6 @@ Namespace CamliftController
         End Sub
 
         Private Sub btnTakePic_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTakePic.Click
-            If m_isLiveViewActive Then m_frmLiveView.Close()
-
             Try
                 m_cam.TakePicture("C:\temptest\out.jpg")
             Catch ex As SdkException When ex.Message = SdkErrors.TakePictureAfNg

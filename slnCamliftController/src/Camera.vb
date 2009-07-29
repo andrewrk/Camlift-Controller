@@ -1,5 +1,9 @@
 ﻿Imports VisionaryDigital.CanonCamera.Sdk
 Imports System.Runtime.InteropServices
+Imports System.Threading
+Imports System.Drawing
+Imports System.IO
+
 
 Public Class Camera
     Implements IDisposable
@@ -14,9 +18,20 @@ Public Class Camera
     Private m_waitingOnPic As Boolean
     Private m_picOutFile As String
 
+    ' live view
+    Private Const LiveViewDelay = 200
+    Private Const LiveViewFrameBufferSize = &H80000
+    Private m_liveViewThread As Thread
     Private m_liveViewOn As Boolean
     Private m_waitingToStartLiveView As Boolean
     Private m_liveViewPicBox As PictureBox
+    Private m_stoppingLiveView As Boolean
+    Private m_liveViewFrameBuffer As Byte()
+    Private m_liveViewBufferHandle As GCHandle
+    Private m_liveViewStreamPtr As IntPtr
+
+    Private Const SleepTimeout = 5000 ' how many milliseconds to wait before giving up
+    Private Const SleepAmount = 50 ' how many milliseconds to sleep before doing the event pump
 
 
     Public Sub New()
@@ -26,6 +41,11 @@ Public Class Camera
             m_liveViewOn = False
             m_waitingToStartLiveView = False
             m_liveViewPicBox = Nothing
+            m_liveViewThread = Nothing
+            m_stoppingLiveView = False
+            ReDim m_liveViewFrameBuffer(0)
+            m_liveViewBufferHandle = Nothing
+            m_liveViewStreamPtr = IntPtr.Zero
 
             CheckError(EdsInitializeSDK())
         Else
@@ -33,6 +53,10 @@ Public Class Camera
         End If
     End Sub
 
+    ''' <summary>
+    ''' connect the computer to the camera. must be called before doing anything else.
+    ''' </summary>
+    ''' <remarks></remarks>
     Public Sub EstablishSession()
         Dim camList As IntPtr
         Dim numCams As Integer
@@ -80,6 +104,8 @@ Public Class Camera
     End Sub
 
     Public Sub Dispose() Implements System.IDisposable.Dispose
+        StopLiveView() 'stops it only if it's running
+
         CheckError(EdsCloseSession(m_cam))
         CheckError(EdsRelease(m_cam))
         CheckError(EdsTerminateSDK())
@@ -138,31 +164,40 @@ Public Class Camera
     End Sub
 
     Private Sub StateEventHandler(ByVal inEvent As Integer, ByVal inParameter As Integer, ByVal inContext As IntPtr)
-        'Debug.Print("state event handler called")
-
-        Select Case inEvent
-            'Case kEdsStateEvent_JobStatusChanged
-            '    If inParameter = 0 Then
-            '        ' jobs are done transferring
-
-            '    End If
-            Case Else
-                Debug.Print(String.Format("stateEventHandler: event {0}, parameter {1}", inEvent, inParameter))
-        End Select
+        Debug.Print(String.Format("stateEventHandler: event {0}, parameter {1}", inEvent, inParameter))
     End Sub
 
     Private Sub PropertyEventHandler(ByVal inEvent As Integer, ByVal inPropertyID As Integer, ByVal inParam As Integer, ByVal inContext As IntPtr)
-        Debug.Print("property event handler called, propid = " & inPropertyID)
+        Select Case inPropertyID
+            Case kEdsPropID_Evf_OutputDevice
+                If m_waitingToStartLiveView Then
+                    'start live view thread
+                    m_liveViewThread = New Thread(AddressOf UpdateLiveView)
+                    m_liveViewThread.Start()
+
+                    'save state
+                    m_waitingToStartLiveView = False
+                    m_liveViewOn = True
+                End If
+            Case Else
+                Debug.Print("property event handler called, propid = " & inPropertyID)
+        End Select
+
     End Sub
 
     '''<summary>snap a photo with the camera and write it to outfile</summary> 
     ''' <param name="OutFile">the file to save the picture to</param>
     Public Sub TakePicture(ByVal OutFile As String)
-        If m_waitingOnPic Then
+        Dim interuptingLiveView As Boolean = m_liveViewOn
+        Dim lvBox As PictureBox = m_liveViewPicBox
+
+        If m_waitingOnPic Or m_waitingToStartLiveView Then
             ' bad programmer. should have disabled user controls
             Throw New CameraIsBusyException
             Exit Sub
         End If
+
+        If interuptingLiveView Then StopLiveView()
 
         ' set flag indicating we are waiting on a callback call
         m_waitingOnPic = True
@@ -171,17 +206,20 @@ Public Class Camera
         ' take a picture with the camera and save it to outfile
         CheckError(EdsSendCommand(m_cam, EdsCameraCommand.kEdsCameraCommand_TakePicture, 0))
 
-        Const SleepTimeout = 5000 ' how many milliseconds to wait before giving up
-        Const SleepAmount = 50 ' how many milliseconds to sleep before doing the event pump
         Dim I As Integer
         For I = 0 To SleepTimeout / SleepAmount
             System.Threading.Thread.Sleep(SleepAmount)
             Application.DoEvents()
 
-            If Not m_waitingOnPic Then Exit Sub 'success 
+            If Not m_waitingOnPic Then
+                If interuptingLiveView Then StartLiveView(lvBox)
+                Exit Sub 'success 
+            End If
         Next I
 
         ' we never got a callback. throw an error
+        If interuptingLiveView Then StartLiveView(lvBox)
+
         m_waitingOnPic = False
         Throw New TakePictureFailedException
     End Sub
@@ -215,6 +253,10 @@ Public Class Camera
     '''<param name="pbox">the picture box to send live video to</param>
     ''' <remarks>you can only have one live view going at a time.</remarks>
     Public Sub StartLiveView(ByVal pbox As PictureBox)
+        While m_stoppingLiveView
+            Application.DoEvents()
+        End While
+
         If m_waitingToStartLiveView Then
             m_liveViewPicBox = pbox
             Return
@@ -232,6 +274,25 @@ Public Class Camera
         ' get ready to stream
         m_liveViewPicBox = pbox
         m_waitingToStartLiveView = True
+
+        ' set up buffer
+        ReDim m_liveViewFrameBuffer(LiveViewFrameBufferSize)
+        m_liveViewBufferHandle = GCHandle.Alloc(m_liveViewFrameBuffer, GCHandleType.Pinned)
+        CheckError(EdsCreateMemoryStreamFromPointer(m_liveViewBufferHandle.AddrOfPinnedObject, LiveViewFrameBufferSize, m_liveViewStreamPtr))
+
+        ' pause this thread until live view starts
+        Dim I As Integer
+        For I = 0 To SleepTimeout / SleepAmount
+            System.Threading.Thread.Sleep(SleepAmount)
+            Application.DoEvents()
+
+            If Not m_waitingToStartLiveView Then Exit Sub 'success 
+        Next I
+
+        ' we never got a callback. throw an error
+        StopLiveView()
+        Throw New LiveViewFailedException
+
     End Sub
 
     ''' <summary>
@@ -241,34 +302,64 @@ Public Class Camera
     Public Sub StopLiveView()
         Dim device As New StructurePointer(Of UInt32)
 
+        If m_stoppingLiveView Or (Not m_waitingToStartLiveView And Not m_liveViewOn) Then Exit Sub
+
+        If m_liveViewOn Then
+            ' stop thread
+            m_stoppingLiveView = True
+            m_liveViewThread.Join()
+        End If
+
+        ' save state
+        m_liveViewOn = False
+        m_waitingToStartLiveView = False
+        m_liveViewPicBox = Nothing
+        m_stoppingLiveView = False
+
         ' tell the camera not to send live data to the computer
         CheckError(EdsGetPropertyData(m_cam, kEdsPropID_Evf_OutputDevice, 0, device.Size, device.Pointer))
         device.Value = device.Value And Not EdsEvfOutputDevice.kEdsEvfOutputDevice_PC
         CheckError(EdsSetPropertyData(m_cam, kEdsPropID_Evf_OutputDevice, 0, device.Size, device.Value))
 
-        m_liveViewOn = False
-        m_waitingToStartLiveView = False
-        m_liveViewPicBox = Nothing
+        ' clean up
+        CheckError(EdsRelease(m_liveViewStreamPtr))
+        m_liveViewBufferHandle.Free()
     End Sub
 
-    'Private Sub setImage(ByVal canonImg As EvfImageInfo)
-    '    Dim oldImg = m_PictureBox.Image
-    '    m_PictureBox.Image = canonImg.Image
-    '    If oldImg IsNot Nothing Then oldImg.Dispose() ' really is required.
+    Private Sub UpdateLiveView()
+        Dim nowPlusInterval As Long
 
-    'End Sub
-    'Private Sub m_liveView_ImageUpdated(ByVal sender As Object, ByVal e As ImageUpdatedEventArgs) Handles m_liveView.ImageUpdated
-    '    Try
-    '        If m_PictureBox.InvokeRequired Then
-    '            m_PictureBox.Invoke(New Action(Of EvfImageInfo)(AddressOf setImage), e.CanonImage)
-    '        Else
-    '            setImage(e.CanonImage)
-    '        End If
-    '    Catch ex As ObjectDisposedException
-    '    Catch ex As InvalidOperationException
-    '    Catch ex As System.ComponentModel.InvalidAsynchronousStateException
-    '    End Try
-    'End Sub
+        While Not m_stoppingLiveView
+            nowPlusInterval = Now.Ticks + LiveViewDelay
+            ShowLiveViewFrame()
+            Thread.Sleep(Math.Max(nowPlusInterval - Now.Ticks, 0))
+        End While
+    End Sub
+
+    Private Sub ShowLiveViewFrame()
+        Dim err As Integer = 0
+        Dim imagePtr As IntPtr
+
+        ' create image
+        CheckError(EdsCreateEvfImageRef(m_liveViewStreamPtr, imagePtr))
+
+        ' download the frame
+        Try
+            CheckError(EdsDownloadEvfImage(m_cam, imagePtr))
+        Catch ex As SdkException When ex.SdkError = SdkErrors.ObjectNotready
+            CheckError(EdsRelease(imagePtr))
+            Exit Sub
+        End Try
+        ' get it into the picture box image
+        Dim canonImg As Image = Image.FromStream(New MemoryStream(m_liveViewFrameBuffer)) 'do not dispose the MemoryStream (Image.FromStream)
+        Dim oldImg As Image = m_liveViewPicBox.Image
+        m_liveViewPicBox.Image = canonImg
+        If oldImg IsNot Nothing Then oldImg.Dispose() 'really is required.
+
+        ' release image
+        CheckError(EdsRelease(imagePtr))
+
+    End Sub
 
     Protected Overrides Sub Finalize()
         Dispose()
@@ -670,5 +761,8 @@ Public Class TakePictureFailedException
     Inherits Exception
 End Class
 Public Class CameraIsBusyException
+    Inherits Exception
+End Class
+Public Class LiveViewFailedException
     Inherits Exception
 End Class

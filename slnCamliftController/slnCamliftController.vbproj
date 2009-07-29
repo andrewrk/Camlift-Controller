@@ -98,18 +98,15 @@
     <Compile Include="src\CamliftController\PositionManager.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\CanonCamera\Download.vb" />
     <Compile Include="src\CamliftController\frmLiveView.Designer.vb">
       <DependentUpon>frmLiveView.vb</DependentUpon>
     </Compile>
     <Compile Include="src\CamliftController\frmLiveView.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\CanonCamera\LiveView.vb" />
-    <Compile Include="src\CanonCamera\Sdk.vb" />
-    <Compile Include="src\CanonCamera\EDSDK\EDSDK.vb" />
-    <Compile Include="src\CanonCamera\EDSDK\EDSDKErrors.vb" />
-    <Compile Include="src\CanonCamera\EDSDK\EDSDKTypes.vb" />
+    <Compile Include="src\EDSDK\EDSDK.vb" />
+    <Compile Include="src\EDSDK\EDSDKErrors.vb" />
+    <Compile Include="src\EDSDK\EDSDKTypes.vb" />
     <Compile Include="src\Settings\Serializer.vb" />
     <Compile Include="src\Settings\Settings.vb" />
     <Compile Include="src\Silverpak.vb">

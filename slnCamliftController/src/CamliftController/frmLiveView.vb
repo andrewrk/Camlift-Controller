@@ -61,5 +61,9 @@ Namespace CanonCamera
             '    g.DrawRectangle(whitePen, zoomRect)
             'End Using
         End Sub
+
+        Private Sub frmLiveView_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+            m_cam.StopLiveView()
+        End Sub
     End Class
 End Namespace

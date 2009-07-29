@@ -6,9 +6,6 @@ Imports VisionaryDigital.CamliftController
 Imports VisionaryDigital.SmartSteps
 Imports VisionaryDigital.Settings
 
-'#Const USE_FAKE_SILVERPAK = True
-'#Const LAST_STABLE = True
-'#Const USE_GLOBAL_CATCH = False
 
 Public Module modMain
 
@@ -17,6 +14,7 @@ Public Module modMain
     Public Const MsgBoxSilverpakNotFoundMessage As String = "Camlift motor not found. Please check all connections."
     Public Const MsgBoxCameraNotFoundMessage = "No Camera Found. Please check all connections."
     Public Const MsgBoxTooManyCamerasMessage = "More than one camera found. Please make sure no other cameras are connected."
+    Public Const MsgBoxDeviceIsBusyMessage = "Camera device is busy. You can disconnect the power to force it to reset."
 
     Public Const ConnectionLostResult = "Connection Lost"
     Public Const MsgBoxTitle As String = "Camlift Controller"
@@ -61,6 +59,8 @@ Public Module modMain
                 If MsgBox(MsgBoxCameraNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
             Catch ex As TooManyCamerasFoundException
                 If MsgBox(MsgBoxTooManyCamerasMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
+            Catch ex As SdkException When ex.SdkError = SdkErrors.DeviceBusy
+                If MsgBox(MsgBoxDeviceIsBusyMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
             End Try
         End While
 
