@@ -29,6 +29,8 @@ Public Class Camera
     Private m_liveViewFrameBuffer As Byte()
     Private m_liveViewBufferHandle As GCHandle
     Private m_liveViewStreamPtr As IntPtr
+    Private m_zoomPosition As StructurePointer(Of EdsPoint)
+    Private m_zoomRatio As StructurePointer(Of Integer)
 
     Private Const SleepTimeout = 20000 ' how many milliseconds to wait before giving up
     Private Const SleepAmount = 50 ' how many milliseconds to sleep before doing the event pump
@@ -48,6 +50,8 @@ Public Class Camera
             m_liveViewBufferHandle = Nothing
             m_liveViewStreamPtr = IntPtr.Zero
             m_transferQueue = New Queue(Of TransferItem)
+            m_zoomPosition = New StructurePointer(Of EdsPoint)
+            m_zoomRatio = New StructurePointer(Of Integer)
 
             CheckError(EdsInitializeSDK())
         Else
@@ -369,6 +373,12 @@ Public Class Camera
             CheckError(EdsRelease(imagePtr))
             Exit Sub
         End Try
+        ' get incidental data
+        ' zoom ratio
+        CheckError(EdsGetPropertyData(imagePtr, kEdsPropID_Evf_Zoom, 0, m_zoomRatio.Size, m_zoomRatio.Pointer))
+        ' zoom position
+        CheckError(EdsGetPropertyData(imagePtr, kEdsPropID_Evf_ZoomPosition, 0, m_zoomPosition.Size, m_zoomPosition.Pointer))
+
         ' get it into the picture box image
         Dim canonImg As Image = Image.FromStream(New MemoryStream(m_liveViewFrameBuffer)) 'do not dispose the MemoryStream (Image.FromStream)
         Dim oldImg As Image = m_liveViewPicBox.Image
@@ -385,6 +395,17 @@ Public Class Camera
         MyBase.Finalize()
     End Sub
 
+    Public ReadOnly Property ZoomPosition() As Point
+        Get
+            Return New Point(m_zoomPosition.Value.x, m_zoomPosition.Value.y)
+        End Get
+    End Property
+
+    Public ReadOnly Property ZoomRatio() As Integer
+        Get
+            Return m_zoomRatio.Value
+        End Get
+    End Property
 
     Private Class StructurePointer(Of T As Structure)
         Implements IDisposable
@@ -426,6 +447,7 @@ Public Class Camera
             Dispose()
             MyBase.Finalize()
         End Sub
+
     End Class
 
     Private Structure TransferItem

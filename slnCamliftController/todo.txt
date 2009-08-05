@@ -1,7 +1,6 @@
 ﻿* main window
 	- Have "Set Autorun Start/Stop" (probably with fewer words) buttons near "Autorun..." button so that the user doesn't need to go through the "Store" menu.
 * live view:
-	- grid overlayed on view similar to canon's
 	- WhiteBalance settings similar to Canon's.
 	- Draggable white box in the view area for determining the WhiteBalance and zoom location.
 	- "Actual Size"/zoom button similar to Canon's.

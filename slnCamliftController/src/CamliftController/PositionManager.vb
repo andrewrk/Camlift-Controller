@@ -62,8 +62,8 @@ Namespace CamliftController
 
                 Me.Items.Add(New ToolStripSeparator) ' -----------------------------
 
-                Me.Items.Add(initValueMenuItem_safe("Atuorun Start", _nest.m_smartStepsManager.LastAutorunRun.AutorunStart, AutorunStartHandler))
-                Me.Items.Add(initValueMenuItem_safe("Atuorun Stop", _nest.m_smartStepsManager.LastAutorunRun.AutorunStop, AutorunStopHandler))
+                Me.Items.Add(initValueMenuItem_safe("Autorun Start", _nest.m_smartStepsManager.LastAutorunRun.AutorunStart, AutorunStartHandler))
+                Me.Items.Add(initValueMenuItem_safe("Autorun Stop", _nest.m_smartStepsManager.LastAutorunRun.AutorunStop, AutorunStopHandler))
 
             End Sub
             Private Sub tsmiMemManage_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmiMemManage.Click
