@@ -32,6 +32,8 @@ Namespace CamliftController
         Private m_cam As Camera
         Private WithEvents m_autorunStepper As AsyncStepper = Nothing
 
+        Private m_numPicsTaken As Integer
+
         Public Shared ReadOnly Property DefaultStepSizes() As Integer()
             Get
                 Static s_DefaultStepSizes As Integer() = {5, 15, 40, 80, 190, 340, 1250, 2500, 5000}
@@ -79,7 +81,7 @@ Namespace CamliftController
 
             'resources
             m_cam = camera
-
+            m_numPicsTaken = 0
         End Sub
 
 
@@ -210,13 +212,27 @@ Namespace CamliftController
         End Sub
 
         Private Sub btnTakePic_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTakePic.Click
+            Dim folder As String = m_allSettings.SettingsIndex.SavePicturesFolder
+            If Not folder.EndsWith("\") Then folder &= "\"
+
+            Dim prefix As String = My.Application.Info.Title
+
+            Dim outfile As String
+
+            Do
+                m_numPicsTaken += 1
+                outfile = folder & prefix & "_" & Format(m_numPicsTaken, "000") & ".jpg"
+            Loop While IO.File.Exists(outfile)
+
             Try
-                m_cam.TakePicture("C:\temptest\out.jpg")
+                m_cam.TakePicture(outfile)
             Catch ex As SdkException When ex.Message = SdkErrors.TakePictureAfNg
                 MsgBox("Autofocus failed!" & vbCrLf & vbCrLf & "NOTE: This software is intended to be used with the camera in manual focus mode", MsgBoxStyle.Exclamation)
             Catch ex As CameraIsBusyException
                 ' do nothing
             End Try
+
+
         End Sub
 
         Private Sub btnLiveView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLiveView.Click
@@ -447,7 +463,8 @@ Namespace CamliftController
                 btnDown}
             Static otherMenuItems As ToolStripItem() = { _
                 PreferencesToolStripMenuItem, _
-                AdvancedToolStripMenuItem}
+                AdvancedToolStripMenuItem, _
+                SavePicturesFolderMenuItem}
             Static otherControls As Control() = { _
                 btnLoad, _
                 btnAutorun, _
@@ -522,6 +539,17 @@ Namespace CamliftController
             Finishing
         End Enum
 
+        Private Sub SavePicturesFolderMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles SavePicturesFolderMenuItem.Click
+            ' pop up a folder location dialog
+            Dim dialog As New FolderBrowserDialog
+            Dim result As DialogResult = dialog.ShowDialog()
+
+            If result = DialogResult.Cancel Then Exit Sub
+
+            m_allSettings.SettingsIndex.SavePicturesFolder = dialog.SelectedPath
+
+
+        End Sub
     End Class
 
 

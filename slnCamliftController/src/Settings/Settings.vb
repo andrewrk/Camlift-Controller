@@ -9,6 +9,7 @@ Namespace Settings
     Public Class AllSettings
 
         Public Shared ReadOnly GlobalSettingsDir As String = Application.StartupPath & "\settings"
+
 #If False Then
         Public Shared ReadOnly UserSettingsDir As String = My.Computer.FileSystem.SpecialDirectories.CurrentUserApplicationData & "\settings"
 #Else
@@ -330,6 +331,22 @@ Namespace Settings
         Private Const userPrefix = "%user%"
 
         Private m_ObjectivesFile As String = globalPrefix & "\objectives.xml"
+        Private m_PositionManagerSettingsFile As String = userPrefix & "\position manager.xml"
+        Private m_SilverpakFile As String = globalPrefix & "\motor.xml"
+        Private m_SmartStepsFile As String = userPrefix & "\smartsteps.xml"
+        Private m_WindowFile As String = userPrefix & "\window.xml"
+
+        Private m_savePictureFolder As String = My.Computer.FileSystem.SpecialDirectories.MyPictures
+
+        Public Property SavePicturesFolder() As String
+            Get
+                Return m_savePictureFolder
+            End Get
+            Set(ByVal value As String)
+                m_savePictureFolder = value
+            End Set
+        End Property
+
         Public Property ObjectivesFile() As String
             Get
                 Return m_ObjectivesFile
@@ -339,7 +356,7 @@ Namespace Settings
             End Set
         End Property
 
-        Private m_PositionManagerSettingsFile As String = userPrefix & "\position manager.xml"
+
         Public Property PositionManagerFile() As String
             Get
                 Return m_PositionManagerSettingsFile
@@ -349,7 +366,7 @@ Namespace Settings
             End Set
         End Property
 
-        Private m_SilverpakFile As String = globalPrefix & "\motor.xml"
+
         Public Property SilverpakFile() As String
             Get
                 Return m_SilverpakFile
@@ -359,7 +376,7 @@ Namespace Settings
             End Set
         End Property
 
-        Private m_SmartStepsFile As String = userPrefix & "\smartsteps.xml"
+
         Public Property SmartStepsFile() As String
             Get
                 Return m_SmartStepsFile
@@ -369,7 +386,7 @@ Namespace Settings
             End Set
         End Property
 
-        Private m_WindowFile As String = userPrefix & "\window.xml"
+
         Public Property WindowFile() As String
             Get
                 Return m_WindowFile
@@ -429,6 +446,7 @@ Namespace Settings
             Return mag.GetIris(irisName)
         End Function
     End Class
+
     Public Class ObjectiveSettings
         Inherits SettingsList(Of MagSettings)
 
@@ -448,6 +466,7 @@ Namespace Settings
         Public Function GetMag(ByVal magName As String) As MagSettings
             'Return findByName(m_Mags, magName)
         End Function
+
         Public Function GetIris(ByVal magName As String, ByVal irisName As String) As Integer?
             Dim mag = GetMag(magName)
             If mag Is Nothing Then Return Nothing

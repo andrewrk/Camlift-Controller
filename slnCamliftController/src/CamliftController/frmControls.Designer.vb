@@ -64,6 +64,7 @@
             Me.btnAutorun = New System.Windows.Forms.Button
             Me.btnTakePic = New System.Windows.Forms.Button
             Me.btnLiveView = New System.Windows.Forms.Button
+            Me.SavePicturesFolderMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.stsStatusStrip.SuspendLayout()
             CType(Me.tkbPos, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.grpDist.SuspendLayout()
@@ -88,7 +89,7 @@
             'tslStatus
             '
             Me.tslStatus.Name = "tslStatus"
-            Me.tslStatus.Size = New System.Drawing.Size(66, 17)
+            Me.tslStatus.Size = New System.Drawing.Size(70, 17)
             Me.tslStatus.Text = "Initializing..."
             '
             'tkbPos
@@ -308,35 +309,35 @@
             '
             'SettingsToolStripMenuItem
             '
-            Me.SettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PreferencesToolStripMenuItem, Me.AdvancedToolStripMenuItem, Me.ToolStripSeparator2, Me.AlwaysOnTopToolStripMenuItem})
+            Me.SettingsToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PreferencesToolStripMenuItem, Me.AdvancedToolStripMenuItem, Me.SavePicturesFolderMenuItem, Me.ToolStripSeparator2, Me.AlwaysOnTopToolStripMenuItem})
             Me.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem"
-            Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(58, 20)
+            Me.SettingsToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
             Me.SettingsToolStripMenuItem.Text = "&Settings"
             '
             'PreferencesToolStripMenuItem
             '
             Me.PreferencesToolStripMenuItem.Enabled = False
             Me.PreferencesToolStripMenuItem.Name = "PreferencesToolStripMenuItem"
-            Me.PreferencesToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+            Me.PreferencesToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
             Me.PreferencesToolStripMenuItem.Text = "Edit &Step Settings..."
             '
             'AdvancedToolStripMenuItem
             '
             Me.AdvancedToolStripMenuItem.Enabled = False
             Me.AdvancedToolStripMenuItem.Name = "AdvancedToolStripMenuItem"
-            Me.AdvancedToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+            Me.AdvancedToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
             Me.AdvancedToolStripMenuItem.Text = "&Advanced..."
             '
             'ToolStripSeparator2
             '
             Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-            Me.ToolStripSeparator2.Size = New System.Drawing.Size(168, 6)
+            Me.ToolStripSeparator2.Size = New System.Drawing.Size(185, 6)
             '
             'AlwaysOnTopToolStripMenuItem
             '
             Me.AlwaysOnTopToolStripMenuItem.CheckOnClick = True
             Me.AlwaysOnTopToolStripMenuItem.Name = "AlwaysOnTopToolStripMenuItem"
-            Me.AlwaysOnTopToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
+            Me.AlwaysOnTopToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
             Me.AlwaysOnTopToolStripMenuItem.Text = "Always On Top"
             '
             'HelpToolStripMenuItem
@@ -344,25 +345,25 @@
             Me.HelpToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
             Me.HelpToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UsersGuideToolStripMenuItem, Me.ToolStripSeparator1, Me.AboutToolStripMenuItem})
             Me.HelpToolStripMenuItem.Name = "HelpToolStripMenuItem"
-            Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(40, 20)
+            Me.HelpToolStripMenuItem.Size = New System.Drawing.Size(44, 20)
             Me.HelpToolStripMenuItem.Text = "&Help"
             '
             'UsersGuideToolStripMenuItem
             '
             Me.UsersGuideToolStripMenuItem.Name = "UsersGuideToolStripMenuItem"
             Me.UsersGuideToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1
-            Me.UsersGuideToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
+            Me.UsersGuideToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
             Me.UsersGuideToolStripMenuItem.Text = "&Users Guide"
             '
             'ToolStripSeparator1
             '
             Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-            Me.ToolStripSeparator1.Size = New System.Drawing.Size(147, 6)
+            Me.ToolStripSeparator1.Size = New System.Drawing.Size(152, 6)
             '
             'AboutToolStripMenuItem
             '
             Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-            Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(150, 22)
+            Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
             Me.AboutToolStripMenuItem.Text = "&About"
             '
             'btnStore
@@ -458,6 +459,13 @@
             Me.btnLiveView.Text = "Live View"
             Me.btnLiveView.UseVisualStyleBackColor = True
             '
+            'SavePicturesFolderMenuItem
+            '
+            Me.SavePicturesFolderMenuItem.Enabled = False
+            Me.SavePicturesFolderMenuItem.Name = "SavePicturesFolderMenuItem"
+            Me.SavePicturesFolderMenuItem.Size = New System.Drawing.Size(188, 22)
+            Me.SavePicturesFolderMenuItem.Text = "&Save Pictures Folder..."
+            '
             'frmControls
             '
             Me.AcceptButton = Me.btnGo
@@ -538,6 +546,7 @@
         Friend WithEvents btnAutorun As System.Windows.Forms.Button
         Friend WithEvents btnTakePic As System.Windows.Forms.Button
         Friend WithEvents btnLiveView As System.Windows.Forms.Button
+        Friend WithEvents SavePicturesFolderMenuItem As System.Windows.Forms.ToolStripMenuItem
     End Class
 
 End Namespace

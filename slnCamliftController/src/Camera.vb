@@ -30,7 +30,7 @@ Public Class Camera
     Private m_liveViewBufferHandle As GCHandle
     Private m_liveViewStreamPtr As IntPtr
 
-    Private Const SleepTimeout = 5000 ' how many milliseconds to wait before giving up
+    Private Const SleepTimeout = 20000 ' how many milliseconds to wait before giving up
     Private Const SleepAmount = 50 ' how many milliseconds to sleep before doing the event pump
 
     Private m_transferQueue As Queue(Of TransferItem)
@@ -218,7 +218,12 @@ Public Class Camera
         m_picOutFile = OutFile
 
         ' take a picture with the camera and save it to outfile
-        CheckError(EdsSendCommand(m_cam, EdsCameraCommand.kEdsCameraCommand_TakePicture, 0))
+        Dim err As Integer = EdsSendCommand(m_cam, EdsCameraCommand.kEdsCameraCommand_TakePicture, 0)
+
+        If err <> EDS_ERR_OK Then
+            m_waitingOnPic = False
+            CheckError(err)
+        End If
 
         Dim I As Integer
         For I = 0 To SleepTimeout / SleepAmount
