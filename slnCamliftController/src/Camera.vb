@@ -33,6 +33,7 @@ Public Class Camera
     Private Const SleepTimeout = 5000 ' how many milliseconds to wait before giving up
     Private Const SleepAmount = 50 ' how many milliseconds to sleep before doing the event pump
 
+    Private m_transferQueue As Queue(Of TransferItem)
 
     Public Sub New()
         If s_instance Is Nothing Then
@@ -46,6 +47,7 @@ Public Class Camera
             ReDim m_liveViewFrameBuffer(0)
             m_liveViewBufferHandle = Nothing
             m_liveViewStreamPtr = IntPtr.Zero
+            m_transferQueue = New Queue(Of TransferItem)
 
             CheckError(EdsInitializeSDK())
         Else
@@ -106,6 +108,8 @@ Public Class Camera
     Public Sub Dispose() Implements System.IDisposable.Dispose
         StopLiveView() 'stops it only if it's running
 
+        FlushTransferQueue()
+
         CheckError(EdsCloseSession(m_cam))
         CheckError(EdsRelease(m_cam))
         CheckError(EdsTerminateSDK())
@@ -140,20 +144,11 @@ Public Class Camera
     Private Sub ObjectEventHandler(ByVal inEvent As Integer, ByVal inRef As IntPtr, ByVal inContext As IntPtr)
         Select Case inEvent
             Case kEdsObjectEvent_DirItemRequestTransfer
-                ' transfer the image in memory to disk
-                Dim dirItemInfo As EdsDirectoryItemInfo = Nothing
-                CheckError(EdsGetDirectoryItemInfo(inRef, dirItemInfo))
-
-
-                'This creates the outStream that is used by EdsDownload to actually grab and write out the file.
-                Dim outStream As IntPtr
-                CheckError(EdsCreateFileStream(m_picOutFile, EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways, EdsAccess.kEdsAccess_Write, outStream))
-
-
-                CheckError(EdsDownload(inRef, dirItemInfo.size, outStream))
-                CheckError(EdsDownloadComplete(inRef))
-                CheckError(EdsRelease(outStream))
-
+                ' queue up the transfer request
+                Dim transfer As New TransferItem
+                transfer.sdkRef = inRef
+                transfer.outFile = m_picOutFile
+                m_transferQueue.Enqueue(transfer)
 
                 m_waitingOnPic = False ' allow other thread to continue
             Case Else
@@ -161,6 +156,25 @@ Public Class Camera
 
         End Select
 
+    End Sub
+
+    Public Sub FlushTransferQueue()
+        While m_transferQueue.Count > 0
+            ' transfer the image in memory to disk
+            Dim transfer As TransferItem = m_transferQueue.Dequeue()
+            Dim dirItemInfo As EdsDirectoryItemInfo = Nothing
+            Dim outStream As IntPtr
+
+            CheckError(EdsGetDirectoryItemInfo(transfer.sdkRef, dirItemInfo))
+
+            ' This creates the outStream that is used by EdsDownload to actually grab and write out the file.
+            CheckError(EdsCreateFileStream(transfer.outFile, EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways, EdsAccess.kEdsAccess_Write, outStream))
+
+            ' do the transfer
+            CheckError(EdsDownload(transfer.sdkRef, dirItemInfo.size, outStream))
+            CheckError(EdsDownloadComplete(transfer.sdkRef))
+            CheckError(EdsRelease(outStream))
+        End While
     End Sub
 
     Private Sub StateEventHandler(ByVal inEvent As Integer, ByVal inParameter As Integer, ByVal inContext As IntPtr)
@@ -409,6 +423,10 @@ Public Class Camera
         End Sub
     End Class
 
+    Private Structure TransferItem
+        Public sdkRef As IntPtr
+        Public outFile As String
+    End Structure
 
 End Class
 
