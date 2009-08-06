@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports VisionaryDigital.CanonCamera.Sdk
 
 Namespace CanonCamera
 
@@ -7,8 +8,34 @@ Namespace CanonCamera
         Private m_cam As Camera
         Private m_ShowGrid As Boolean
 
+        Private WhiteBalanceValues As Integer()
+
+        Private Sub SetWhiteBalanceCombo(ByVal value As Integer)
+            Dim I As Integer
+            For I = 0 To WhiteBalanceValues.Length - 1
+                If WhiteBalanceValues(I) = value Then
+                    cboWhiteBalance.SelectedIndex = I
+                End If
+            Next
+        End Sub
+
         Public Sub New(ByVal cam As Camera)
             InitializeComponent() ' This call is required by the Windows Form Designer.
+
+            WhiteBalanceValues = New Integer() { _
+                EdsWhiteBalance.kEdsWhiteBalance_Click, _
+                EdsWhiteBalance.kEdsWhiteBalance_Auto, _
+                EdsWhiteBalance.kEdsWhiteBalance_Daylight, _
+                EdsWhiteBalance.kEdsWhiteBalance_Cloudy, _
+                EdsWhiteBalance.kEdsWhiteBalance_Tangsten, _
+                EdsWhiteBalance.kEdsWhiteBalance_Fluorescent, _
+                EdsWhiteBalance.kEdsWhiteBalance_Strobe, _
+                EdsWhiteBalance.kEdsWhiteBalance_Shade, _
+                EdsWhiteBalance.kEdsWhiteBalance_ColorTemp, _
+                EdsWhiteBalance.kEdsWhiteBalance_PCSet1, _
+                EdsWhiteBalance.kEdsWhiteBalance_PCSet2, _
+                EdsWhiteBalance.kEdsWhiteBalance_PCSet3}
+
 
             m_ShowGrid = False
             m_cam = cam
@@ -27,6 +54,8 @@ Namespace CanonCamera
                     End If
                 End Try
             End While
+
+            SetWhiteBalanceCombo(cam.WhiteBalance)
         End Sub
 
 
@@ -134,5 +163,9 @@ Namespace CanonCamera
             End Function
 
         End Structure
+
+        Private Sub cboWhiteBalance_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboWhiteBalance.SelectedIndexChanged
+            m_cam.WhiteBalance = WhiteBalanceValues(cboWhiteBalance.SelectedIndex)
+        End Sub
     End Class
 End Namespace

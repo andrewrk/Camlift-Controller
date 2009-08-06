@@ -232,6 +232,13 @@ Public Class Camera
 
     End Sub
 
+    Private Sub CheckBusy()
+        If m_waitingOnPic Or m_waitingToStartLiveView Then
+            ' bad programmer. should have disabled user controls
+            Throw New CameraIsBusyException
+        End If
+    End Sub
+
     '''<summary>snap a photo with the camera and write it to outfile</summary> 
     ''' <param name="OutFile">the file to save the picture to</param>
     Public Sub TakePicture(ByVal OutFile As String)
@@ -239,12 +246,7 @@ Public Class Camera
         Dim lvBox As PictureBox = m_liveViewPicBox
 
         EstablishSession()
-
-        If m_waitingOnPic Or m_waitingToStartLiveView Then
-            ' bad programmer. should have disabled user controls
-            Throw New CameraIsBusyException
-            Exit Sub
-        End If
+        CheckBusy()
 
         If interuptingLiveView Then StopLiveView()
 
@@ -440,6 +442,23 @@ Public Class Camera
         Get
             Return m_zoomRatio.Value
         End Get
+    End Property
+
+    Public Property WhiteBalance() As Integer
+        Get
+            Dim wb As New StructurePointer(Of Integer)
+            CheckError(EdsGetPropertyData(m_cam, kEdsPropID_WhiteBalance, 0, wb.Size, wb.Pointer))
+            Return wb.Value
+        End Get
+        Set(ByVal value As Integer)
+            EstablishSession()
+            CheckBusy()
+            Dim LiveViewOn As Boolean = m_liveViewOn
+            Dim lvBox As PictureBox = m_liveViewPicBox
+            If LiveViewOn Then StopLiveView()
+            CheckError(EdsSetPropertyData(m_cam, kEdsPropID_Evf_WhiteBalance, 0, Marshal.SizeOf(value), value))
+            If LiveViewOn Then StartLiveView(lvBox)
+        End Set
     End Property
 
     Private Class StructurePointer(Of T As Structure)

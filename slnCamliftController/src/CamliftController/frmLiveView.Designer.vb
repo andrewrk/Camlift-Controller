@@ -29,6 +29,7 @@
             Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel
             Me.GroupBox1 = New System.Windows.Forms.GroupBox
             Me.cboWhiteBalance = New System.Windows.Forms.ComboBox
+            Me.picLiveView = New System.Windows.Forms.PictureBox
             Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel
             Me.FlowLayoutPanel3 = New System.Windows.Forms.FlowLayoutPanel
             Me.btnGrid = New System.Windows.Forms.Button
@@ -37,15 +38,14 @@
             Me.btnZoomIn = New System.Windows.Forms.Button
             Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
             Me.btnClose = New System.Windows.Forms.Button
-            Me.picLiveView = New System.Windows.Forms.PictureBox
             Me.TableLayoutPanel1.SuspendLayout()
             Me.tlpMain.SuspendLayout()
             Me.FlowLayoutPanel2.SuspendLayout()
             Me.GroupBox1.SuspendLayout()
+            CType(Me.picLiveView, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.TableLayoutPanel3.SuspendLayout()
             Me.FlowLayoutPanel3.SuspendLayout()
             Me.FlowLayoutPanel1.SuspendLayout()
-            CType(Me.picLiveView, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'TableLayoutPanel1
@@ -97,17 +97,27 @@
             Me.GroupBox1.Size = New System.Drawing.Size(158, 82)
             Me.GroupBox1.TabIndex = 0
             Me.GroupBox1.TabStop = False
-            Me.GroupBox1.Text = "Whit Balance"
+            Me.GroupBox1.Text = "White Balance"
             '
             'cboWhiteBalance
             '
             Me.cboWhiteBalance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cboWhiteBalance.FormattingEnabled = True
-            Me.cboWhiteBalance.Items.AddRange(New Object() {"Auto", "Other...(coming soon!)"})
+            Me.cboWhiteBalance.Items.AddRange(New Object() {"<Coordinate Based>", "Auto", "Daylight", "Cloudy", "Tungsten", "Fluorescent", "Flash", "Shade", "Color Temperature", "Custom White Balance: PC-1", "Custom White Balance: PC-2", "Custom White Balance: PC-3"})
             Me.cboWhiteBalance.Location = New System.Drawing.Point(6, 19)
             Me.cboWhiteBalance.Name = "cboWhiteBalance"
             Me.cboWhiteBalance.Size = New System.Drawing.Size(121, 21)
             Me.cboWhiteBalance.TabIndex = 0
+            '
+            'picLiveView
+            '
+            Me.picLiveView.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.picLiveView.Location = New System.Drawing.Point(3, 3)
+            Me.picLiveView.Name = "picLiveView"
+            Me.picLiveView.Size = New System.Drawing.Size(395, 376)
+            Me.picLiveView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+            Me.picLiveView.TabIndex = 2
+            Me.picLiveView.TabStop = False
             '
             'TableLayoutPanel3
             '
@@ -197,16 +207,6 @@
             Me.btnClose.Text = "Close"
             Me.btnClose.UseVisualStyleBackColor = True
             '
-            'picLiveView
-            '
-            Me.picLiveView.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.picLiveView.Location = New System.Drawing.Point(3, 3)
-            Me.picLiveView.Name = "picLiveView"
-            Me.picLiveView.Size = New System.Drawing.Size(395, 376)
-            Me.picLiveView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-            Me.picLiveView.TabIndex = 2
-            Me.picLiveView.TabStop = False
-            '
             'frmLiveView
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -222,11 +222,11 @@
             Me.tlpMain.PerformLayout()
             Me.FlowLayoutPanel2.ResumeLayout(False)
             Me.GroupBox1.ResumeLayout(False)
+            CType(Me.picLiveView, System.ComponentModel.ISupportInitialize).EndInit()
             Me.TableLayoutPanel3.ResumeLayout(False)
             Me.TableLayoutPanel3.PerformLayout()
             Me.FlowLayoutPanel3.ResumeLayout(False)
             Me.FlowLayoutPanel1.ResumeLayout(False)
-            CType(Me.picLiveView, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
 
         End Sub
