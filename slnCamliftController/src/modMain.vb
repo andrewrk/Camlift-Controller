@@ -65,7 +65,6 @@ Public Module modMain
 
             Dim form As New CamliftController.frmControls(settings, spm, cam)
 
-
             form.ShowDialog()
         End Using
     End Sub

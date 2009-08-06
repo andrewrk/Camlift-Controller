@@ -29,8 +29,14 @@ Public Class Camera
     Private m_liveViewFrameBuffer As Byte()
     Private m_liveViewBufferHandle As GCHandle
     Private m_liveViewStreamPtr As IntPtr
+
     Private m_zoomPosition As StructurePointer(Of EdsPoint)
+    Private m_pendingZoomPosition As Boolean
     Private m_zoomRatio As StructurePointer(Of Integer)
+    Private m_pendingZoomRatio As Boolean
+    Private m_whiteBalance As StructurePointer(Of Integer)
+    Private m_pendingWhiteBalance As Boolean
+
     Private m_haveSession As Boolean
 
     Private m_disposed As Boolean
@@ -63,9 +69,17 @@ Public Class Camera
         m_liveViewBufferHandle = Nothing
         m_liveViewStreamPtr = IntPtr.Zero
         m_transferQueue = New Queue(Of TransferItem)
+        m_haveSession = False
+
         m_zoomPosition = New StructurePointer(Of EdsPoint)
         m_zoomRatio = New StructurePointer(Of Integer)
-        m_haveSession = False
+        m_whiteBalance = New StructurePointer(Of Integer)
+
+        m_pendingZoomRatio = False
+        m_pendingZoomPosition = False
+        m_pendingWhiteBalance = False
+
+
     End Sub
 
     ''' <summary>
@@ -410,11 +424,32 @@ Public Class Camera
             CheckError(EdsRelease(imagePtr))
             Exit Sub
         End Try
+        Dim oldZoomRatio As Integer = m_zoomRatio.Value
+        Dim oldZoomPosition As EdsPoint = m_zoomPosition.Value
+
         ' get incidental data
         ' zoom ratio
         CheckError(EdsGetPropertyData(imagePtr, kEdsPropID_Evf_Zoom, 0, m_zoomRatio.Size, m_zoomRatio.Pointer))
         ' zoom position
         CheckError(EdsGetPropertyData(imagePtr, kEdsPropID_Evf_ZoomPosition, 0, m_zoomPosition.Size, m_zoomPosition.Pointer))
+
+        ' set camera data
+        If m_pendingZoomRatio Then
+            m_zoomRatio.Value = oldZoomRatio
+            CheckError(EdsSetPropertyData(m_cam, kEdsPropID_Evf_Zoom, 0, m_zoomRatio.Size, m_zoomRatio.Value))
+            m_pendingZoomRatio = False
+        End If
+        If m_pendingZoomPosition Then
+            m_zoomPosition.Value = oldZoomPosition
+            CheckError(EdsSetPropertyData(m_cam, kEdsPropID_Evf_ZoomPosition, 0, m_zoomPosition.Size, m_zoomPosition.Value))
+            m_pendingZoomPosition = False
+        End If
+        If m_pendingWhiteBalance Then
+            CheckError(EdsSetPropertyData(m_cam, kEdsPropID_Evf_WhiteBalance, 0, m_whiteBalance.Size, m_whiteBalance.Value))
+            m_pendingWhiteBalance = False
+        End If
+
+
 
         ' get it into the picture box image
         Dim canonImg As Image = Image.FromStream(New MemoryStream(m_liveViewFrameBuffer)) 'do not dispose the MemoryStream (Image.FromStream)
@@ -432,32 +467,34 @@ Public Class Camera
         MyBase.Finalize()
     End Sub
 
-    Public ReadOnly Property ZoomPosition() As Point
+    Public Property ZoomPosition() As Point
         Get
             Return New Point(m_zoomPosition.Value.x, m_zoomPosition.Value.y)
         End Get
+        Set(ByVal value As Point)
+            m_zoomPosition.Value = New EdsPoint() With {.x = value.X, .y = value.Y}
+            m_pendingZoomPosition = True
+        End Set
     End Property
 
-    Public ReadOnly Property ZoomRatio() As Integer
+    Public Property ZoomRatio() As Integer
         Get
             Return m_zoomRatio.Value
         End Get
+        Set(ByVal value As Integer)
+            m_zoomRatio.Value = value
+            m_pendingZoomRatio = True
+        End Set
     End Property
 
     Public Property WhiteBalance() As Integer
         Get
-            Dim wb As New StructurePointer(Of Integer)
-            CheckError(EdsGetPropertyData(m_cam, kEdsPropID_WhiteBalance, 0, wb.Size, wb.Pointer))
-            Return wb.Value
+            CheckError(EdsGetPropertyData(m_cam, kEdsPropID_WhiteBalance, 0, m_whiteBalance.Size, m_whiteBalance.Pointer))
+            Return m_whiteBalance.Value
         End Get
         Set(ByVal value As Integer)
-            EstablishSession()
-            CheckBusy()
-            Dim LiveViewOn As Boolean = m_liveViewOn
-            Dim lvBox As PictureBox = m_liveViewPicBox
-            If LiveViewOn Then StopLiveView()
-            CheckError(EdsSetPropertyData(m_cam, kEdsPropID_Evf_WhiteBalance, 0, Marshal.SizeOf(value), value))
-            If LiveViewOn Then StartLiveView(lvBox)
+            m_whiteBalance.value = value
+            m_pendingWhiteBalance = True
         End Set
     End Property
 

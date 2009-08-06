@@ -1,6 +1,5 @@
 ﻿* live view:
 	- Draggable white box in the view area for determining the WhiteBalance and zoom location.
-	- "Actual Size"/zoom button similar to Canon's.
 * step sizes and labels are not stored in xml
 * fix the mag stuff
 * main window

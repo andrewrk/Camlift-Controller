@@ -9,6 +9,12 @@ Namespace CanonCamera
         Private m_ShowGrid As Boolean
 
         Private WhiteBalanceValues As Integer()
+        Private m_zoomRatio As Integer
+
+
+        Private Const MaxZoom = 5
+        Private Const MaxZoomWidth = 3888
+        Private Const MaxZoomHeight = 2592
 
         Private Sub SetWhiteBalanceCombo(ByVal value As Integer)
             Dim I As Integer
@@ -39,6 +45,7 @@ Namespace CanonCamera
 
             m_ShowGrid = False
             m_cam = cam
+            m_zoomRatio = 1
 
             Dim TryAgain As Boolean = True
             While TryAgain
@@ -55,7 +62,8 @@ Namespace CanonCamera
                 End Try
             End While
 
-            SetWhiteBalanceCombo(cam.WhiteBalance)
+            SetWhiteBalanceCombo(m_cam.WhiteBalance)
+            m_cam.ZoomRatio = m_zoomRatio
         End Sub
 
 
@@ -89,18 +97,22 @@ Namespace CanonCamera
                     g.DrawLine(gridPen, paintRect.Left, y2, paintRect.Right, y2)
                 End Using
             End If
-            ' draw zoom
-            Dim zoomSize = New Size(paintRect.Width / 5, paintRect.Height / 5)
-            Dim zoomUl = trans.Transform(Transform2D.Scale(m_cam.ZoomPosition, imgRect.Size))
-            Dim zoomRect = New Rectangle(zoomUl, zoomSize)
-            Using shadowPen As Pen = New Pen(Color.Black, 1)
-                Dim shadowRect As Rectangle = zoomRect
-                shadowRect.Offset(1, 1)
-                g.DrawRectangle(shadowPen, shadowRect)
-            End Using
-            Using whitePen As Pen = New Pen(Color.White, 2)
-                g.DrawRectangle(whitePen, zoomRect)
-            End Using
+            If m_zoomRatio = 1 Then
+                ' draw zoom
+                Dim zoomSize = New Size(paintRect.Width / MaxZoom, paintRect.Height / MaxZoom)
+                Dim zoomCamLoc As Point = m_cam.ZoomPosition
+                Dim zoomLoc As Point = New Point(zoomCamLoc.X / MaxZoomWidth * picLiveView.Width, _
+                                                 zoomCamLoc.Y / MaxZoomHeight * picLiveView.Height)
+                Dim zoomRect = New Rectangle(zoomLoc, zoomSize)
+                Using shadowPen As Pen = New Pen(Color.Black, 1)
+                    Dim shadowRect As Rectangle = zoomRect
+                    shadowRect.Offset(1, 1)
+                    g.DrawRectangle(shadowPen, shadowRect)
+                End Using
+                Using whitePen As Pen = New Pen(Color.White, 2)
+                    g.DrawRectangle(whitePen, zoomRect)
+                End Using
+            End If
         End Sub
 
         Private Sub frmLiveView_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -166,6 +178,26 @@ Namespace CanonCamera
 
         Private Sub cboWhiteBalance_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboWhiteBalance.SelectedIndexChanged
             m_cam.WhiteBalance = WhiteBalanceValues(cboWhiteBalance.SelectedIndex)
+        End Sub
+
+        Private Sub btnZoomIn_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnZoomIn.Click
+            btnZoomOut.Enabled = True
+            If m_zoomRatio = 1 Then
+                m_zoomRatio = MaxZoom
+                btnZoomIn.Enabled = False
+                lblZoom.Text = "500%"
+            End If
+            m_cam.ZoomRatio = m_zoomRatio
+        End Sub
+
+        Private Sub btnZoomOut_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnZoomOut.Click
+            btnZoomIn.Enabled = True
+            If m_zoomRatio = MaxZoom Then
+                m_zoomRatio = 1
+                btnZoomOut.Enabled = False
+                lblZoom.Text = "100%"
+            End If
+            m_cam.ZoomRatio = m_zoomRatio
         End Sub
     End Class
 End Namespace
