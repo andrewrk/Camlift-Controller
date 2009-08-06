@@ -2,9 +2,11 @@
 Imports VisionaryDigital.Settings
 Imports System.Threading
 
+#Const USE_FAKE_SILVERPAK = False
+
 Public Class Silverpak
 #If USE_FAKE_SILVERPAK Then
-    inherits DebugSilverpakManager
+    Inherits DebugSilverpakManager
 #Else
     Inherits SilverpakManager
 #End If
@@ -66,7 +68,7 @@ Public Class Silverpak
 End Class
 
 
-#Region "asdf"
+#Region "aoeu"
 #If USE_FAKE_SILVERPAK Then
 
 
