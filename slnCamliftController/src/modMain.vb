@@ -52,18 +52,7 @@ Public Module modMain
 
         Dim settings As New AllSettings
         Using cam As New Camera, spm As New Silverpak(settings.Silverpak)
-            While True
-                Try
-                    cam.EstablishSession()
-                    Exit While
-                Catch ex As NoCameraFoundException
-                    If MsgBox(MsgBoxCameraNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
-                Catch ex As TooManyCamerasFoundException
-                    If MsgBox(MsgBoxTooManyCamerasMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
-                Catch ex As SdkException When ex.SdkError = SdkErrors.DeviceBusy
-                    If MsgBox(MsgBoxDeviceIsBusyMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
-                End Try
-            End While
+            If Not ConnectCamera(cam) Then Exit Sub
 
             While True
                 Try
@@ -79,6 +68,21 @@ Public Module modMain
             form.ShowDialog()
         End Using
     End Sub
+
+    Public Function ConnectCamera(ByVal cam As Camera) As Boolean
+        While True
+            Try
+                cam.EstablishSession()
+                Return True
+            Catch ex As NoCameraFoundException
+                If MsgBox(MsgBoxCameraNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Return False
+            Catch ex As TooManyCamerasFoundException
+                If MsgBox(MsgBoxTooManyCamerasMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Return False
+            Catch ex As SdkException When ex.SdkError = SdkErrors.DeviceBusy
+                If MsgBox(MsgBoxDeviceIsBusyMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Return False
+            End Try
+        End While
+    End Function
 
     Public Function MicrostepsToMilimeters(ByVal microsteps As Integer) As String
         Return Format(microsteps / MicrostepsPerMm, "0.00")

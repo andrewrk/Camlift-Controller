@@ -1,6 +1,5 @@
 ﻿Imports System.Drawing
 
-
 Namespace CanonCamera
 
     Public Class frmLiveView
@@ -13,7 +12,21 @@ Namespace CanonCamera
 
             m_ShowGrid = False
             m_cam = cam
-            m_cam.StartLiveView(Me.picLiveView)
+
+            Dim TryAgain As Boolean = True
+            While TryAgain
+                TryAgain = False
+                Try
+                    m_cam.StartLiveView(Me.picLiveView)
+
+                Catch ex As CameraDisconnectedException
+                    If ConnectCamera(m_cam) Then
+                        TryAgain = True
+                    Else
+                        Me.Close()
+                    End If
+                End Try
+            End While
         End Sub
 
 

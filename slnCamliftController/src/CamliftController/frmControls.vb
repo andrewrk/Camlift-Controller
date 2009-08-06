@@ -230,15 +230,27 @@ Namespace CamliftController
                 outfile = folder & prefix & "_" & Format(m_numPicsTaken, "000") & ".jpg"
             Loop While IO.File.Exists(outfile)
 
-            Try
-                m_cam.TakePicture(outfile)
-                m_cam.FlushTransferQueue()
-            Catch ex As SdkException When ex.Message = SdkErrors.TakePictureAfNg
-                MsgBox("Autofocus failed!" & vbCrLf & vbCrLf & "NOTE: This software is intended to be used with the camera in manual focus mode", MsgBoxStyle.Exclamation)
-            Catch ex As CameraIsBusyException
-                ' do nothing
-            End Try
+            Dim TryAgain As Boolean = True
 
+            While TryAgain
+                TryAgain = False
+
+                Try
+                    m_cam.TakePicture(outfile)
+                    m_cam.FlushTransferQueue()
+                Catch ex As SdkException When ex.Message = SdkErrors.TakePictureAfNg
+                    MsgBox("Autofocus failed!" & vbCrLf & vbCrLf & "NOTE: This software is intended to be used with the camera in manual focus mode", MsgBoxStyle.Exclamation)
+                Catch ex As CameraIsBusyException
+                    ' do nothing
+                Catch ex As CameraDisconnectedException
+                    If Not ConnectCamera(m_cam) Then
+                        Me.Close()
+                        Exit Sub
+                    Else
+                        TryAgain = True
+                    End If
+                End Try
+            End While
 
         End Sub
 

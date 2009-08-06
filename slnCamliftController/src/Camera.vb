@@ -31,6 +31,9 @@ Public Class Camera
     Private m_liveViewStreamPtr As IntPtr
     Private m_zoomPosition As StructurePointer(Of EdsPoint)
     Private m_zoomRatio As StructurePointer(Of Integer)
+    Private m_haveSession As Boolean
+
+    Private m_disposed As Boolean
 
     Private Const SleepTimeout = 20000 ' how many milliseconds to wait before giving up
     Private Const SleepAmount = 50 ' how many milliseconds to sleep before doing the event pump
@@ -40,23 +43,29 @@ Public Class Camera
     Public Sub New()
         If s_instance Is Nothing Then
             s_instance = Me
-            m_waitingOnPic = False
-            m_liveViewOn = False
-            m_waitingToStartLiveView = False
-            m_liveViewPicBox = Nothing
-            m_liveViewThread = Nothing
-            m_stoppingLiveView = False
-            ReDim m_liveViewFrameBuffer(0)
-            m_liveViewBufferHandle = Nothing
-            m_liveViewStreamPtr = IntPtr.Zero
-            m_transferQueue = New Queue(Of TransferItem)
-            m_zoomPosition = New StructurePointer(Of EdsPoint)
-            m_zoomRatio = New StructurePointer(Of Integer)
+            m_disposed = False
+            ResetState()
 
             CheckError(EdsInitializeSDK())
         Else
             Throw New OnlyOneInstanceAllowedException
         End If
+    End Sub
+
+    Private Sub ResetState()
+        m_waitingOnPic = False
+        m_liveViewOn = False
+        m_waitingToStartLiveView = False
+        m_liveViewPicBox = Nothing
+        m_liveViewThread = Nothing
+        m_stoppingLiveView = False
+        ReDim m_liveViewFrameBuffer(0)
+        m_liveViewBufferHandle = Nothing
+        m_liveViewStreamPtr = IntPtr.Zero
+        m_transferQueue = New Queue(Of TransferItem)
+        m_zoomPosition = New StructurePointer(Of EdsPoint)
+        m_zoomRatio = New StructurePointer(Of Integer)
+        m_haveSession = False
     End Sub
 
     ''' <summary>
@@ -66,6 +75,8 @@ Public Class Camera
     Public Sub EstablishSession()
         Dim camList As IntPtr
         Dim numCams As Integer
+
+        If m_haveSession Then Exit Sub
 
         CheckError(EdsGetCameraList(camList))
         CheckError(EdsGetChildCount(camList, numCams))
@@ -107,23 +118,39 @@ Public Class Camera
         ' clear the old image type setting and set the new one
         qs.Value = qs.Value And &HFF0FFFFFL Or (EdsImageType.kEdsImageType_Jpeg << 20)
         CheckError(EdsSetPropertyData(m_cam, kEdsPropID_ImageQuality, 0, qs.Size, qs.Value))
+
+        m_haveSession = True
     End Sub
 
-    Private m_disposed As Boolean = False
+    Private Sub CleanupSession()
+        EdsCloseSession(m_cam)
+        EdsRelease(m_cam)
+    End Sub
+
+
     Public Sub Dispose() Implements System.IDisposable.Dispose
         If m_disposed Then Exit Sub
         m_disposed = True
         StopLiveView() 'stops it only if it's running
 
         'FlushTransferQueue()
-        EdsCloseSession(m_cam)
-        EdsRelease(m_cam)
+        CleanupSession()
         EdsTerminateSDK()
 
         s_instance = Nothing
     End Sub
 
     Private Sub CheckError(ByVal Err As Integer)
+        ' check for disconnect
+        If Err = EDS_ERR_INVALID_HANDLE Then
+            ' camera was disconnected, clean up and then try to establish a session
+            ' clean up
+            ResetState()
+            EdsCloseSession(m_cam)
+            EdsRelease(m_cam)
+
+            Throw New CameraDisconnectedException
+        End If
         ' throw errors if necessary
         If Err <> EDS_ERR_OK Then Throw New SdkException(Err)
     End Sub
@@ -211,6 +238,8 @@ Public Class Camera
         Dim interuptingLiveView As Boolean = m_liveViewOn
         Dim lvBox As PictureBox = m_liveViewPicBox
 
+        EstablishSession()
+
         If m_waitingOnPic Or m_waitingToStartLiveView Then
             ' bad programmer. should have disabled user controls
             Throw New CameraIsBusyException
@@ -278,6 +307,8 @@ Public Class Camera
     '''<param name="pbox">the picture box to send live video to</param>
     ''' <remarks>you can only have one live view going at a time.</remarks>
     Public Sub StartLiveView(ByVal pbox As PictureBox)
+        EstablishSession()
+
         While m_stoppingLiveView
             Application.DoEvents()
         End While
@@ -326,6 +357,8 @@ Public Class Camera
     ''' <remarks></remarks>
     Public Sub StopLiveView()
         Dim device As New StructurePointer(Of UInt32)
+
+        EstablishSession()
 
         If m_stoppingLiveView Or (Not m_waitingToStartLiveView And Not m_liveViewOn) Then Exit Sub
 
@@ -804,5 +837,8 @@ Public Class CameraIsBusyException
     Inherits Exception
 End Class
 Public Class LiveViewFailedException
+    Inherits Exception
+End Class
+Public Class CameraDisconnectedException
     Inherits Exception
 End Class
