@@ -109,14 +109,16 @@ Public Class Camera
         CheckError(EdsSetPropertyData(m_cam, kEdsPropID_ImageQuality, 0, qs.Size, qs.Value))
     End Sub
 
+    Private m_disposed As Boolean = False
     Public Sub Dispose() Implements System.IDisposable.Dispose
+        If m_disposed Then Exit Sub
+        m_disposed = True
         StopLiveView() 'stops it only if it's running
 
-        FlushTransferQueue()
-
-        CheckError(EdsCloseSession(m_cam))
-        CheckError(EdsRelease(m_cam))
-        CheckError(EdsTerminateSDK())
+        'FlushTransferQueue()
+        EdsCloseSession(m_cam)
+        EdsRelease(m_cam)
+        EdsTerminateSDK()
 
         s_instance = Nothing
     End Sub
@@ -408,7 +410,6 @@ Public Class Camera
     End Property
 
     Private Class StructurePointer(Of T As Structure)
-        Implements IDisposable
 
         Private m_Size As Integer 'in bytes
         Private m_ptr As IntPtr
@@ -439,15 +440,9 @@ Public Class Camera
             m_ptr = Marshal.AllocHGlobal(m_Size)
         End Sub
 
-        Public Sub Dispose() Implements IDisposable.Dispose
+        Protected Overrides Sub Finalize()
             Marshal.FreeHGlobal(m_ptr)
         End Sub
-
-        Protected Overrides Sub Finalize()
-            Dispose()
-            MyBase.Finalize()
-        End Sub
-
     End Class
 
     Private Structure TransferItem

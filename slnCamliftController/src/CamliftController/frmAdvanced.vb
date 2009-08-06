@@ -104,7 +104,6 @@ Namespace CamliftController
             If Not checkNumericRange(txtVelocity, SilverpakSettings.VelocityMin, SilverpakSettings.VelocityMax) Then Return False
             If Not checkNumericRange(txtAcceleration, SilverpakSettings.AccelerationMin, SilverpakSettings.AccelerationMax) Then Return False
             If Not checkNumericRange(txtCurrent, SilverpakSettings.RunningCurrentMin, SilverpakSettings.RunningCurrentMax) Then Return False
-            If True Then Return False
             'All fields are valid
             m_spmMain.Velocity = txtVelocity.Text
             m_spmMain.Acceleration = txtAcceleration.Text

@@ -48,34 +48,33 @@ Public Module modMain
         Application.EnableVisualStyles()
 
         Dim settings As New AllSettings
-        Dim cam As New Camera
-        Dim spm As New Silverpak(settings.Silverpak)
+        Using cam As New Camera, spm As New Silverpak(settings.Silverpak)
+            While True
+                Try
+                    cam.EstablishSession()
+                    Exit While
+                Catch ex As NoCameraFoundException
+                    If MsgBox(MsgBoxCameraNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
+                Catch ex As TooManyCamerasFoundException
+                    If MsgBox(MsgBoxTooManyCamerasMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
+                Catch ex As SdkException When ex.SdkError = SdkErrors.DeviceBusy
+                    If MsgBox(MsgBoxDeviceIsBusyMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
+                End Try
+            End While
 
-        While True
-            Try
-                cam.EstablishSession()
-                Exit While
-            Catch ex As NoCameraFoundException
-                If MsgBox(MsgBoxCameraNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
-            Catch ex As TooManyCamerasFoundException
-                If MsgBox(MsgBoxTooManyCamerasMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
-            Catch ex As SdkException When ex.SdkError = SdkErrors.DeviceBusy
-                If MsgBox(MsgBoxDeviceIsBusyMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
-            End Try
-        End While
+            While True
+                Try
+                    spm.EstablishConnection()
+                    Exit While
+                Catch ex As SilverpakNotFoundException
+                    If MsgBox(MsgBoxSilverpakNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
+                End Try
+            End While
 
-        While True
-            Try
-                spm.EstablishConnection()
-                Exit While
-            Catch ex As SilverpakNotFoundException
-                If MsgBox(MsgBoxSilverpakNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
-            End Try
-        End While
+            Dim form As New CamliftController.frmControls(settings, spm, cam)
 
-        Dim form As New CamliftController.frmControls(settings, spm, cam)
-
-        form.ShowDialog()
+            form.ShowDialog()
+        End Using
 
 #If USE_GLOBAL_CATCH Then
         Catch ex As Exception

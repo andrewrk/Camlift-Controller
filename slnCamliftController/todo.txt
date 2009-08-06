@@ -14,4 +14,3 @@
 	- Have radio buttons instead of combo boxes for Objective, Mag, and Iris
 * make sure disconnects are handled for camera class and silverpak class
 * settings -> edit step settings is broken
-* settings -> advanced, OK button doesn't close dialog

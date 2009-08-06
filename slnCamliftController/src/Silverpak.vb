@@ -65,6 +65,8 @@ Public Class Silverpak
     End Sub
 End Class
 
+
+#Region "asdf"
 #If USE_FAKE_SILVERPAK Then
 
 
@@ -163,6 +165,7 @@ Public Class DebugSilverpakManager
 End Class
 
 #End If
+#End Region
 
 Public Class SilverpakNotFoundException
     Inherits Exception
