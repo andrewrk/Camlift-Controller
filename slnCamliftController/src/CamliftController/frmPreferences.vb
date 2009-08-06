@@ -8,6 +8,7 @@
         Public Sub New(ByVal steps As IEnumerable(Of KeyValuePair(Of String, Integer)), ByVal f_updateSteps As Action(Of IEnumerable(Of KeyValuePair(Of String, Integer))))
             InitializeComponent() ' This call is required by the Windows Form Designer.
 
+            If steps.Count <> StepsCount Then Throw New ArgumentException()
             m_steps = steps
             m_f_updateSteps = f_updateSteps
         End Sub
@@ -15,7 +16,7 @@
 
             Dim i = 1
             For Each kvp In m_steps
-                If i < 7 Then
+                If i <= LabeledStepsCount Then
                     Dim txtLabel As TextBox = grpStepSizes.Controls("txtLabel" & i)
                     txtLabel.Text = kvp.Key
                     AddHandler txtLabel.TextChanged, AddressOf txt_TextChanged
@@ -93,13 +94,17 @@
         End Sub
 
         Private Function ApplyChanges() As Boolean
-            Dim stepSizes(9 - 1) As KeyValuePair(Of String, Integer)
-            For i As Integer = 1 To 6
-                Dim txtLabel As TextBox = grpStepSizes.Controls("txtLabel" & i)
+            Dim stepSizes As New List(Of KeyValuePair(Of String, Integer))
+            For i As Integer = 1 To StepsCount
+                Dim name As String = Nothing
+                If i <= LabeledStepsCount Then
+                    Dim txtLabel As TextBox = grpStepSizes.Controls("txtLabel" & i)
+                    name = txtLabel.Text
+                End If
                 Dim txtStep As TextBox = grpStepSizes.Controls("txtStep" & i)
                 If Not ValidateRange(txtStep, 1, Silverpak23CE.SilverpakManager.DefaultMaxPosition) Then Return False
 
-                stepSizes(i - 1) = New KeyValuePair(Of String, Integer)(txtLabel.Text, txtStep.Text)
+                stepSizes.Add(New KeyValuePair(Of String, Integer)(name, txtStep.Text))
             Next
             m_f_updateSteps(stepSizes)
             Return True

@@ -10,10 +10,10 @@ Namespace Settings
 
         Public Shared ReadOnly GlobalSettingsDir As String = Application.StartupPath & "\settings"
 
-#If False Then
-        Public Shared ReadOnly UserSettingsDir As String = My.Computer.FileSystem.SpecialDirectories.CurrentUserApplicationData & "\settings"
-#Else
+#If DEBUG Then
         Public Shared ReadOnly UserSettingsDir As String = GlobalSettingsDir
+#Else
+        Public Shared ReadOnly UserSettingsDir As String = My.Computer.FileSystem.SpecialDirectories.CurrentUserApplicationData & "\settings"
 #End If
 
         Private Shared ReadOnly settingsIndexFile As String = GlobalSettingsDir & "\settings index.xml"
@@ -165,6 +165,10 @@ Namespace Settings
         Protected Shared Function serialize(ByVal value As Object) As Object
             If TypeOf value Is String Or TypeOf value Is Integer Then
                 Return value
+            ElseIf TypeOf value Is Boolean Then
+                Return value.ToString.ToLower
+            ElseIf TypeOf value Is Point Then
+                Return pointToString(value)
             ElseIf TypeOf value Is SettingsBase Then
                 Dim valueSettings As SettingsBase = value
                 Return valueSettings.GetContents

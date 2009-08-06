@@ -1,5 +1,4 @@
-﻿* close program if no camera found and they press cancel
-* main window
+﻿* main window
 	- Have "Set Autorun Start/Stop" (probably with fewer words) buttons near "Autorun..." button so that the user doesn't need to go through the "Store" menu.
 * live view:
 	- WhiteBalance settings similar to Canon's.
@@ -13,4 +12,5 @@
 		 The user might see "0%" when it's really 10% and "-10%" when it's really 0%.
 	- Have radio buttons instead of combo boxes for Objective, Mag, and Iris
 * make sure disconnects are handled for camera class and silverpak class
-* settings -> edit step settings is broken
+* step sizes and labels are not stored in xml
+* fix the mag stuff

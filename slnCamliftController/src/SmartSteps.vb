@@ -98,10 +98,6 @@ Namespace SmartSteps
         End Sub
 
         Private Sub execute_run()
-#If USE_GLOBAL_CATCH Then
-            Try
-#End If
-
             Dim total = m_locations.Count()
             m_Progress = 0
             RaiseEvent ProgressReported(Me, New EventArgs)
@@ -166,11 +162,6 @@ Namespace SmartSteps
             m_Progress = 100 ' complete
             RaiseEvent Finished(Me, New EventArgs)
             Exit Sub
-#If USE_GLOBAL_CATCH Then
-            Catch ex As Exception
-                GlobalCatch(ex)
-            End Try
-#End If
         End Sub
 
     End Class

@@ -33,6 +33,9 @@ Public Module modMain
     Public Const RolloverHelpAcceleration As String = "A lower value will cause the motor to slow or ramp down before stopping. It will also cause the motor to ramp up prior to full speed."
     Public Const RolloverHelpNone As String = ""
 
+    Public Const StepsCount = 9
+    Public Const LabeledStepsCount = 6
+
 
 
     Private ReadOnly globalErrorLogFile = My.Computer.FileSystem.SpecialDirectories.Desktop & "\Camlift Error Report.txt"
@@ -40,11 +43,11 @@ Public Module modMain
     Public ReadOnly HelpFileName As String = Application.StartupPath & "\help.html"
 
     Public Sub Main()
-#If USE_GLOBAL_CATCH Then
-        Try
-                AddHandler Application.ThreadException, AddressOf applicationExceptionHandler
-                AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf appDomainExceptionHandler
+#If Not Debug Then
+        AddHandler Application.ThreadException, AddressOf applicationExceptionHandler
+        AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf appDomainExceptionHandler
 #End If
+
         Application.EnableVisualStyles()
 
         Dim settings As New AllSettings
@@ -75,12 +78,6 @@ Public Module modMain
 
             form.ShowDialog()
         End Using
-
-#If USE_GLOBAL_CATCH Then
-        Catch ex As Exception
-            GlobalCatch(ex)
-        End Try
-#End If
     End Sub
 
     Public Function MicrostepsToMilimeters(ByVal microsteps As Integer) As String

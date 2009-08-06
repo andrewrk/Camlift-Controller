@@ -102,7 +102,13 @@ Namespace CamliftController
         End Sub
 
         Private Sub PreferencesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PreferencesToolStripMenuItem.Click
-            Using f As New frmPreferences(Nothing, AddressOf updateSteps_safe)
+            Dim stepsList = New List(Of KeyValuePair(Of String, Integer))
+            For i = 0 To 8
+                ' TODO remove magic numbers
+                Dim label As String = If(i <= 8 - 3, m_StepLabels(i), Nothing)
+                stepsList.Add(New KeyValuePair(Of String, Integer)(label, m_StepSizes(i)))
+            Next
+            Using f As New frmPreferences(stepsList, AddressOf updateSteps_safe)
                 f.ShowDialog(Me)
             End Using
             resync(New Action(AddressOf saveSettings_gui))
@@ -226,6 +232,7 @@ Namespace CamliftController
 
             Try
                 m_cam.TakePicture(outfile)
+                m_cam.FlushTransferQueue()
             Catch ex As SdkException When ex.Message = SdkErrors.TakePictureAfNg
                 MsgBox("Autofocus failed!" & vbCrLf & vbCrLf & "NOTE: This software is intended to be used with the camera in manual focus mode", MsgBoxStyle.Exclamation)
             Catch ex As CameraIsBusyException
@@ -504,13 +511,17 @@ Namespace CamliftController
         End Sub
 
         Private Sub updateSteps_gui(ByVal steps As IEnumerable(Of KeyValuePair(Of String, Integer)))
-            For i As Integer = 1 To 6
-                Dim lblDist As Label = pnlDist.Controls("lblDist" & i)
-                lblDist.Text = m_StepLabels(i - 1)
-            Next
-            For i As Integer = 7 To 9
-                Dim lblDist As Label = pnlDist.Controls("lblDist" & i)
-                lblDist.Text = MicrostepsToMilimeters(m_StepSizes(i - 1)) & "mm"
+            Dim i = 0
+            For Each kvp In steps
+                Dim lblDist As Label = pnlDist.Controls("lblDist" & i + 1)
+                If i < LabeledStepsCount Then
+                    m_StepLabels(i) = kvp.Key
+                    lblDist.Text = m_StepLabels(i)
+                Else
+                    lblDist.Text = MicrostepsToMilimeters(m_StepSizes(i - 1)) & "mm"
+                End If
+                m_StepSizes(i) = kvp.Value
+                i += 1
             Next
             updateCurrentDist_gui()
         End Sub
