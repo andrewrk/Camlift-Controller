@@ -1,4 +1,5 @@
-﻿* main window
+﻿* close program if no camera found and they press cancel
+* main window
 	- Have "Set Autorun Start/Stop" (probably with fewer words) buttons near "Autorun..." button so that the user doesn't need to go through the "Store" menu.
 * live view:
 	- WhiteBalance settings similar to Canon's.
@@ -13,6 +14,4 @@
 	- Have radio buttons instead of combo boxes for Objective, Mag, and Iris
 * make sure disconnects are handled for camera class and silverpak class
 * settings -> edit step settings is broken
-* settigs -> advanced, OK button doesn't close dialog
-* help-> user's guide, broken link
-* why can't you frmControls.show() instead of frmControls.showDialog() ?
+* settings -> advanced, OK button doesn't close dialog
