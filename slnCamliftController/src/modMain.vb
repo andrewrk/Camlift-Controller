@@ -42,6 +42,9 @@ Public Module modMain
 
     Public ReadOnly HelpFileName As String = Application.StartupPath & "\help.html"
 
+    Private m_settings As AllSettings
+    Private m_numPicsTaken As Integer = 0
+
     Public Sub Main()
 #If Not Debug Then
         AddHandler Application.ThreadException, AddressOf applicationExceptionHandler
@@ -50,8 +53,8 @@ Public Module modMain
 
         Application.EnableVisualStyles()
 
-        Dim settings As New AllSettings
-        Using cam As New Camera, spm As New Silverpak(settings.Silverpak)
+        m_settings = New AllSettings
+        Using cam As New Camera, spm As New Silverpak(m_settings.Silverpak)
             While True
                 Try
                     spm.EstablishConnection()
@@ -61,7 +64,7 @@ Public Module modMain
                 End Try
             End While
 
-            Dim form As New CamliftController.frmControls(settings, spm, cam)
+            Dim form As New CamliftController.frmControls(m_settings, spm, cam)
 
             form.ShowDialog()
         End Using
@@ -81,6 +84,22 @@ Public Module modMain
         Else
             Throw ex
         End If
+    End Function
+
+    Public Function GetNextPictureFile() As String
+        Dim folder As String = m_settings.SettingsIndex.SavePicturesFolder
+        If Not folder.EndsWith("\") Then folder &= "\"
+
+        Dim prefix As String = My.Application.Info.Title
+
+        Dim outfile As String
+
+        Do
+            m_numPicsTaken += 1
+            outfile = folder & prefix & "_" & Format(m_numPicsTaken, "000") & ".jpg"
+        Loop While IO.File.Exists(outfile)
+
+        Return outfile
     End Function
 
     Public Function MicrostepsToMilimeters(ByVal microsteps As Integer) As String

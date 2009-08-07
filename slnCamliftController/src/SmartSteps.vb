@@ -138,8 +138,7 @@ Namespace SmartSteps
 
                 'Take Picture
                 Try
-                    ' TODO: replace folder with folder from settings
-                    m_camera.TakeFastPicture("C:\temptest\out.jpg")
+                    m_camera.TakeFastPicture(GetNextPictureFile())
                 Catch ex As SdkException
                     AbortRun(ex)
                     Exit Sub

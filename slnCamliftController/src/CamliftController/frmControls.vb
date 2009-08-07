@@ -217,17 +217,7 @@ Namespace CamliftController
         End Sub
 
         Private Sub btnTakePic_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTakePic.Click
-            Dim folder As String = m_allSettings.SettingsIndex.SavePicturesFolder
-            If Not folder.EndsWith("\") Then folder &= "\"
-
-            Dim prefix As String = My.Application.Info.Title
-
-            Dim outfile As String
-
-            Do
-                m_numPicsTaken += 1
-                outfile = folder & prefix & "_" & Format(m_numPicsTaken, "000") & ".jpg"
-            Loop While IO.File.Exists(outfile)
+            Dim outfile As String = GetNextPictureFile()
 
             Dim TryAgain As Boolean = True
 
