@@ -9,7 +9,7 @@
 	- Add an "Adjust overlap" setting where the user can adjust the percentage of overlap between slices.
 		Default 10%
 		 min 0%
-		 max ?%.
+		 max ?%
 		 The user might see "0%" when it's really 10% and "-10%" when it's really 0%.
 	- Have radio buttons instead of combo boxes for Objective, Mag, and Iris
 	- Saved Positions

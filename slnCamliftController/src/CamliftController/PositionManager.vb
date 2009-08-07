@@ -182,23 +182,4 @@ Namespace CamliftController
         End Class
 
     End Class
-
-
-    Public Class LoadPositionEventArgs
-        Inherits EventArgs
-
-        Private m_NewPosition As Integer
-        Public Property NewPosition() As Integer
-            Get
-                Return m_NewPosition
-            End Get
-            Set(ByVal value As Integer)
-                m_NewPosition = value
-            End Set
-        End Property
-
-        Public Sub New(ByVal newPosition As Integer)
-            m_NewPosition = newPosition
-        End Sub
-    End Class
 End Namespace

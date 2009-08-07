@@ -147,6 +147,7 @@ Public Class Camera
     Public Sub Dispose() Implements System.IDisposable.Dispose
         If m_disposed Then Exit Sub
         m_disposed = True
+        If Not m_haveSession Then Exit Sub
         StopLiveView() 'stops it only if it's running
 
         'FlushTransferQueue()
@@ -555,7 +556,7 @@ Public Class Camera
     End Sub
 
     Public Sub TakePicture(ByVal outfile As String)
-
+        Debug.Print("oh snap: " & outfile)
     End Sub
 
     Public Sub StartLiveView(ByVal pbox As PictureBox)
