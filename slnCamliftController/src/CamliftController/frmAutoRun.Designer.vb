@@ -37,23 +37,40 @@
             Me.txtDwell = New System.Windows.Forms.TextBox
             Me.lblDwell = New System.Windows.Forms.Label
             Me.grpSetup = New System.Windows.Forms.GroupBox
+            Me.grpIris = New System.Windows.Forms.GroupBox
+            Me.RadioButton11 = New System.Windows.Forms.RadioButton
+            Me.RadioButton12 = New System.Windows.Forms.RadioButton
+            Me.RadioButton13 = New System.Windows.Forms.RadioButton
+            Me.RadioButton14 = New System.Windows.Forms.RadioButton
+            Me.RadioButton15 = New System.Windows.Forms.RadioButton
+            Me.grpMag = New System.Windows.Forms.GroupBox
+            Me.RadioButton6 = New System.Windows.Forms.RadioButton
+            Me.RadioButton7 = New System.Windows.Forms.RadioButton
+            Me.RadioButton8 = New System.Windows.Forms.RadioButton
+            Me.RadioButton9 = New System.Windows.Forms.RadioButton
+            Me.RadioButton10 = New System.Windows.Forms.RadioButton
+            Me.grpObjective = New System.Windows.Forms.GroupBox
+            Me.RadioButton16 = New System.Windows.Forms.RadioButton
+            Me.RadioButton17 = New System.Windows.Forms.RadioButton
+            Me.RadioButton5 = New System.Windows.Forms.RadioButton
+            Me.RadioButton4 = New System.Windows.Forms.RadioButton
+            Me.RadioButton3 = New System.Windows.Forms.RadioButton
+            Me.RadioButton2 = New System.Windows.Forms.RadioButton
+            Me.RadioButton1 = New System.Windows.Forms.RadioButton
+            Me.lblOverlap = New System.Windows.Forms.Label
+            Me.nudOverlap = New System.Windows.Forms.NumericUpDown
             Me.btnLoad = New System.Windows.Forms.Button
             Me.btnSave = New System.Windows.Forms.Button
-            Me.lblIris = New System.Windows.Forms.Label
-            Me.lblMag = New System.Windows.Forms.Label
-            Me.lblObjective = New System.Windows.Forms.Label
-            Me.cboIris = New System.Windows.Forms.ComboBox
-            Me.cboObjective = New System.Windows.Forms.ComboBox
             Me.rdoStepSizeCalculated = New System.Windows.Forms.RadioButton
             Me.rdoStepSizeManual = New System.Windows.Forms.RadioButton
-            Me.cboMag = New System.Windows.Forms.ComboBox
             Me.chkReturnToTop = New System.Windows.Forms.CheckBox
             Me.btnCancel = New System.Windows.Forms.Button
             Me.btnStart = New System.Windows.Forms.Button
-            Me.nudOverlap = New System.Windows.Forms.NumericUpDown
-            Me.lblOverlap = New System.Windows.Forms.Label
             Me.grpRun.SuspendLayout()
             Me.grpSetup.SuspendLayout()
+            Me.grpIris.SuspendLayout()
+            Me.grpMag.SuspendLayout()
+            Me.grpObjective.SuspendLayout()
             CType(Me.nudOverlap, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
@@ -159,7 +176,7 @@
             '
             'txtDwell
             '
-            Me.txtDwell.Location = New System.Drawing.Point(131, 182)
+            Me.txtDwell.Location = New System.Drawing.Point(131, 296)
             Me.txtDwell.Name = "txtDwell"
             Me.txtDwell.Size = New System.Drawing.Size(79, 20)
             Me.txtDwell.TabIndex = 4
@@ -167,7 +184,7 @@
             'lblDwell
             '
             Me.lblDwell.AutoSize = True
-            Me.lblDwell.Location = New System.Drawing.Point(6, 185)
+            Me.lblDwell.Location = New System.Drawing.Point(6, 299)
             Me.lblDwell.Name = "lblDwell"
             Me.lblDwell.Size = New System.Drawing.Size(58, 13)
             Me.lblDwell.TabIndex = 104
@@ -177,31 +194,278 @@
             'grpSetup
             '
             Me.grpSetup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.grpSetup.Controls.Add(Me.grpIris)
+            Me.grpSetup.Controls.Add(Me.grpMag)
+            Me.grpSetup.Controls.Add(Me.grpObjective)
             Me.grpSetup.Controls.Add(Me.lblOverlap)
             Me.grpSetup.Controls.Add(Me.nudOverlap)
             Me.grpSetup.Controls.Add(Me.btnLoad)
             Me.grpSetup.Controls.Add(Me.btnSave)
-            Me.grpSetup.Controls.Add(Me.lblIris)
-            Me.grpSetup.Controls.Add(Me.lblMag)
-            Me.grpSetup.Controls.Add(Me.lblObjective)
             Me.grpSetup.Controls.Add(Me.txtDwell)
-            Me.grpSetup.Controls.Add(Me.cboIris)
-            Me.grpSetup.Controls.Add(Me.cboObjective)
             Me.grpSetup.Controls.Add(Me.rdoStepSizeCalculated)
             Me.grpSetup.Controls.Add(Me.lblDwell)
             Me.grpSetup.Controls.Add(Me.rdoStepSizeManual)
-            Me.grpSetup.Controls.Add(Me.cboMag)
             Me.grpSetup.Controls.Add(Me.txtStepSize)
             Me.grpSetup.Location = New System.Drawing.Point(13, 122)
             Me.grpSetup.Name = "grpSetup"
-            Me.grpSetup.Size = New System.Drawing.Size(263, 237)
+            Me.grpSetup.Size = New System.Drawing.Size(263, 351)
             Me.grpSetup.TabIndex = 106
             Me.grpSetup.TabStop = False
             Me.grpSetup.Text = "Settings"
             '
+            'grpIris
+            '
+            Me.grpIris.Controls.Add(Me.RadioButton11)
+            Me.grpIris.Controls.Add(Me.RadioButton12)
+            Me.grpIris.Controls.Add(Me.RadioButton13)
+            Me.grpIris.Controls.Add(Me.RadioButton14)
+            Me.grpIris.Controls.Add(Me.RadioButton15)
+            Me.grpIris.Location = New System.Drawing.Point(181, 66)
+            Me.grpIris.Name = "grpIris"
+            Me.grpIris.Size = New System.Drawing.Size(76, 179)
+            Me.grpIris.TabIndex = 118
+            Me.grpIris.TabStop = False
+            Me.grpIris.Text = "Iris"
+            '
+            'RadioButton11
+            '
+            Me.RadioButton11.AutoSize = True
+            Me.RadioButton11.Location = New System.Drawing.Point(6, 108)
+            Me.RadioButton11.Name = "RadioButton11"
+            Me.RadioButton11.Size = New System.Drawing.Size(96, 17)
+            Me.RadioButton11.TabIndex = 4
+            Me.RadioButton11.TabStop = True
+            Me.RadioButton11.Text = "RadioButton11"
+            Me.RadioButton11.UseVisualStyleBackColor = True
+            '
+            'RadioButton12
+            '
+            Me.RadioButton12.AutoSize = True
+            Me.RadioButton12.Location = New System.Drawing.Point(6, 85)
+            Me.RadioButton12.Name = "RadioButton12"
+            Me.RadioButton12.Size = New System.Drawing.Size(96, 17)
+            Me.RadioButton12.TabIndex = 3
+            Me.RadioButton12.TabStop = True
+            Me.RadioButton12.Text = "RadioButton12"
+            Me.RadioButton12.UseVisualStyleBackColor = True
+            '
+            'RadioButton13
+            '
+            Me.RadioButton13.AutoSize = True
+            Me.RadioButton13.Location = New System.Drawing.Point(6, 62)
+            Me.RadioButton13.Name = "RadioButton13"
+            Me.RadioButton13.Size = New System.Drawing.Size(96, 17)
+            Me.RadioButton13.TabIndex = 2
+            Me.RadioButton13.TabStop = True
+            Me.RadioButton13.Text = "RadioButton13"
+            Me.RadioButton13.UseVisualStyleBackColor = True
+            '
+            'RadioButton14
+            '
+            Me.RadioButton14.AutoSize = True
+            Me.RadioButton14.Location = New System.Drawing.Point(6, 39)
+            Me.RadioButton14.Name = "RadioButton14"
+            Me.RadioButton14.Size = New System.Drawing.Size(96, 17)
+            Me.RadioButton14.TabIndex = 1
+            Me.RadioButton14.TabStop = True
+            Me.RadioButton14.Text = "RadioButton14"
+            Me.RadioButton14.UseVisualStyleBackColor = True
+            '
+            'RadioButton15
+            '
+            Me.RadioButton15.AutoSize = True
+            Me.RadioButton15.Location = New System.Drawing.Point(6, 16)
+            Me.RadioButton15.Name = "RadioButton15"
+            Me.RadioButton15.Size = New System.Drawing.Size(38, 17)
+            Me.RadioButton15.TabIndex = 0
+            Me.RadioButton15.TabStop = True
+            Me.RadioButton15.Text = "P3"
+            Me.RadioButton15.UseVisualStyleBackColor = True
+            '
+            'grpMag
+            '
+            Me.grpMag.Controls.Add(Me.RadioButton6)
+            Me.grpMag.Controls.Add(Me.RadioButton7)
+            Me.grpMag.Controls.Add(Me.RadioButton8)
+            Me.grpMag.Controls.Add(Me.RadioButton9)
+            Me.grpMag.Controls.Add(Me.RadioButton10)
+            Me.grpMag.Location = New System.Drawing.Point(99, 66)
+            Me.grpMag.Name = "grpMag"
+            Me.grpMag.Size = New System.Drawing.Size(76, 179)
+            Me.grpMag.TabIndex = 117
+            Me.grpMag.TabStop = False
+            Me.grpMag.Text = "Mag:"
+            '
+            'RadioButton6
+            '
+            Me.RadioButton6.AutoSize = True
+            Me.RadioButton6.Location = New System.Drawing.Point(6, 108)
+            Me.RadioButton6.Name = "RadioButton6"
+            Me.RadioButton6.Size = New System.Drawing.Size(90, 17)
+            Me.RadioButton6.TabIndex = 4
+            Me.RadioButton6.TabStop = True
+            Me.RadioButton6.Text = "RadioButton6"
+            Me.RadioButton6.UseVisualStyleBackColor = True
+            '
+            'RadioButton7
+            '
+            Me.RadioButton7.AutoSize = True
+            Me.RadioButton7.Location = New System.Drawing.Point(6, 85)
+            Me.RadioButton7.Name = "RadioButton7"
+            Me.RadioButton7.Size = New System.Drawing.Size(90, 17)
+            Me.RadioButton7.TabIndex = 3
+            Me.RadioButton7.TabStop = True
+            Me.RadioButton7.Text = "RadioButton7"
+            Me.RadioButton7.UseVisualStyleBackColor = True
+            '
+            'RadioButton8
+            '
+            Me.RadioButton8.AutoSize = True
+            Me.RadioButton8.Location = New System.Drawing.Point(6, 62)
+            Me.RadioButton8.Name = "RadioButton8"
+            Me.RadioButton8.Size = New System.Drawing.Size(90, 17)
+            Me.RadioButton8.TabIndex = 2
+            Me.RadioButton8.TabStop = True
+            Me.RadioButton8.Text = "RadioButton8"
+            Me.RadioButton8.UseVisualStyleBackColor = True
+            '
+            'RadioButton9
+            '
+            Me.RadioButton9.AutoSize = True
+            Me.RadioButton9.Location = New System.Drawing.Point(6, 39)
+            Me.RadioButton9.Name = "RadioButton9"
+            Me.RadioButton9.Size = New System.Drawing.Size(90, 17)
+            Me.RadioButton9.TabIndex = 1
+            Me.RadioButton9.TabStop = True
+            Me.RadioButton9.Text = "RadioButton9"
+            Me.RadioButton9.UseVisualStyleBackColor = True
+            '
+            'RadioButton10
+            '
+            Me.RadioButton10.AutoSize = True
+            Me.RadioButton10.Location = New System.Drawing.Point(6, 16)
+            Me.RadioButton10.Name = "RadioButton10"
+            Me.RadioButton10.Size = New System.Drawing.Size(38, 17)
+            Me.RadioButton10.TabIndex = 0
+            Me.RadioButton10.TabStop = True
+            Me.RadioButton10.Text = "P3"
+            Me.RadioButton10.UseVisualStyleBackColor = True
+            '
+            'grpObjective
+            '
+            Me.grpObjective.Controls.Add(Me.RadioButton16)
+            Me.grpObjective.Controls.Add(Me.RadioButton17)
+            Me.grpObjective.Controls.Add(Me.RadioButton5)
+            Me.grpObjective.Controls.Add(Me.RadioButton4)
+            Me.grpObjective.Controls.Add(Me.RadioButton3)
+            Me.grpObjective.Controls.Add(Me.RadioButton2)
+            Me.grpObjective.Controls.Add(Me.RadioButton1)
+            Me.grpObjective.Location = New System.Drawing.Point(6, 66)
+            Me.grpObjective.Name = "grpObjective"
+            Me.grpObjective.Size = New System.Drawing.Size(87, 179)
+            Me.grpObjective.TabIndex = 116
+            Me.grpObjective.TabStop = False
+            Me.grpObjective.Text = "Objective:"
+            '
+            'RadioButton16
+            '
+            Me.RadioButton16.AutoSize = True
+            Me.RadioButton16.Location = New System.Drawing.Point(6, 154)
+            Me.RadioButton16.Name = "RadioButton16"
+            Me.RadioButton16.Size = New System.Drawing.Size(96, 17)
+            Me.RadioButton16.TabIndex = 6
+            Me.RadioButton16.TabStop = True
+            Me.RadioButton16.Text = "RadioButton16"
+            Me.RadioButton16.UseVisualStyleBackColor = True
+            '
+            'RadioButton17
+            '
+            Me.RadioButton17.AutoSize = True
+            Me.RadioButton17.Location = New System.Drawing.Point(6, 131)
+            Me.RadioButton17.Name = "RadioButton17"
+            Me.RadioButton17.Size = New System.Drawing.Size(96, 17)
+            Me.RadioButton17.TabIndex = 5
+            Me.RadioButton17.TabStop = True
+            Me.RadioButton17.Text = "RadioButton17"
+            Me.RadioButton17.UseVisualStyleBackColor = True
+            '
+            'RadioButton5
+            '
+            Me.RadioButton5.AutoSize = True
+            Me.RadioButton5.Location = New System.Drawing.Point(6, 108)
+            Me.RadioButton5.Name = "RadioButton5"
+            Me.RadioButton5.Size = New System.Drawing.Size(90, 17)
+            Me.RadioButton5.TabIndex = 4
+            Me.RadioButton5.TabStop = True
+            Me.RadioButton5.Text = "RadioButton5"
+            Me.RadioButton5.UseVisualStyleBackColor = True
+            '
+            'RadioButton4
+            '
+            Me.RadioButton4.AutoSize = True
+            Me.RadioButton4.Location = New System.Drawing.Point(6, 85)
+            Me.RadioButton4.Name = "RadioButton4"
+            Me.RadioButton4.Size = New System.Drawing.Size(90, 17)
+            Me.RadioButton4.TabIndex = 3
+            Me.RadioButton4.TabStop = True
+            Me.RadioButton4.Text = "RadioButton4"
+            Me.RadioButton4.UseVisualStyleBackColor = True
+            '
+            'RadioButton3
+            '
+            Me.RadioButton3.AutoSize = True
+            Me.RadioButton3.Location = New System.Drawing.Point(6, 62)
+            Me.RadioButton3.Name = "RadioButton3"
+            Me.RadioButton3.Size = New System.Drawing.Size(90, 17)
+            Me.RadioButton3.TabIndex = 2
+            Me.RadioButton3.TabStop = True
+            Me.RadioButton3.Text = "RadioButton3"
+            Me.RadioButton3.UseVisualStyleBackColor = True
+            '
+            'RadioButton2
+            '
+            Me.RadioButton2.AutoSize = True
+            Me.RadioButton2.Location = New System.Drawing.Point(6, 39)
+            Me.RadioButton2.Name = "RadioButton2"
+            Me.RadioButton2.Size = New System.Drawing.Size(90, 17)
+            Me.RadioButton2.TabIndex = 1
+            Me.RadioButton2.TabStop = True
+            Me.RadioButton2.Text = "RadioButton2"
+            Me.RadioButton2.UseVisualStyleBackColor = True
+            '
+            'RadioButton1
+            '
+            Me.RadioButton1.AutoSize = True
+            Me.RadioButton1.Location = New System.Drawing.Point(6, 16)
+            Me.RadioButton1.Name = "RadioButton1"
+            Me.RadioButton1.Size = New System.Drawing.Size(75, 17)
+            Me.RadioButton1.TabIndex = 0
+            Me.RadioButton1.TabStop = True
+            Me.RadioButton1.Text = "10X Nikon"
+            Me.RadioButton1.UseVisualStyleBackColor = True
+            '
+            'lblOverlap
+            '
+            Me.lblOverlap.AutoSize = True
+            Me.lblOverlap.Location = New System.Drawing.Point(6, 272)
+            Me.lblOverlap.Name = "lblOverlap"
+            Me.lblOverlap.Size = New System.Drawing.Size(90, 13)
+            Me.lblOverlap.TabIndex = 115
+            Me.lblOverlap.Text = "Slice Overlap (%):"
+            '
+            'nudOverlap
+            '
+            Me.nudOverlap.Location = New System.Drawing.Point(131, 270)
+            Me.nudOverlap.Maximum = New Decimal(New Integer() {70, 0, 0, 0})
+            Me.nudOverlap.Minimum = New Decimal(New Integer() {10, 0, 0, -2147483648})
+            Me.nudOverlap.Name = "nudOverlap"
+            Me.nudOverlap.Size = New System.Drawing.Size(79, 20)
+            Me.nudOverlap.TabIndex = 114
+            Me.nudOverlap.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
+            '
             'btnLoad
             '
-            Me.btnLoad.Location = New System.Drawing.Point(182, 208)
+            Me.btnLoad.Location = New System.Drawing.Point(182, 322)
             Me.btnLoad.Name = "btnLoad"
             Me.btnLoad.Size = New System.Drawing.Size(75, 23)
             Me.btnLoad.TabIndex = 31
@@ -210,57 +474,12 @@
             '
             'btnSave
             '
-            Me.btnSave.Location = New System.Drawing.Point(101, 208)
+            Me.btnSave.Location = New System.Drawing.Point(101, 322)
             Me.btnSave.Name = "btnSave"
             Me.btnSave.Size = New System.Drawing.Size(75, 23)
             Me.btnSave.TabIndex = 30
             Me.btnSave.Text = "Save..."
             Me.btnSave.UseVisualStyleBackColor = True
-            '
-            'lblIris
-            '
-            Me.lblIris.AutoSize = True
-            Me.lblIris.Location = New System.Drawing.Point(23, 129)
-            Me.lblIris.Name = "lblIris"
-            Me.lblIris.Size = New System.Drawing.Size(23, 13)
-            Me.lblIris.TabIndex = 113
-            Me.lblIris.Text = "Iris:"
-            '
-            'lblMag
-            '
-            Me.lblMag.AutoSize = True
-            Me.lblMag.Location = New System.Drawing.Point(23, 99)
-            Me.lblMag.Name = "lblMag"
-            Me.lblMag.Size = New System.Drawing.Size(31, 13)
-            Me.lblMag.TabIndex = 112
-            Me.lblMag.Text = "Mag:"
-            '
-            'lblObjective
-            '
-            Me.lblObjective.AutoSize = True
-            Me.lblObjective.Location = New System.Drawing.Point(23, 69)
-            Me.lblObjective.Name = "lblObjective"
-            Me.lblObjective.Size = New System.Drawing.Size(55, 13)
-            Me.lblObjective.TabIndex = 111
-            Me.lblObjective.Text = "Objective:"
-            '
-            'cboIris
-            '
-            Me.cboIris.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-            Me.cboIris.FormattingEnabled = True
-            Me.cboIris.Location = New System.Drawing.Point(131, 126)
-            Me.cboIris.Name = "cboIris"
-            Me.cboIris.Size = New System.Drawing.Size(79, 21)
-            Me.cboIris.TabIndex = 110
-            '
-            'cboObjective
-            '
-            Me.cboObjective.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-            Me.cboObjective.FormattingEnabled = True
-            Me.cboObjective.Location = New System.Drawing.Point(131, 66)
-            Me.cboObjective.Name = "cboObjective"
-            Me.cboObjective.Size = New System.Drawing.Size(79, 21)
-            Me.cboObjective.TabIndex = 109
             '
             'rdoStepSizeCalculated
             '
@@ -284,19 +503,10 @@
             Me.rdoStepSizeManual.Text = "Manual"
             Me.rdoStepSizeManual.UseVisualStyleBackColor = True
             '
-            'cboMag
-            '
-            Me.cboMag.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-            Me.cboMag.FormattingEnabled = True
-            Me.cboMag.Location = New System.Drawing.Point(131, 96)
-            Me.cboMag.Name = "cboMag"
-            Me.cboMag.Size = New System.Drawing.Size(79, 21)
-            Me.cboMag.TabIndex = 106
-            '
             'chkReturnToTop
             '
             Me.chkReturnToTop.AutoSize = True
-            Me.chkReturnToTop.Location = New System.Drawing.Point(22, 364)
+            Me.chkReturnToTop.Location = New System.Drawing.Point(22, 479)
             Me.chkReturnToTop.Name = "chkReturnToTop"
             Me.chkReturnToTop.Size = New System.Drawing.Size(151, 17)
             Me.chkReturnToTop.TabIndex = 104
@@ -306,7 +516,7 @@
             'btnCancel
             '
             Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.btnCancel.Location = New System.Drawing.Point(201, 387)
+            Me.btnCancel.Location = New System.Drawing.Point(201, 502)
             Me.btnCancel.Name = "btnCancel"
             Me.btnCancel.Size = New System.Drawing.Size(75, 23)
             Me.btnCancel.TabIndex = 51
@@ -315,31 +525,12 @@
             '
             'btnStart
             '
-            Me.btnStart.Location = New System.Drawing.Point(120, 387)
+            Me.btnStart.Location = New System.Drawing.Point(120, 502)
             Me.btnStart.Name = "btnStart"
             Me.btnStart.Size = New System.Drawing.Size(75, 23)
             Me.btnStart.TabIndex = 50
             Me.btnStart.Text = "Start"
             Me.btnStart.UseVisualStyleBackColor = True
-            '
-            'nudOverlap
-            '
-            Me.nudOverlap.Location = New System.Drawing.Point(131, 156)
-            Me.nudOverlap.Maximum = New Decimal(New Integer() {70, 0, 0, 0})
-            Me.nudOverlap.Minimum = New Decimal(New Integer() {10, 0, 0, -2147483648})
-            Me.nudOverlap.Name = "nudOverlap"
-            Me.nudOverlap.Size = New System.Drawing.Size(79, 20)
-            Me.nudOverlap.TabIndex = 114
-            Me.nudOverlap.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
-            '
-            'lblOverlap
-            '
-            Me.lblOverlap.AutoSize = True
-            Me.lblOverlap.Location = New System.Drawing.Point(6, 158)
-            Me.lblOverlap.Name = "lblOverlap"
-            Me.lblOverlap.Size = New System.Drawing.Size(90, 13)
-            Me.lblOverlap.TabIndex = 115
-            Me.lblOverlap.Text = "Slice Overlap (%):"
             '
             'frmAutoRun
             '
@@ -349,7 +540,7 @@
             Me.AutoSize = True
             Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.CancelButton = Me.btnCancel
-            Me.ClientSize = New System.Drawing.Size(353, 440)
+            Me.ClientSize = New System.Drawing.Size(353, 538)
             Me.Controls.Add(Me.btnStart)
             Me.Controls.Add(Me.chkReturnToTop)
             Me.Controls.Add(Me.btnCancel)
@@ -367,6 +558,12 @@
             Me.grpRun.PerformLayout()
             Me.grpSetup.ResumeLayout(False)
             Me.grpSetup.PerformLayout()
+            Me.grpIris.ResumeLayout(False)
+            Me.grpIris.PerformLayout()
+            Me.grpMag.ResumeLayout(False)
+            Me.grpMag.PerformLayout()
+            Me.grpObjective.ResumeLayout(False)
+            Me.grpObjective.PerformLayout()
             CType(Me.nudOverlap, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
@@ -390,16 +587,30 @@
         Friend WithEvents btnLoad As System.Windows.Forms.Button
         Friend WithEvents chkReturnToTop As System.Windows.Forms.CheckBox
         Friend WithEvents grpSetup As System.Windows.Forms.GroupBox
-        Friend WithEvents cboMag As System.Windows.Forms.ComboBox
-        Friend WithEvents cboObjective As System.Windows.Forms.ComboBox
         Friend WithEvents rdoStepSizeCalculated As System.Windows.Forms.RadioButton
         Friend WithEvents rdoStepSizeManual As System.Windows.Forms.RadioButton
-        Friend WithEvents lblIris As System.Windows.Forms.Label
-        Friend WithEvents lblMag As System.Windows.Forms.Label
-        Friend WithEvents lblObjective As System.Windows.Forms.Label
-        Friend WithEvents cboIris As System.Windows.Forms.ComboBox
         Friend WithEvents nudOverlap As System.Windows.Forms.NumericUpDown
         Friend WithEvents lblOverlap As System.Windows.Forms.Label
+        Friend WithEvents grpObjective As System.Windows.Forms.GroupBox
+        Friend WithEvents RadioButton5 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton4 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton3 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton2 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton1 As System.Windows.Forms.RadioButton
+        Friend WithEvents grpIris As System.Windows.Forms.GroupBox
+        Friend WithEvents RadioButton11 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton12 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton13 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton14 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton15 As System.Windows.Forms.RadioButton
+        Friend WithEvents grpMag As System.Windows.Forms.GroupBox
+        Friend WithEvents RadioButton6 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton7 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton8 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton9 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton10 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton16 As System.Windows.Forms.RadioButton
+        Friend WithEvents RadioButton17 As System.Windows.Forms.RadioButton
     End Class
 
 End Namespace

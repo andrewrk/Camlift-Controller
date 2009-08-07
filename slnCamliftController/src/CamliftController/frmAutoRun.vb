@@ -15,6 +15,10 @@ Namespace SmartSteps
         Private m_currentSetup As AutorunSetupSettings
         Private m_currentReturnToTop As Boolean
 
+        Private m_selectedObjective As KeyValuePair(Of String, ObjectiveSettings) = Nothing
+        Private m_selectedMag As KeyValuePair(Of String, MagSettings) = Nothing
+        Private m_selectedIris As KeyValuePair(Of String, Integer) = Nothing
+
         Public Sub New(ByVal smartStepsManager As SmartStepsManager, ByVal positionManager As PositionManager, ByVal objectiveList As ObjectiveListSettings)
             InitializeComponent() ' This call is required by the Windows Form Designer.
 
@@ -33,6 +37,7 @@ Namespace SmartSteps
                 AddHandler txt.TextChanged, AddressOf txt_TextChanged
             Next
             loadObjectives()
+
 
             Dim currentRun = New AutorunRunSettings(m_currentRun.GetContents)
             Dim currentSetup = New AutorunSetupSettings(m_currentSetup.GetContents)
@@ -79,29 +84,32 @@ Namespace SmartSteps
 
             txtStepSize.Enabled = Not m_currentSetup.CalculateStepSize
 
-            lblObjective.Enabled = m_currentSetup.CalculateStepSize
-            cboObjective.Enabled = m_currentSetup.CalculateStepSize
-            lblMag.Enabled = m_currentSetup.CalculateStepSize
-            cboMag.Enabled = m_currentSetup.CalculateStepSize
-            lblIris.Enabled = m_currentSetup.CalculateStepSize
-            cboIris.Enabled = m_currentSetup.CalculateStepSize
+            grpObjective.Enabled = m_currentSetup.CalculateStepSize
+            grpMag.Enabled = m_currentSetup.CalculateStepSize
+            grpIris.Enabled = m_currentSetup.CalculateStepSize
+
             lblOverlap.Enabled = m_currentSetup.CalculateStepSize
             nudOverlap.Enabled = m_currentSetup.CalculateStepSize
 
             loadStepSize(m_currentSetup)
         End Sub
 
-        Private Sub cboObjective_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboObjective.SelectedIndexChanged
-            Dim lastMagName = cboMag.Text
+        Private Sub rdoObjective_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+            Dim rdoObjective As RadioButton = sender
+            Dim name = rdoObjective.Text
+            m_selectedObjective = (From kvp In m_objecitveList.Objectives Where kvp.Key = name)(0)
             loadMags()
-            trySetCombo(cboMag, lastMagName)
         End Sub
-        Private Sub cboMag_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboMag.SelectedIndexChanged
-            Dim lastIrisName = cboIris.Text
+        Private Sub rdoMag_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+            Dim rdoMag As RadioButton = sender
+            Dim name = rdoMag.Text
+            m_selectedMag = (From kvp In m_selectedObjective.Value.Mags Where kvp.Key = name)(0)
             loadIrises()
-            trySetCombo(cboIris, lastIrisName)
         End Sub
-        Private Sub cboIris_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboIris.SelectedIndexChanged
+        Private Sub rdoIris_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+            Dim rdoIris As RadioButton = sender
+            Dim name = rdoIris.Text
+            m_selectedIris = (From kvp In m_selectedMag.Value.Irises Where kvp.Key = name)(0)
             loadCalculatedStepSize()
         End Sub
         Private Sub nudOverlap_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudOverlap.ValueChanged
@@ -146,59 +154,58 @@ Namespace SmartSteps
             If Not setup.CalculateStepSize Then
                 txtStepSize.Text = setup.StepSize
             Else
-                trySetCombo(cboObjective, setup.Objective)
-                trySetCombo(cboMag, setup.Mag)
-                trySetCombo(cboIris, setup.Iris)
+                trySelectRadio(grpObjective, setup.Objective)
+                trySelectRadio(grpMag, setup.Mag)
+                trySelectRadio(grpIris, setup.Iris)
                 'nudOverlap.Value = setup.Overlap
                 loadCalculatedStepSize()
             End If
         End Sub
 
         Private Sub loadObjectives()
-            cboMag.Items.Clear()
-            For Each kvp In m_objecitveList.Objectives
-                cboObjective.Items.Add(kvp.Key)
-            Next
+            fillGroupWithRadios(grpObjective, (From kvp In m_objecitveList.Objectives Select kvp.Key), AddressOf rdoObjective_CheckedChanged)
         End Sub
         Private Sub loadMags()
-            cboMag.Items.Clear()
-            Dim objective = m_objecitveList.GetObjective(cboObjective.Text)
-            If objective Is Nothing Then Return
-            For Each kvp In objective.Mags
-                cboMag.Items.Add(kvp.Key)
-            Next
+            Dim lastMagName = m_selectedMag.Key
+            fillGroupWithRadios(grpMag, (From kvp In m_selectedObjective.Value.Mags Select kvp.Key), AddressOf rdoMag_CheckedChanged)
+            trySelectRadio(grpMag, lastMagName)
         End Sub
         Private Sub loadIrises()
-            cboIris.Items.Clear()
-            Dim mag = m_objecitveList.GetMag(cboObjective.Text, cboMag.Text)
-            If mag Is Nothing Then Return
-            For Each kvp In mag.Irises
-                cboIris.Items.Add(kvp.Key)
-            Next
+            Dim lastIrisName = m_selectedIris.Key
+            fillGroupWithRadios(grpIris, (From kvp In m_selectedMag.Value.Irises Select kvp.Key), AddressOf rdoIris_CheckedChanged)
+            trySelectRadio(grpIris, lastIrisName)
         End Sub
         Private Sub loadCalculatedStepSize()
-            Dim stepSize As String = m_objecitveList.GetIris(cboObjective.Text, cboMag.Text, cboIris.Text)
+            Dim stepSize As String = m_objecitveList.GetIris(m_selectedObjective.Key, m_selectedMag.Key, m_selectedIris.Key)
             If stepSize <> "" Then
                 stepSize = Int(stepSize * (1 - nudOverlap.Value / 100))
             End If
             txtStepSize.Text = stepSize
         End Sub
-
-        Private Function trySetCombo(ByVal cbo As ComboBox, ByVal name As String) As Boolean
-            For Each iName In cbo.Items
-                If iName = name Then
-                    cbo.Text = iName
-                    Return True
-                End If
+        Private Shared ReadOnly firstLocation As New Point(6, 16)
+        Private Const vertDelta As Integer = 23
+        Private Sub fillGroupWithRadios(ByVal grp As GroupBox, ByVal names As IEnumerable(Of String), ByVal eventHandler As EventHandler)
+            grp.Controls.Clear()
+            Dim loc = firstLocation
+            For Each name As String In names
+                Dim rdo = New RadioButton()
+                rdo.Location = loc
+                loc.Y += vertDelta
+                rdo.Text = name
+                AddHandler rdo.CheckedChanged, eventHandler
+                grp.Controls.Add(rdo)
             Next
-            'select the first one
-            If cbo.Items.Count > 0 Then
-                cbo.Text = cbo.Items.Item(0)
+        End Sub
+
+        Private Function trySelectRadio(ByVal grp As GroupBox, ByVal name As String) As Boolean
+            Dim results = From rdo As RadioButton In grp.Controls Where rdo.Text = name
+            If results.Count > 0 Then
+                results(0).Checked = True
                 Return True
-            Else
-                'no items
-                Return False
+            ElseIf grp.Controls.Count > 0 Then
+                CType(grp.Controls(0), RadioButton).Checked = True
             End If
+            Return False
         End Function
 
         Private Sub validateForm()
@@ -220,9 +227,9 @@ Namespace SmartSteps
             If Not m_currentSetup.CalculateStepSize Then
                 m_currentSetup.StepSize = getValidString(txtStepSize)
             Else
-                m_currentSetup.Objective = cboObjective.Text
-                m_currentSetup.Mag = cboMag.Text
-                m_currentSetup.Iris = cboIris.Text
+                'm_currentSetup.Objective = cboObjective.Text
+                'm_currentSetup.Mag = cboMag.Text
+                'm_currentSetup.Iris = cboIris.Text
                 'm_currentSetup.StepSize = getCurrentIris()
             End If
             m_currentSetup.Dwell = getValidString(txtDwell)
@@ -337,5 +344,4 @@ Namespace SmartSteps
         End Sub
 
     End Class
-
 End Namespace
