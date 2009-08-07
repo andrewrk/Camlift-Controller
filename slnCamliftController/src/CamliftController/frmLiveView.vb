@@ -17,10 +17,10 @@ Namespace CanonCamera
         Private Const MaxZoomHeight = 2592
 
         Private Sub SetWhiteBalanceCombo(ByVal value As Integer)
-            Dim I As Integer
-            For I = 0 To WhiteBalanceValues.Length - 1
-                If WhiteBalanceValues(I) = value Then
-                    cboWhiteBalance.SelectedIndex = I
+            For i = 0 To WhiteBalanceValues.Length - 1
+                If WhiteBalanceValues(i) = value Then
+                    cboWhiteBalance.SelectedIndex = i
+                    Exit For
                 End If
             Next
         End Sub
