@@ -776,7 +776,7 @@ Namespace Settings
 
         Public Const DefaultDwell = "2000"
         Public Const MaxDwell = 5000
-        Public Const MinDwell = 300
+        Public Const MinDwell = 0
         Private m_Dwell As String = DefaultDwell
         Public Property Dwell() As String
             Get
