@@ -14,5 +14,4 @@
 	- Save setup (fancier)
 	- Fix calculation discrepencies 
 	- Cancel Cleanly
-	- Move Dwell to after motor, before picture.
 

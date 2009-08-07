@@ -130,7 +130,9 @@ Namespace SmartSteps
                     Exit Sub
                 End If
 
-                Dim StartTime = Now
+                ' sleep for dwell amount
+                Thread.Sleep(m_dwell)
+
 
                 'Take Picture
                 Try
@@ -139,13 +141,6 @@ Namespace SmartSteps
                     AbortRun(ex)
                     Exit Sub
                 End Try
-
-                Dim DwellSoFar = Now.Subtract(StartTime).TotalMilliseconds
-                Dim SleepAmount = Math.Max(m_dwell - DwellSoFar, 1)
-
-
-                ' sleep for dwell
-                Thread.Sleep(SleepAmount)
 
                 ' check for abort
                 Application.DoEvents()
