@@ -48,8 +48,6 @@ Namespace SmartSteps
         Public Const AbortedProgress = -2
         Public Const NotStartedProgress = -1
 
-        Private Const PostDwell = 100
-
         'Private ReadOnly m_f_takePicture As Action
         Private ReadOnly m_camera As Camera
         Private ReadOnly m_f_goToLocation As Action(Of Integer)
@@ -126,15 +124,13 @@ Namespace SmartSteps
                 m_Progress = 100 * soFar / total
                 RaiseEvent ProgressReported(Me, New EventArgs)
 
-                'Sleep
-                Thread.Sleep(m_dwell)
-
                 'Check for Abort before Take Picture
                 If m_break Then
                     AbortRun(Nothing)
                     Exit Sub
                 End If
 
+                Dim StartTime = Now
 
                 'Take Picture
                 Try
@@ -144,8 +140,15 @@ Namespace SmartSteps
                     Exit Sub
                 End Try
 
-                'Sleep
-                Thread.Sleep(PostDwell)
+                Dim DwellSoFar = Now.Subtract(StartTime).TotalMilliseconds
+                Dim SleepAmount = Math.Max(m_dwell - DwellSoFar, 1)
+
+
+                ' sleep for dwell
+                Thread.Sleep(SleepAmount)
+
+                ' check for abort
+                Application.DoEvents()
 
                 'Check for Abort before next move
                 If m_break Then
