@@ -6,6 +6,14 @@ Imports System.IO
 
 #Const USE_FAKE_CAMERA = False
 
+
+Public Enum CameraState
+    Ready
+    TooManyCameras
+    NoCameraConnected
+    DeviceBusy
+End Enum
+
 #If Not USE_FAKE_CAMERA Then
 Public Class Camera
     Implements IDisposable
@@ -81,14 +89,9 @@ Public Class Camera
         m_pendingZoomPosition = False
         m_pendingWhiteBalance = False
 
-
     End Sub
 
-    ''' <summary>
-    ''' connect the computer to the camera. must be called before doing anything else.
-    ''' </summary>
-    ''' <remarks></remarks>
-    Public Sub EstablishSession()
+    Private Sub EstablishSession()
         Dim camList As IntPtr
         Dim numCams As Integer
 
@@ -138,9 +141,11 @@ Public Class Camera
         m_haveSession = True
     End Sub
 
-    Private Sub CleanupSession()
+    Private Sub ReleaseSession()
+        FlushTransferQueue()
         EdsCloseSession(m_cam)
         EdsRelease(m_cam)
+        m_haveSession = False
     End Sub
 
 
@@ -151,7 +156,7 @@ Public Class Camera
         StopLiveView() 'stops it only if it's running
 
         'FlushTransferQueue()
-        CleanupSession()
+        ReleaseSession()
         EdsTerminateSDK()
 
         s_instance = Nothing
@@ -195,35 +200,39 @@ Public Class Camera
         Select Case inEvent
             Case kEdsObjectEvent_DirItemRequestTransfer
                 ' queue up the transfer request
-                Dim transfer As New TransferItem
-                transfer.sdkRef = inRef
-                transfer.outFile = m_picOutFile
-                m_transferQueue.Enqueue(transfer)
+                'Dim transfer As New TransferItem
+                'transfer.sdkRef = inRef
+                'transfer.outFile = m_picOutFile
+                'm_transferQueue.Enqueue(transfer)
 
+                TransferOneItem(inRef, m_picOutFile)
                 m_waitingOnPic = False ' allow other thread to continue
             Case Else
                 Debug.Print(String.Format("ObjectEventHandler: event {0}", inEvent))
 
         End Select
+    End Sub
 
+    Private Sub TransferOneItem(ByVal inRef As IntPtr, ByVal outfile As String)
+        ' transfer the image in memory to disk
+        Dim dirItemInfo As EdsDirectoryItemInfo = Nothing
+        Dim outStream As IntPtr
+
+        CheckError(EdsGetDirectoryItemInfo(inRef, dirItemInfo))
+
+        ' This creates the outStream that is used by EdsDownload to actually grab and write out the file.
+        CheckError(EdsCreateFileStream(outfile, EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways, EdsAccess.kEdsAccess_Write, outStream))
+
+        ' do the transfer
+        CheckError(EdsDownload(inRef, dirItemInfo.size, outStream))
+        CheckError(EdsDownloadComplete(inRef))
+        CheckError(EdsRelease(outStream))
     End Sub
 
     Public Sub FlushTransferQueue()
         While m_transferQueue.Count > 0
-            ' transfer the image in memory to disk
             Dim transfer As TransferItem = m_transferQueue.Dequeue()
-            Dim dirItemInfo As EdsDirectoryItemInfo = Nothing
-            Dim outStream As IntPtr
-
-            CheckError(EdsGetDirectoryItemInfo(transfer.sdkRef, dirItemInfo))
-
-            ' This creates the outStream that is used by EdsDownload to actually grab and write out the file.
-            CheckError(EdsCreateFileStream(transfer.outFile, EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways, EdsAccess.kEdsAccess_Write, outStream))
-
-            ' do the transfer
-            CheckError(EdsDownload(transfer.sdkRef, dirItemInfo.size, outStream))
-            CheckError(EdsDownloadComplete(transfer.sdkRef))
-            CheckError(EdsRelease(outStream))
+            TransferOneItem(transfer.sdkRef, transfer.outFile)
         End While
     End Sub
 
@@ -256,11 +265,11 @@ Public Class Camera
         End If
     End Sub
 
-    '''<summary>snap a photo with the camera and write it to outfile</summary> 
-    ''' <param name="OutFile">the file to save the picture to</param>
-    Public Sub TakePicture(ByVal OutFile As String)
+    Public Sub TakeSinglePicture(ByVal OutFile As String)
         Dim interuptingLiveView As Boolean = m_liveViewOn
         Dim lvBox As PictureBox = m_liveViewPicBox
+
+        Dim haveSession As Boolean = m_haveSession
 
         EstablishSession()
         CheckBusy()
@@ -270,6 +279,29 @@ Public Class Camera
         ' set flag indicating we are waiting on a callback call
         m_waitingOnPic = True
         m_picOutFile = OutFile
+
+
+        If TakePicture(OutFile) Then
+            If interuptingLiveView Then StartLiveView(lvBox)
+        Else
+            ' we never got a callback. throw an error
+            If interuptingLiveView Then
+                StartLiveView(lvBox)
+            Else
+                If Not haveSession Then ReleaseSession()
+            End If
+
+
+            m_waitingOnPic = False
+            Throw New TakePictureFailedException
+        End If
+    End Sub
+
+
+    '''<summary>snap a photo with the camera and write it to outfile</summary> 
+    ''' <param name="OutFile">the file to save the picture to</param>
+    Private Function TakePicture(ByVal OutFile As String) As Boolean
+
 
         ' take a picture with the camera and save it to outfile
         Dim err As Integer = EdsSendCommand(m_cam, EdsCameraCommand.kEdsCameraCommand_TakePicture, 0)
@@ -284,18 +316,11 @@ Public Class Camera
             System.Threading.Thread.Sleep(SleepAmount)
             Application.DoEvents()
 
-            If Not m_waitingOnPic Then
-                If interuptingLiveView Then StartLiveView(lvBox)
-                Exit Sub 'success 
-            End If
+            If Not m_waitingOnPic Then Return True ' success
         Next I
 
-        ' we never got a callback. throw an error
-        If interuptingLiveView Then StartLiveView(lvBox)
-
-        m_waitingOnPic = False
-        Throw New TakePictureFailedException
-    End Sub
+        Return False
+    End Function
 
     Private Sub StartBulb()
         Dim err As Integer
@@ -377,6 +402,8 @@ Public Class Camera
     Public Sub StopLiveView()
         Dim device As New StructurePointer(Of UInt32)
 
+        Dim haveSession As Boolean = m_haveSession
+
         EstablishSession()
 
         If m_stoppingLiveView Or (Not m_waitingToStartLiveView And Not m_liveViewOn) Then Exit Sub
@@ -401,6 +428,8 @@ Public Class Camera
         ' clean up
         CheckError(EdsRelease(m_liveViewStreamPtr))
         m_liveViewBufferHandle.Free()
+
+        If Not haveSession Then ReleaseSession()
     End Sub
 
     Private Sub UpdateLiveView()
@@ -492,11 +521,14 @@ Public Class Camera
 
     Public Property WhiteBalance() As Integer
         Get
+            Dim haveSession As Boolean = m_haveSession
+            EstablishSession()
             CheckError(EdsGetPropertyData(m_cam, kEdsPropID_WhiteBalance, 0, m_whiteBalance.Size, m_whiteBalance.Pointer))
+            If Not haveSession Then ReleaseSession()
             Return m_whiteBalance.Value
         End Get
         Set(ByVal value As Integer)
-            m_whiteBalance.value = value
+            m_whiteBalance.Value = value
             m_pendingWhiteBalance = True
         End Set
     End Property

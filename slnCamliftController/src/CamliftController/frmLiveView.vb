@@ -53,12 +53,8 @@ Namespace CanonCamera
                 Try
                     m_cam.StartLiveView(Me.picLiveView)
 
-                Catch ex As CameraDisconnectedException
-                    If ConnectCamera(m_cam) Then
-                        TryAgain = True
-                    Else
-                        Me.Close()
-                    End If
+                Catch ex As Exception
+                    TryAgain = HandleCameraException(ex)
                 End Try
             End While
 

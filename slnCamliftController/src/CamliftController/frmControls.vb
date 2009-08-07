@@ -236,19 +236,13 @@ Namespace CamliftController
                 TryAgain = False
 
                 Try
-                    m_cam.TakePicture(outfile)
-                    m_cam.FlushTransferQueue()
+                    m_cam.TakeSinglePicture(outfile)
                 Catch ex As SdkException When ex.Message = SdkErrors.TakePictureAfNg
                     MsgBox("Autofocus failed!" & vbCrLf & vbCrLf & "NOTE: This software is intended to be used with the camera in manual focus mode", MsgBoxStyle.Exclamation)
                 Catch ex As CameraIsBusyException
                     ' do nothing
-                Catch ex As CameraDisconnectedException
-                    If Not ConnectCamera(m_cam) Then
-                        Me.Close()
-                        Exit Sub
-                    Else
-                        TryAgain = True
-                    End If
+                Catch ex As Exception
+                    TryAgain = HandleCameraException(ex)
                 End Try
             End While
 

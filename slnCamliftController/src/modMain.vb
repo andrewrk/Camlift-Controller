@@ -52,8 +52,7 @@ Public Module modMain
 
         Dim settings As New AllSettings
         Using cam As New Camera, spm As New Silverpak(settings.Silverpak)
-            If Not ConnectCamera(cam) Then Exit Sub
-
+            
             While True
                 Try
                     spm.EstablishConnection()
@@ -69,19 +68,20 @@ Public Module modMain
         End Using
     End Sub
 
-    Public Function ConnectCamera(ByVal cam As Camera) As Boolean
-        While True
-            Try
-                cam.EstablishSession()
-                Return True
-            Catch ex As NoCameraFoundException
-                If MsgBox(MsgBoxCameraNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Return False
-            Catch ex As TooManyCamerasFoundException
-                If MsgBox(MsgBoxTooManyCamerasMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Return False
-            Catch ex As SdkException When ex.SdkError = SdkErrors.DeviceBusy
-                If MsgBox(MsgBoxDeviceIsBusyMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Return False
-            End Try
-        End While
+    Public Function HandleCameraException(ByVal ex As Exception) As Boolean
+        If TypeOf ex Is NoCameraFoundException Then
+            Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxCameraNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
+        ElseIf TypeOf ex Is TooManyCamerasFoundException Then
+            Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxTooManyCamerasMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
+        ElseIf TypeOf ex Is SdkException Then
+            If CType(ex, SdkException).SdkError = SdkErrors.DeviceBusy Then
+                Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxDeviceIsBusyMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
+            Else
+                Throw ex
+            End If
+        Else
+            Throw ex
+        End If
     End Function
 
     Public Function MicrostepsToMilimeters(ByVal microsteps As Integer) As String
