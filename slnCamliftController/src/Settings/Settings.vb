@@ -468,7 +468,7 @@ Namespace Settings
         End Sub
 
         Public Function GetMag(ByVal magName As String) As MagSettings
-            'Return findByName(m_Mags, magName)
+            Return findByName(Mags, magName)
         End Function
 
         Public Function GetIris(ByVal magName As String, ByVal irisName As String) As Integer?
@@ -577,7 +577,7 @@ Namespace Settings
     Public Class SmartStepsSettings
         Inherits SettingsDict
 
-        Private m_AutorunSetups As AutorunSetupListSettings
+        Private m_AutorunSetups As New AutorunSetupListSettings(Nothing)
         Public Property AutorunSetups() As AutorunSetupListSettings
             Get
                 Return m_AutorunSetups
@@ -587,7 +587,7 @@ Namespace Settings
             End Set
         End Property
 
-        Private m_LastAutorunSetup As AutorunSetupSettings
+        Private m_LastAutorunSetup As New AutorunSetupSettings(Nothing)
         Public Property LastAutorunSetup() As AutorunSetupSettings
             Get
                 Return m_LastAutorunSetup
@@ -609,19 +609,7 @@ Namespace Settings
 
         Public Sub New(ByVal contents As Object)
             init(contents)
-            'Dim autorunSetupsArg As IList(Of KeyValuePair(Of String, Object)) = Nothing
-            'Dim lastAutorunSetupArg As IDictionary(Of String, Object) = Nothing
-            ''...
-            'Dim dict = TryCast(contents, IDictionary(Of String, Object))
-            'If dict IsNot Nothing Then
-            '    tryGetValue(dict, AutorunSetupsName, autorunSetupsArg)
-            '    tryGetValue(dict, LastAutorunSetupName, lastAutorunSetupArg)
-            '    tryGetValue(dict, ReturnToTopName, m_ReturnToTop)
-            '    '...
-            'End If
-            'm_AutorunSetups = New AutorunSetupListSettings(autorunSetupsArg)
-            'm_LastAutorunSetup = New AutorunSetupSettings(lastAutorunSetupArg)
-            ''...
+
         End Sub
 
     End Class

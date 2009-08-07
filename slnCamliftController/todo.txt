@@ -1,7 +1,6 @@
 ﻿* live view:
 	- Draggable white box in the view area for determining the WhiteBalance and zoom location.
 * step sizes and labels are not stored in xml
-* fix the mag stuff
 * main window
 	- Have "Set Autorun Start/Stop" (probably with fewer words) buttons near "Autorun..." button so that the user doesn't need to go through the "Store" menu.
 * auto run
@@ -11,3 +10,5 @@
 		 max ?%.
 		 The user might see "0%" when it's really 10% and "-10%" when it's really 0%.
 	- Have radio buttons instead of combo boxes for Objective, Mag, and Iris
+	- Saved Positions
+	- Manage Memory Registers
