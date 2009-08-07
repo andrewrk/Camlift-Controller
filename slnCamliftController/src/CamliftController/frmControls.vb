@@ -96,7 +96,6 @@ Namespace CamliftController
         End Sub
 
         Private Sub frmControls_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
-            m_cam.FlushTransferQueue()
             If m_isLiveViewActive Then m_frmLiveView.Close()
             saveSettings_gui()
         End Sub

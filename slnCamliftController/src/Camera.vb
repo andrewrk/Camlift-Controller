@@ -46,6 +46,7 @@ Public Class Camera
     Private m_pendingZoomRatio As Boolean
     Private m_whiteBalance As StructurePointer(Of Integer)
     Private m_pendingWhiteBalance As Boolean
+    Private m_fastPictures As Boolean
 
     Private m_haveSession As Boolean
 
@@ -89,6 +90,7 @@ Public Class Camera
         m_pendingZoomPosition = False
         m_pendingWhiteBalance = False
 
+        m_fastPictures = False
     End Sub
 
     Private Sub EstablishSession()
@@ -142,7 +144,7 @@ Public Class Camera
     End Sub
 
     Private Sub ReleaseSession()
-        FlushTransferQueue()
+        Debug.Assert(m_fastPictures = False)
         EdsCloseSession(m_cam)
         EdsRelease(m_cam)
         m_haveSession = False
@@ -199,17 +201,19 @@ Public Class Camera
     Private Sub ObjectEventHandler(ByVal inEvent As Integer, ByVal inRef As IntPtr, ByVal inContext As IntPtr)
         Select Case inEvent
             Case kEdsObjectEvent_DirItemRequestTransfer
-                ' queue up the transfer request
-                'Dim transfer As New TransferItem
-                'transfer.sdkRef = inRef
-                'transfer.outFile = m_picOutFile
-                'm_transferQueue.Enqueue(transfer)
+                If m_fastPictures Then
+                    ' queue up the transfer request
+                    Dim transfer As New TransferItem
+                    transfer.sdkRef = inRef
+                    transfer.outFile = m_picOutFile
+                    m_transferQueue.Enqueue(transfer)
+                Else
+                    TransferOneItem(inRef, m_picOutFile)
+                End If
 
-                TransferOneItem(inRef, m_picOutFile)
                 m_waitingOnPic = False ' allow other thread to continue
             Case Else
                 Debug.Print(String.Format("ObjectEventHandler: event {0}", inEvent))
-
         End Select
     End Sub
 
@@ -229,11 +233,24 @@ Public Class Camera
         CheckError(EdsRelease(outStream))
     End Sub
 
-    Public Sub FlushTransferQueue()
+    Public Sub EndFastPictures()
+        If Not m_fastPictures Then Exit Sub
+
         While m_transferQueue.Count > 0
             Dim transfer As TransferItem = m_transferQueue.Dequeue()
             TransferOneItem(transfer.sdkRef, transfer.outFile)
         End While
+        m_fastPictures = False
+
+        ReleaseSession()
+    End Sub
+
+    Public Sub BeginFastPictures()
+        CheckBusy()
+        If m_liveViewOn Then Throw New CameraIsBusyException
+
+        m_fastPictures = True
+        EstablishSession()
     End Sub
 
     Private Sub StateEventHandler(ByVal inEvent As Integer, ByVal inParameter As Integer, ByVal inContext As IntPtr)
@@ -265,6 +282,28 @@ Public Class Camera
         End If
     End Sub
 
+
+    Public Sub TakeFastPicture(ByVal outfile As String)
+        If Not m_fastPictures Then Throw New CameraIsBusyException
+
+
+        ' set flag indicating we are waiting on a callback call
+        m_waitingOnPic = True
+        m_picOutFile = outfile
+
+        Dim TryAgain As Boolean = True
+        While TryAgain
+            TryAgain = False
+            Try
+                TakePicture(outfile)
+            Catch ex As SdkException When ex.SdkError = SdkErrors.DeviceBusy
+                Thread.Sleep(SleepAmount)
+                TryAgain = True
+            End Try
+        End While
+    End Sub
+
+
     Public Sub TakeSinglePicture(ByVal OutFile As String)
         Dim interuptingLiveView As Boolean = m_liveViewOn
         Dim lvBox As PictureBox = m_liveViewPicBox
@@ -276,10 +315,10 @@ Public Class Camera
 
         If interuptingLiveView Then StopLiveView()
 
+
         ' set flag indicating we are waiting on a callback call
         m_waitingOnPic = True
         m_picOutFile = OutFile
-
 
         If TakePicture(OutFile) Then
             If interuptingLiveView Then StartLiveView(lvBox)

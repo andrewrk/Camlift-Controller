@@ -88,6 +88,7 @@ Namespace SmartSteps
         End Sub
 
         Public Sub Abort()
+            m_camera.EndFastPictures()
             If m_runnerThread Is Nothing Then Throw New InvalidOperationException
             m_break = True
         End Sub
@@ -114,6 +115,7 @@ Namespace SmartSteps
             End If
 
             'reached first location
+            m_camera.BeginFastPictures()
 
             Dim soFar = 0
             For Each location In m_locations
@@ -137,8 +139,7 @@ Namespace SmartSteps
                 'Take Picture
                 Try
                     ' TODO: replace folder with folder from settings
-                    'm_camera.TakePicture("C:\temptest\out.jpg")
-                    ' ^^ will be replaced with m_camera.startfastpictures() .takefastpicture() .endfastpictures()
+                    m_camera.TakeFastPicture("C:\temptest\out.jpg")
                 Catch ex As SdkException
                     AbortRun(ex)
                     Exit Sub
@@ -159,6 +160,8 @@ Namespace SmartSteps
             If m_returnToTop Then
                 m_f_goToLocation.Invoke(m_locations.First)
             End If
+
+            m_camera.EndFastPictures()
 
             m_Progress = 100 ' complete
             RaiseEvent Finished(Me, New EventArgs)

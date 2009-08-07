@@ -1,5 +1,4 @@
-﻿* Camera API for fast pictures with queue
-* live view:
+﻿* live view:
 	- Draggable white box in the view area for determining the WhiteBalance and zoom location.
 	- implement 10x zoom even though it may not work
 * step sizes and labels are not stored in xml

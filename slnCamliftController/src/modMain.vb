@@ -52,7 +52,6 @@ Public Module modMain
 
         Dim settings As New AllSettings
         Using cam As New Camera, spm As New Silverpak(settings.Silverpak)
-            
             While True
                 Try
                     spm.EstablishConnection()
