@@ -50,6 +50,7 @@
             Me.SettingsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.PreferencesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.AdvancedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.SavePicturesFolderMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator
             Me.AlwaysOnTopToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
@@ -58,13 +59,13 @@
             Me.AboutToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.btnStore = New System.Windows.Forms.Button
             Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
-            Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel
             Me.FlowLayoutPanel3 = New System.Windows.Forms.FlowLayoutPanel
             Me.btnLoad = New System.Windows.Forms.Button
             Me.btnAutorun = New System.Windows.Forms.Button
             Me.btnTakePic = New System.Windows.Forms.Button
             Me.btnLiveView = New System.Windows.Forms.Button
-            Me.SavePicturesFolderMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.btnAutoStart = New System.Windows.Forms.Button
+            Me.btnAutoStop = New System.Windows.Forms.Button
             Me.stsStatusStrip.SuspendLayout()
             CType(Me.tkbPos, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.grpDist.SuspendLayout()
@@ -72,7 +73,6 @@
             CType(Me.tkbDist, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.MenuStrip1.SuspendLayout()
             Me.FlowLayoutPanel1.SuspendLayout()
-            Me.FlowLayoutPanel2.SuspendLayout()
             Me.FlowLayoutPanel3.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -81,7 +81,7 @@
             Me.stsStatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tslStatus})
             Me.stsStatusStrip.Location = New System.Drawing.Point(0, 553)
             Me.stsStatusStrip.Name = "stsStatusStrip"
-            Me.stsStatusStrip.Size = New System.Drawing.Size(168, 22)
+            Me.stsStatusStrip.Size = New System.Drawing.Size(194, 22)
             Me.stsStatusStrip.SizingGrip = False
             Me.stsStatusStrip.TabIndex = 0
             Me.stsStatusStrip.Text = "StatusStrip1"
@@ -131,9 +131,9 @@
             Me.grpDist.Controls.Add(Me.lblCurrentDist)
             Me.grpDist.Controls.Add(Me.pnlDist)
             Me.grpDist.Controls.Add(Me.tkbDist)
-            Me.grpDist.Location = New System.Drawing.Point(3, 239)
+            Me.grpDist.Location = New System.Drawing.Point(51, 263)
             Me.grpDist.Name = "grpDist"
-            Me.grpDist.Size = New System.Drawing.Size(106, 199)
+            Me.grpDist.Size = New System.Drawing.Size(115, 199)
             Me.grpDist.TabIndex = 3
             Me.grpDist.TabStop = False
             Me.grpDist.Text = "Distance"
@@ -270,7 +270,7 @@
             'btnUp
             '
             Me.btnUp.Enabled = False
-            Me.btnUp.Location = New System.Drawing.Point(3, 61)
+            Me.btnUp.Location = New System.Drawing.Point(51, 85)
             Me.btnUp.Name = "btnUp"
             Me.btnUp.Size = New System.Drawing.Size(80, 32)
             Me.btnUp.TabIndex = 6
@@ -280,7 +280,7 @@
             'btnDown
             '
             Me.btnDown.Enabled = False
-            Me.btnDown.Location = New System.Drawing.Point(3, 99)
+            Me.btnDown.Location = New System.Drawing.Point(51, 123)
             Me.btnDown.Name = "btnDown"
             Me.btnDown.Size = New System.Drawing.Size(80, 32)
             Me.btnDown.TabIndex = 7
@@ -291,7 +291,7 @@
             '
             Me.btnStop.BackColor = System.Drawing.Color.Red
             Me.btnStop.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.btnStop.Location = New System.Drawing.Point(3, 444)
+            Me.btnStop.Location = New System.Drawing.Point(51, 468)
             Me.btnStop.Name = "btnStop"
             Me.btnStop.Size = New System.Drawing.Size(80, 63)
             Me.btnStop.TabIndex = 8
@@ -303,7 +303,7 @@
             Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SettingsToolStripMenuItem, Me.HelpToolStripMenuItem})
             Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
             Me.MenuStrip1.Name = "MenuStrip1"
-            Me.MenuStrip1.Size = New System.Drawing.Size(168, 24)
+            Me.MenuStrip1.Size = New System.Drawing.Size(194, 24)
             Me.MenuStrip1.TabIndex = 10
             Me.MenuStrip1.Text = "MenuStrip1"
             '
@@ -327,6 +327,13 @@
             Me.AdvancedToolStripMenuItem.Name = "AdvancedToolStripMenuItem"
             Me.AdvancedToolStripMenuItem.Size = New System.Drawing.Size(188, 22)
             Me.AdvancedToolStripMenuItem.Text = "&Advanced..."
+            '
+            'SavePicturesFolderMenuItem
+            '
+            Me.SavePicturesFolderMenuItem.Enabled = False
+            Me.SavePicturesFolderMenuItem.Name = "SavePicturesFolderMenuItem"
+            Me.SavePicturesFolderMenuItem.Size = New System.Drawing.Size(188, 22)
+            Me.SavePicturesFolderMenuItem.Text = "&Save Pictures Folder..."
             '
             'ToolStripSeparator2
             '
@@ -383,31 +390,11 @@
             Me.FlowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.FlowLayoutPanel1.Controls.Add(Me.txtPos)
             Me.FlowLayoutPanel1.Controls.Add(Me.btnGo)
-            Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
+            Me.FlowLayoutPanel1.Location = New System.Drawing.Point(48, 24)
             Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
             Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
             Me.FlowLayoutPanel1.Size = New System.Drawing.Size(94, 29)
             Me.FlowLayoutPanel1.TabIndex = 12
-            '
-            'FlowLayoutPanel2
-            '
-            Me.FlowLayoutPanel2.AutoSize = True
-            Me.FlowLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.FlowLayoutPanel2.Controls.Add(Me.FlowLayoutPanel1)
-            Me.FlowLayoutPanel2.Controls.Add(Me.FlowLayoutPanel3)
-            Me.FlowLayoutPanel2.Controls.Add(Me.btnUp)
-            Me.FlowLayoutPanel2.Controls.Add(Me.btnDown)
-            Me.FlowLayoutPanel2.Controls.Add(Me.btnAutorun)
-            Me.FlowLayoutPanel2.Controls.Add(Me.btnTakePic)
-            Me.FlowLayoutPanel2.Controls.Add(Me.btnLiveView)
-            Me.FlowLayoutPanel2.Controls.Add(Me.grpDist)
-            Me.FlowLayoutPanel2.Controls.Add(Me.btnStop)
-            Me.FlowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.FlowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-            Me.FlowLayoutPanel2.Location = New System.Drawing.Point(45, 24)
-            Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
-            Me.FlowLayoutPanel2.Size = New System.Drawing.Size(123, 529)
-            Me.FlowLayoutPanel2.TabIndex = 13
             '
             'FlowLayoutPanel3
             '
@@ -415,7 +402,7 @@
             Me.FlowLayoutPanel3.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.FlowLayoutPanel3.Controls.Add(Me.btnLoad)
             Me.FlowLayoutPanel3.Controls.Add(Me.btnStore)
-            Me.FlowLayoutPanel3.Location = New System.Drawing.Point(0, 29)
+            Me.FlowLayoutPanel3.Location = New System.Drawing.Point(48, 53)
             Me.FlowLayoutPanel3.Margin = New System.Windows.Forms.Padding(0)
             Me.FlowLayoutPanel3.Name = "FlowLayoutPanel3"
             Me.FlowLayoutPanel3.Size = New System.Drawing.Size(95, 29)
@@ -434,7 +421,7 @@
             '
             'btnAutorun
             '
-            Me.btnAutorun.Location = New System.Drawing.Point(3, 137)
+            Me.btnAutorun.Location = New System.Drawing.Point(51, 161)
             Me.btnAutorun.Name = "btnAutorun"
             Me.btnAutorun.Size = New System.Drawing.Size(80, 28)
             Me.btnAutorun.TabIndex = 0
@@ -443,7 +430,7 @@
             '
             'btnTakePic
             '
-            Me.btnTakePic.Location = New System.Drawing.Point(3, 171)
+            Me.btnTakePic.Location = New System.Drawing.Point(51, 195)
             Me.btnTakePic.Name = "btnTakePic"
             Me.btnTakePic.Size = New System.Drawing.Size(80, 28)
             Me.btnTakePic.TabIndex = 15
@@ -452,19 +439,30 @@
             '
             'btnLiveView
             '
-            Me.btnLiveView.Location = New System.Drawing.Point(3, 205)
+            Me.btnLiveView.Location = New System.Drawing.Point(51, 229)
             Me.btnLiveView.Name = "btnLiveView"
             Me.btnLiveView.Size = New System.Drawing.Size(80, 28)
             Me.btnLiveView.TabIndex = 16
             Me.btnLiveView.Text = "Live View"
             Me.btnLiveView.UseVisualStyleBackColor = True
             '
-            'SavePicturesFolderMenuItem
+            'btnAutoStart
             '
-            Me.SavePicturesFolderMenuItem.Enabled = False
-            Me.SavePicturesFolderMenuItem.Name = "SavePicturesFolderMenuItem"
-            Me.SavePicturesFolderMenuItem.Size = New System.Drawing.Size(188, 22)
-            Me.SavePicturesFolderMenuItem.Text = "&Save Pictures Folder..."
+            Me.btnAutoStart.Location = New System.Drawing.Point(133, 155)
+            Me.btnAutoStart.Name = "btnAutoStart"
+            Me.btnAutoStart.Size = New System.Drawing.Size(56, 20)
+            Me.btnAutoStart.TabIndex = 17
+            Me.btnAutoStart.Text = "Set Start"
+            Me.btnAutoStart.UseVisualStyleBackColor = True
+            '
+            'btnAutoStop
+            '
+            Me.btnAutoStop.Location = New System.Drawing.Point(133, 176)
+            Me.btnAutoStop.Name = "btnAutoStop"
+            Me.btnAutoStop.Size = New System.Drawing.Size(56, 20)
+            Me.btnAutoStop.TabIndex = 18
+            Me.btnAutoStop.Text = "Set Stop"
+            Me.btnAutoStop.UseVisualStyleBackColor = True
             '
             'frmControls
             '
@@ -473,11 +471,21 @@
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.AutoSize = True
             Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.ClientSize = New System.Drawing.Size(168, 575)
-            Me.Controls.Add(Me.FlowLayoutPanel2)
+            Me.ClientSize = New System.Drawing.Size(194, 575)
+            Me.Controls.Add(Me.btnAutoStop)
+            Me.Controls.Add(Me.btnAutoStart)
+            Me.Controls.Add(Me.FlowLayoutPanel1)
+            Me.Controls.Add(Me.FlowLayoutPanel3)
             Me.Controls.Add(Me.tkbPos)
+            Me.Controls.Add(Me.btnUp)
             Me.Controls.Add(Me.stsStatusStrip)
+            Me.Controls.Add(Me.btnDown)
             Me.Controls.Add(Me.MenuStrip1)
+            Me.Controls.Add(Me.btnAutorun)
+            Me.Controls.Add(Me.btnStop)
+            Me.Controls.Add(Me.btnTakePic)
+            Me.Controls.Add(Me.grpDist)
+            Me.Controls.Add(Me.btnLiveView)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
             Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
             Me.KeyPreview = True
@@ -499,8 +507,6 @@
             Me.MenuStrip1.PerformLayout()
             Me.FlowLayoutPanel1.ResumeLayout(False)
             Me.FlowLayoutPanel1.PerformLayout()
-            Me.FlowLayoutPanel2.ResumeLayout(False)
-            Me.FlowLayoutPanel2.PerformLayout()
             Me.FlowLayoutPanel3.ResumeLayout(False)
             Me.FlowLayoutPanel3.PerformLayout()
             Me.ResumeLayout(False)
@@ -540,13 +546,14 @@
         Friend WithEvents ToolStripSeparator2 As System.Windows.Forms.ToolStripSeparator
         Friend WithEvents AlwaysOnTopToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
-        Friend WithEvents FlowLayoutPanel2 As System.Windows.Forms.FlowLayoutPanel
         Friend WithEvents btnLoad As System.Windows.Forms.Button
         Friend WithEvents FlowLayoutPanel3 As System.Windows.Forms.FlowLayoutPanel
         Friend WithEvents btnAutorun As System.Windows.Forms.Button
         Friend WithEvents btnTakePic As System.Windows.Forms.Button
         Friend WithEvents btnLiveView As System.Windows.Forms.Button
         Friend WithEvents SavePicturesFolderMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents btnAutoStart As System.Windows.Forms.Button
+        Friend WithEvents btnAutoStop As System.Windows.Forms.Button
     End Class
 
 End Namespace

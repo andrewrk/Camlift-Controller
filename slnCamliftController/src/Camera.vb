@@ -249,8 +249,8 @@ Public Class Camera
         CheckBusy()
         If m_liveViewOn Then Throw New CameraIsBusyException
 
-        m_fastPictures = True
         EstablishSession()
+        m_fastPictures = True
     End Sub
 
     Private Sub StateEventHandler(ByVal inEvent As Integer, ByVal inParameter As Integer, ByVal inContext As IntPtr)

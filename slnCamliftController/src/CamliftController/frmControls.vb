@@ -470,6 +470,8 @@ Namespace CamliftController
             Static otherControls As Control() = { _
                 btnLoad, _
                 btnAutorun, _
+                btnAutoStart, _
+                btnAutoStop, _
                 btnStore, _
                 btnTakePic, _
                 btnLiveView, _
@@ -555,6 +557,14 @@ Namespace CamliftController
             m_allSettings.SettingsIndex.SavePicturesFolder = dialog.SelectedPath
 
 
+        End Sub
+
+        Private Sub btnAutoStart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAutoStart.Click
+            If ValidateNumeric(txtPos, True) Then m_smartStepsManager.LastAutorunRun.AutorunStart = Val(txtPos.Text)
+        End Sub
+
+        Private Sub btnAutoStop_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAutoStop.Click
+            If ValidateNumeric(txtPos, True) Then m_smartStepsManager.LastAutorunRun.AutorunStop = Val(txtPos.Text)
         End Sub
     End Class
 

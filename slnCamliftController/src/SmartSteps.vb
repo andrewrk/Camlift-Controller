@@ -113,7 +113,16 @@ Namespace SmartSteps
             End If
 
             'reached first location
-            m_camera.BeginFastPictures()
+            Dim TryAgain As Boolean = True
+            While TryAgain
+                TryAgain = False
+
+                Try
+                    m_camera.BeginFastPictures()
+                Catch ex As Exception
+                    TryAgain = HandleCameraException(ex)
+                End Try
+            End While
 
             Dim soFar = 0
             For Each location In m_locations
@@ -158,7 +167,9 @@ Namespace SmartSteps
                 m_f_goToLocation.Invoke(m_locations.First)
             End If
 
+
             m_camera.EndFastPictures()
+
 
             m_Progress = 100 ' complete
             RaiseEvent Finished(Me, New EventArgs)

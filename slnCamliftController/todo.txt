@@ -1,6 +1,4 @@
 ﻿* step sizes and labels are not stored in xml
-* main window
-	- Have "Set Autorun Start/Stop" (probably with fewer words) buttons near "Autorun..." button so that the user doesn't need to go through the "Store" menu.
 * auto run
 	- Add an "Adjust overlap" setting where the user can adjust the percentage of overlap between slices.
 		Default 10%
