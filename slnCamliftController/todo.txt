@@ -1,9 +1,7 @@
-﻿* live view:
-	- Draggable white box in the view area for determining the WhiteBalance and zoom location.
-	- implement 10x zoom even though it may not work
-* step sizes and labels are not stored in xml
+﻿* step sizes and labels are not stored in xml
 * main window
 	- Have "Set Autorun Start/Stop" (probably with fewer words) buttons near "Autorun..." button so that the user doesn't need to go through the "Store" menu.
+* make sure when you take queued pictures, it doesn't bork up the camera
 * auto run
 	- Add an "Adjust overlap" setting where the user can adjust the percentage of overlap between slices.
 		Default 10%
@@ -17,3 +15,4 @@
 	- Fix calculation discrepencies 
 	- Cancel Cleanly
 	- Move Dwell to after motor, before picture.
+

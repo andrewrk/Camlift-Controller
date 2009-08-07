@@ -9,12 +9,16 @@ Namespace CanonCamera
         Private m_ShowGrid As Boolean
 
         Private WhiteBalanceValues As Integer()
-        Private m_zoomRatio As Integer
 
+        Private ZoomRatios As Integer()
+        Private m_zoomIndex As Integer
 
-        Private Const MaxZoom = 5
         Private Const MaxZoomWidth = 3888
         Private Const MaxZoomHeight = 2592
+
+        Private m_mouseDownZoomLocation As Point
+        Private m_mouseDownPt As Point
+        Private m_mouseDown As Boolean
 
         Private Sub SetWhiteBalanceCombo(ByVal value As Integer)
             For i = 0 To WhiteBalanceValues.Length - 1
@@ -42,10 +46,12 @@ Namespace CanonCamera
                 EdsWhiteBalance.kEdsWhiteBalance_PCSet2, _
                 EdsWhiteBalance.kEdsWhiteBalance_PCSet3}
 
+            ZoomRatios = New Integer() {1, 5, 10}
+            m_zoomIndex = 0
+            btnZoomOut.Enabled = False
 
             m_ShowGrid = False
             m_cam = cam
-            m_zoomRatio = 1
 
             Dim TryAgain As Boolean = True
             While TryAgain
@@ -59,7 +65,7 @@ Namespace CanonCamera
             End While
 
             SetWhiteBalanceCombo(m_cam.WhiteBalance)
-            m_cam.ZoomRatio = m_zoomRatio
+            m_cam.ZoomRatio = ZoomRatios(m_zoomIndex)
         End Sub
 
 
@@ -72,8 +78,58 @@ Namespace CanonCamera
             Me.Close()
         End Sub
 
+        Private Sub picLiveView_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles picLiveView.MouseDown
+            m_mouseDown = True
+            m_mouseDownPt.X = e.X
+            m_mouseDownPt.Y = e.Y
+            m_mouseDownZoomLocation = getzoomloc()
+        End Sub
+
+        Private Function GetZoomLoc() As Point
+            Dim zoomCamLoc As Point = m_cam.ZoomPosition
+            Return New Point(zoomCamLoc.X / MaxZoomWidth * picLiveView.Width, _
+                                             zoomCamLoc.Y / MaxZoomHeight * picLiveView.Height)
+        End Function
+
+        Private Function GetZoomSize() As Size
+            Dim ratio As Integer = ZoomRatios(Math.Max(m_zoomIndex, 1))
+            Return New Size(picLiveView.Width / ratio, picLiveView.Height / ratio)
+        End Function
+
+        Private Sub picLiveView_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles picLiveView.MouseMove
+            If Not e.Button = Windows.Forms.MouseButtons.Left Then m_mouseDown = False
+            If Not m_mouseDown Then Exit Sub
+
+            Dim newpt As Point = m_mouseDownZoomLocation
+
+            If m_zoomIndex = 0 Then
+                'move the little white box around
+                newpt.Offset(e.X - m_mouseDownPt.X, e.Y - m_mouseDownPt.Y)
+            Else
+                'move the zoom position
+                newpt.Offset(m_mouseDownPt.X - e.X, m_mouseDownPt.Y - e.Y)
+            End If
+
+            newpt.X = (newpt.X / picLiveView.Width) * MaxZoomWidth
+            newpt.Y = (newpt.Y / picLiveView.Height) * MaxZoomHeight
+
+            Dim ZSize As Size = GetZoomSize()
+            If newpt.X < 0 Then newpt.X = 0
+            If newpt.X + ZSize.Width > MaxZoomWidth Then newpt.X = MaxZoomWidth - ZSize.Width
+            If newpt.Y < 0 Then newpt.Y = 0
+            If newpt.Y + ZSize.Height > MaxZoomHeight Then newpt.Y = MaxZoomHeight - ZSize.Height
+
+            m_cam.ZoomPosition = newpt
+        End Sub
+
+        Private Sub picLiveView_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles picLiveView.MouseUp
+            m_mouseDown = False
+        End Sub
+
         Private Sub picLiveView_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles picLiveView.Paint
-            If picLiveView.Image Is Nothing Then Return
+
+
+            If picLiveView.Image Is Nothing OrElse m_zoomIndex <> 0 Then Return
             Dim g = e.Graphics
             Dim imgRect = New Rectangle(New Point(0, 0), picLiveView.Image.Size)
             Dim trans As Transform2D
@@ -93,22 +149,21 @@ Namespace CanonCamera
                     g.DrawLine(gridPen, paintRect.Left, y2, paintRect.Right, y2)
                 End Using
             End If
-            If m_zoomRatio = 1 Then
-                ' draw zoom
-                Dim zoomSize = New Size(paintRect.Width / MaxZoom, paintRect.Height / MaxZoom)
-                Dim zoomCamLoc As Point = m_cam.ZoomPosition
-                Dim zoomLoc As Point = New Point(zoomCamLoc.X / MaxZoomWidth * picLiveView.Width, _
-                                                 zoomCamLoc.Y / MaxZoomHeight * picLiveView.Height)
-                Dim zoomRect = New Rectangle(zoomLoc, zoomSize)
-                Using shadowPen As Pen = New Pen(Color.Black, 1)
-                    Dim shadowRect As Rectangle = zoomRect
-                    shadowRect.Offset(1, 1)
-                    g.DrawRectangle(shadowPen, shadowRect)
-                End Using
-                Using whitePen As Pen = New Pen(Color.White, 2)
-                    g.DrawRectangle(whitePen, zoomRect)
-                End Using
-            End If
+
+            Dim MaxZoom As Integer = ZoomRatios(m_zoomIndex + 1)
+            ' draw zoom
+            Dim zoomSize = New Size(picLiveView.Width / MaxZoom, picLiveView.Height / MaxZoom)
+            Dim zoomLoc As Point = getzoomloc()
+            Dim zoomRect = New Rectangle(zoomLoc, zoomSize)
+            Using shadowPen As Pen = New Pen(Color.Black, 1)
+                Dim shadowRect As Rectangle = zoomRect
+                shadowRect.Offset(1, 1)
+                g.DrawRectangle(shadowPen, shadowRect)
+            End Using
+            Using whitePen As Pen = New Pen(Color.White, 2)
+                g.DrawRectangle(whitePen, zoomRect)
+            End Using
+
         End Sub
 
         Private Sub frmLiveView_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -177,23 +232,20 @@ Namespace CanonCamera
         End Sub
 
         Private Sub btnZoomIn_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnZoomIn.Click
-            btnZoomOut.Enabled = True
-            If m_zoomRatio = 1 Then
-                m_zoomRatio = MaxZoom
-                btnZoomIn.Enabled = False
-                lblZoom.Text = "500%"
-            End If
-            m_cam.ZoomRatio = m_zoomRatio
+            m_zoomIndex += 1
+            UpdateZoom()
+        End Sub
+
+        Private Sub UpdateZoom()
+            btnZoomOut.Enabled = m_zoomIndex > 0
+            btnZoomIn.Enabled = m_zoomIndex < ZoomRatios.Length - 1
+            lblZoom.Text = (ZoomRatios(m_zoomIndex) * 100) & "%"
+            m_cam.ZoomRatio = ZoomRatios(m_zoomIndex)
         End Sub
 
         Private Sub btnZoomOut_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnZoomOut.Click
-            btnZoomIn.Enabled = True
-            If m_zoomRatio = MaxZoom Then
-                m_zoomRatio = 1
-                btnZoomOut.Enabled = False
-                lblZoom.Text = "100%"
-            End If
-            m_cam.ZoomRatio = m_zoomRatio
+            m_zoomIndex -= 1
+            UpdateZoom()
         End Sub
     End Class
 End Namespace

@@ -111,6 +111,7 @@
             '
             'picLiveView
             '
+            Me.picLiveView.Cursor = System.Windows.Forms.Cursors.SizeAll
             Me.picLiveView.Dock = System.Windows.Forms.DockStyle.Fill
             Me.picLiveView.Location = New System.Drawing.Point(3, 3)
             Me.picLiveView.Name = "picLiveView"
@@ -145,7 +146,7 @@
             Me.FlowLayoutPanel3.Controls.Add(Me.btnZoomIn)
             Me.FlowLayoutPanel3.Location = New System.Drawing.Point(3, 3)
             Me.FlowLayoutPanel3.Name = "FlowLayoutPanel3"
-            Me.FlowLayoutPanel3.Size = New System.Drawing.Size(282, 29)
+            Me.FlowLayoutPanel3.Size = New System.Drawing.Size(289, 29)
             Me.FlowLayoutPanel3.TabIndex = 2
             Me.FlowLayoutPanel3.WrapContents = False
             '
@@ -172,14 +173,14 @@
             Me.lblZoom.Dock = System.Windows.Forms.DockStyle.Fill
             Me.lblZoom.Location = New System.Drawing.Point(165, 0)
             Me.lblZoom.Name = "lblZoom"
-            Me.lblZoom.Size = New System.Drawing.Size(33, 29)
+            Me.lblZoom.Size = New System.Drawing.Size(40, 29)
             Me.lblZoom.TabIndex = 3
             Me.lblZoom.Text = "100%"
             Me.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
             'btnZoomIn
             '
-            Me.btnZoomIn.Location = New System.Drawing.Point(204, 3)
+            Me.btnZoomIn.Location = New System.Drawing.Point(211, 3)
             Me.btnZoomIn.Name = "btnZoomIn"
             Me.btnZoomIn.Size = New System.Drawing.Size(75, 23)
             Me.btnZoomIn.TabIndex = 2
