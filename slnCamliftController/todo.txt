@@ -14,3 +14,4 @@
 	- Have radio buttons instead of combo boxes for Objective, Mag, and Iris
 	- Saved Positions
 	- Manage Memory Registers
+	- Save setup (fancier)
