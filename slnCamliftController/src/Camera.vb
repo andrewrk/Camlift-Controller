@@ -626,9 +626,13 @@ Public Class Camera
     Public Sub Dispose() Implements IDisposable.Dispose
     End Sub
 
-    Public Sub TakePicture(ByVal outfile As String)
+    Public Sub TakeSinglePicture(ByVal outfile As String)
         Debug.Print("oh snap: " & outfile)
     End Sub
+
+    Public sub TakeFastPicture(outfile As String)
+        takesinglepicture()
+    end sub
 
     Public Sub StartLiveView(ByVal pbox As PictureBox)
 
@@ -642,7 +646,11 @@ Public Class Camera
 
     End Sub
 
-    Public Sub FlushTransferQueue()
+    Public Sub BeginFastPictures()
+
+    End Sub
+
+    Public sub EndFastPictures()
 
     End Sub
 
