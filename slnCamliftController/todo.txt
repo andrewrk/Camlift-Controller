@@ -12,3 +12,4 @@
 	- Fix calculation discrepencies 
 	- Cancel Cleanly
 * fix on/off bug in infinite mode.
+* close form should stop motor
