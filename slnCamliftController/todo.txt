@@ -5,12 +5,13 @@
 		 min 0%
 		 max ?%
 		 The user might see "0%" when it's really 10% and "-10%" when it's really 0%.
-	- Have radio buttons instead of combo boxes for Objective, Mag, and Iris
-	- Saved Positions
-	- Manage Memory Registers
+	- Load:
+		- Saved Positions
+		- Manage Memory Registers
 	- Save setup (fancier)
-	- Fix calculation discrepencies 
+	- Fix calculation discrepencies
 	- Cancel Cleanly
 * fix on/off bug in infinite mode.
 * close form should stop motor
 * fix design of frmControls
+* cancel sliverpak should terminate program
