@@ -1,7 +1,5 @@
 ﻿Version 2.0
 * step sizes and labels are not stored in xml
-* live view:
-	- dragging right bounds is glitchy
 * auto run
 	- Add an "Adjust overlap" setting where the user can adjust the percentage of overlap between slices.
 		Default 10%

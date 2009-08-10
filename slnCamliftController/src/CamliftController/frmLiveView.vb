@@ -19,6 +19,7 @@ Namespace CanonCamera
         Private m_mouseDownZoomLocation As Point
         Private m_mouseDownPt As Point
         Private m_mouseDown As Boolean
+        Private m_zoomPosition As Point
 
         Private Sub SetWhiteBalanceCombo(ByVal value As Integer)
             For i = 0 To WhiteBalanceValues.Length - 1
@@ -82,7 +83,7 @@ Namespace CanonCamera
             m_mouseDown = True
             m_mouseDownPt.X = e.X
             m_mouseDownPt.Y = e.Y
-            m_mouseDownZoomLocation = getzoomloc()
+            m_mouseDownZoomLocation = GetZoomLoc()
         End Sub
 
         Private Function GetZoomLoc() As Point
@@ -93,7 +94,7 @@ Namespace CanonCamera
 
         Private Function GetZoomSize() As Size
             Dim ratio As Integer = ZoomRatios(Math.Max(m_zoomIndex, 1))
-            Return New Size(picLiveView.Width / ratio, picLiveView.Height / ratio)
+            Return New Size(MaxZoomWidth / ratio, MaxZoomHeight / ratio)
         End Function
 
         Private Sub picLiveView_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles picLiveView.MouseMove
