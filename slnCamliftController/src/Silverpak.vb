@@ -66,7 +66,10 @@ Public Class Silverpak
     End Sub
 
     Protected Overrides Sub Finalize()
-        Dispose()
+        Try
+            Dispose()
+        Catch ex As Exception
+        End Try
         MyBase.Finalize()
     End Sub
 End Class
