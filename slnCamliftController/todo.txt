@@ -1,4 +1,5 @@
-﻿* step sizes and labels are not stored in xml
+﻿Version 2.0
+* step sizes and labels are not stored in xml
 * auto run
 	- Add an "Adjust overlap" setting where the user can adjust the percentage of overlap between slices.
 		Default 10%
@@ -13,4 +14,6 @@
 	- Cancel Cleanly
 * close form should stop motor
 * fix design of frmControls
-* cancel sliverpak should terminate program
+
+Version 3.0
+* instead of a message box for silverpak, show frmcontrols and disable everything except a button labeled "Initialize Motor"

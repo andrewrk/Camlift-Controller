@@ -32,7 +32,11 @@ Public Class Silverpak
         Me.PortName = SilverpakManager.DefaultPortname
         If Me.FindAndConnect() Then
             InitializeMotor()
-            If MsgBox(MsgBoxInitializeCoordinatesMessage, MsgBoxStyle.OkCancel, MsgBoxTitle) = MsgBoxResult.Ok Then TryInitializeCoordinates()
+            If MsgBox(MsgBoxInitializeCoordinatesMessage, MsgBoxStyle.OkCancel, MsgBoxTitle) = MsgBoxResult.Ok Then
+                TryInitializeCoordinates()
+            Else
+                End 'crash program
+            End If
         Else
             Throw New SilverpakNotFoundException
         End If
