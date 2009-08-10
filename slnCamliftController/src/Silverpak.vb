@@ -75,7 +75,7 @@ Public Class Silverpak
 End Class
 
 
-#Region "aoeu"
+#Region "qwerty up"
 #If USE_FAKE_SILVERPAK Then
 
 
