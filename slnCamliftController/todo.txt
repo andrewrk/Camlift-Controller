@@ -13,3 +13,4 @@
 	- Cancel Cleanly
 * fix on/off bug in infinite mode.
 * close form should stop motor
+* fix design of frmControls
