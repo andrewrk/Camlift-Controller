@@ -11,4 +11,4 @@
 	- Save setup (fancier)
 	- Fix calculation discrepencies 
 	- Cancel Cleanly
-
+* fix on/off bug in infinite mode.
