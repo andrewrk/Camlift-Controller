@@ -168,7 +168,7 @@ Namespace CamliftController
             End If
         End Sub
         Private Sub btnUp_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles btnUp.MouseUp
-            If m_movementMode = enuMovementMode.Infinite Then
+            If m_movementMode <> enuMovementMode.Absolute Then
                 stopInifite_gui()
             End If
         End Sub
@@ -178,7 +178,7 @@ Namespace CamliftController
             End If
         End Sub
         Private Sub btnUp_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnUp.LostFocus
-            If m_movementMode = enuMovementMode.Infinite Then
+            If m_movementMode <> enuMovementMode.Absolute Then
                 stopInifite_gui()
             End If
         End Sub
@@ -191,7 +191,7 @@ Namespace CamliftController
             End If
         End Sub
         Private Sub btnDown_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles btnDown.MouseUp
-            If m_movementMode = enuMovementMode.Infinite Then
+            If m_movementMode <> enuMovementMode.Absolute Then
                 stopInifite_gui()
             End If
         End Sub
@@ -201,7 +201,7 @@ Namespace CamliftController
             End If
         End Sub
         Private Sub btnDown_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnDown.LostFocus
-            If m_movementMode = enuMovementMode.Infinite Then
+            If m_movementMode <> enuMovementMode.Absolute Then
                 stopInifite_gui()
             End If
         End Sub
