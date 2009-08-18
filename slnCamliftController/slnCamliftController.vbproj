@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{33D1A02A-02B5-4A63-9F4B-B9BE391C9B4A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -25,7 +25,6 @@
     <TargetZone>LocalIntranet</TargetZone>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
     <SignManifests>true</SignManifests>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -36,9 +35,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>22</ApplicationRevision>
-    <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -97,6 +97,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\Camera.vb" />
+    <Compile Include="src\CamliftController\frmAutoRunSetups.Designer.vb">
+      <DependentUpon>frmAutoRunSetups.vb</DependentUpon>
+    </Compile>
+    <Compile Include="src\CamliftController\frmAutoRunSetups.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="src\CamliftController\frmManageMemoryRegisters.Designer.vb">
       <DependentUpon>frmManageMemoryRegisters.vb</DependentUpon>
     </Compile>
@@ -166,6 +172,9 @@
     <Compile Include="src\SmartSteps.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="src\CamliftController\frmAutoRunSetups.resx">
+      <DependentUpon>frmAutoRunSetups.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\CamliftController\frmLiveView.resx">
       <DependentUpon>frmLiveView.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -226,6 +235,11 @@
     <None Include="src\Silverpak23CE\README.txt" />
   </ItemGroup>
   <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
       <Visible>False</Visible>
       <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
@@ -240,6 +254,11 @@
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5</ProductName>
       <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
       <Visible>False</Visible>

@@ -27,7 +27,7 @@ Public Module modMain
     Public Const MsgBoxConfirmDeleteMessage As String = "Are you sure you want to delete this position?"
     Public ReadOnly MsgBoxAboutMessage As String = "P-51 Camlift Controller" & vbCrLf & _
                                                    "Copyright " & ChrW(169) & "  2008 Visionary Digital" & vbCrLf & _
-                                                   "Version " & Application.ProductVersion
+                                                   "Version " & Application.ProductVersion & " Beta"
 
     Public Const RolloverHelpVelocity As String = "Increasing this value will speed up the lift; decreasing the value will slow it down."
     Public Const RolloverHelpAcceleration As String = "A lower value will cause the motor to slow or ramp down before stopping. It will also cause the motor to ramp up prior to full speed."

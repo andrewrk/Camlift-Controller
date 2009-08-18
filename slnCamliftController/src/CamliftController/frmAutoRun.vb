@@ -320,6 +320,7 @@ Namespace SmartSteps
         End Function
 
         Private Sub btnSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSave.Click
+
             Dim name = InputBox("Enter name (this will get fancier...):", MsgBoxTitle)
             If name = "" Then Exit Sub
             m_smartStepsManager.AutorunSetups.AutorunSetups.Add(New KeyValuePair(Of String, AutorunSetupSettings)(name, New AutorunSetupSettings(m_currentSetup.GetContents)))
