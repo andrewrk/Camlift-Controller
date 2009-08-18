@@ -557,7 +557,13 @@ Namespace CamliftController
             End While
 
             tsmStore.DropDownItems.Clear()
-            Dim storeItems As ToolStripItemCollection = m_positionManager.MakeStoreMenu(txtPos.Text).Items
+            Dim position As Integer
+            Try
+                position = Val(txtPos.Text)
+            Catch ex As Exception
+                position = 0
+            End Try
+            Dim storeItems As ToolStripItemCollection = m_positionManager.MakeStoreMenu(position).Items
             While storeItems.Count > 0
                 tsmStore.DropDownItems.Add(storeItems(0))
             End While

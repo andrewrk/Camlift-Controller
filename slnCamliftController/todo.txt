@@ -7,11 +7,14 @@
 		 The user might see "0%" when it's really 10% and "-10%" when it's really 0%.
 	- Load:
 		- Saved Positions
-		- Manage Memory Registers
 	- Save setup (fancier)
 	- Fix calculation discrepencies
+* change hard code iexplore to default browser
+* auto run -> unplug camera during run -> exit -> assertion failed
+
 
 Version 3.0
 * instead of a message box for silverpak, show frmcontrols and disable everything except a button labeled "Initialize Motor"
 * park distance. Never really go to 0 except for initialization. the perceived "0" is really parkDistance, this prevents switch-sitting hardware bugs.
 * right click step sizes to bring up edit dialog
+* lazy motor - don't try to initialize until motor is needed
