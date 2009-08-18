@@ -229,13 +229,22 @@ Namespace CamliftController
 
         Private Sub btnLiveView_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLiveView.Click
             If Not m_isLiveViewActive Then
-                Try
-                    m_frmLiveView = New frmLiveView(m_cam)
-                    m_frmLiveView.Show()
-                    m_isLiveViewActive = True
-                Catch ex As SdkException When ex.SdkError = SdkErrors.CommPortIsInUse
-                    MsgBox("Camera is in use!", MsgBoxStyle.Critical, MsgBoxTitle)
-                End Try
+                Dim TryAgain As Boolean = True
+
+                While TryAgain
+                    TryAgain = False
+
+
+                    Try
+                        m_frmLiveView = New frmLiveView(m_cam)
+                        m_frmLiveView.Show()
+                        m_isLiveViewActive = True
+                    Catch ex As SdkException When ex.SdkError = SdkErrors.CommPortIsInUse
+                        MsgBox("Camera is in use!", MsgBoxStyle.Critical, MsgBoxTitle)
+                    Catch ex As Exception
+                        TryAgain = HandleCameraException(ex)
+                    End Try
+                End While
             Else
                 m_frmLiveView.Focus()
             End If

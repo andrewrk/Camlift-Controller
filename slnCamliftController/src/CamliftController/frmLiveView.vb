@@ -54,16 +54,7 @@ Namespace CanonCamera
             m_ShowGrid = False
             m_cam = cam
 
-            Dim TryAgain As Boolean = True
-            While TryAgain
-                TryAgain = False
-                Try
-                    m_cam.StartLiveView(Me.picLiveView)
-
-                Catch ex As Exception
-                    TryAgain = HandleCameraException(ex)
-                End Try
-            End While
+            m_cam.StartLiveView(Me.picLiveView)
 
             SetWhiteBalanceCombo(m_cam.WhiteBalance)
             m_cam.ZoomRatio = ZoomRatios(m_zoomIndex)

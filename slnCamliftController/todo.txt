@@ -1,6 +1,5 @@
 ﻿Version 2.0
 * step sizes and labels are not stored in xml
-* "Live View" -> "No Camera" -> "Cancel" -> Crash
 * auto run
 	- Add an "Adjust overlap" setting where the user can adjust the percentage of overlap between slices.
 		Default 10%
@@ -14,7 +13,6 @@
 	- Fix calculation discrepencies
 	- Cancel Cleanly
 * close form should stop motor
-* bug: start the form, press go
 
 Version 3.0
 * instead of a message box for silverpak, show frmcontrols and disable everything except a button labeled "Initialize Motor"
