@@ -32,23 +32,9 @@ Namespace CamliftController
         Private m_cam As Camera
         Private WithEvents m_autorunStepper As AsyncStepper = Nothing
 
-        Private m_numPicsTaken As Integer
+        Private m_numPicsTaken As Integer = 0
 
-        Public Shared ReadOnly Property DefaultStepSizes() As Integer()
-            Get
-                Static s_DefaultStepSizes As Integer() = {5, 15, 40, 80, 190, 340, 1250, 2500, 5000}
-                Return s_DefaultStepSizes.Clone
-            End Get
-        End Property
-        Private m_StepSizes As Integer() = DefaultStepSizes
-
-        Public Shared ReadOnly Property DefaultStepLabels() As String()
-            Get
-                Static s_defaultStepLabels As String() = {"20x", "10x", "5x", "CF4", "CF3", "CF2"}
-                Return s_defaultStepLabels.Clone
-            End Get
-        End Property
-        Private m_StepLabels As String() = DefaultStepLabels
+        Private m_stepSizes As List(Of KeyValuePair(Of String, Integer))
 
         'TODO: implement this
         Public Const DefaultParkDistance As Integer = 500
@@ -73,6 +59,7 @@ Namespace CamliftController
             m_windowSettings = settings.Window
             Me.TopMost = m_windowSettings.AlwaysOnTop
             Me.Location = m_windowSettings.GetStartPositionInScreen(Me.Size)
+            m_stepSizes = settings.PositionManager.StepSizes.StepSizes
 
             'managers
             m_silverpakManager = silverpakManager
@@ -81,7 +68,6 @@ Namespace CamliftController
 
             'resources
             m_cam = camera
-            m_numPicsTaken = 0
         End Sub
 
 
@@ -92,6 +78,7 @@ Namespace CamliftController
             'updateSteps_gui()
             m_movementMode = enuMovementMode.Initializing
             updateControlsEnabled_gui()
+            updateSteps_gui()
             checkForInitialized_gui()
         End Sub
 
@@ -101,13 +88,7 @@ Namespace CamliftController
         End Sub
 
         Private Sub PreferencesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PreferencesToolStripMenuItem.Click
-            Dim stepsList = New List(Of KeyValuePair(Of String, Integer))
-            For i = 0 To 8
-                ' TODO remove magic numbers
-                Dim label As String = If(i <= 8 - 3, m_StepLabels(i), Nothing)
-                stepsList.Add(New KeyValuePair(Of String, Integer)(label, m_StepSizes(i)))
-            Next
-            Using f As New frmPreferences(stepsList, AddressOf updateSteps_safe)
+            Using f As New frmPreferences(m_stepSizes, AddressOf updateSteps_safe)
                 f.ShowDialog(Me)
             End Using
             resync(New Action(AddressOf saveSettings_gui))
@@ -362,8 +343,8 @@ Namespace CamliftController
         Private Function isMoveFinished_safe() As Boolean
             Return m_silverpakManager.IsReady
         End Function
-        Private Sub updateSteps_safe(ByVal steps As IEnumerable(Of KeyValuePair(Of String, Integer)))
-            resync(New Action(Of IEnumerable(Of KeyValuePair(Of String, Integer)))(AddressOf updateSteps_gui), steps)
+        Private Sub updateSteps_safe()
+            resync(New Action(AddressOf updateSteps_gui))
         End Sub
 
         'resync (thread safe)
@@ -396,6 +377,7 @@ Namespace CamliftController
             'my settings
             m_windowSettings.AlwaysOnTop = Me.TopMost
             m_windowSettings.StartPosition = Me.Location
+            m_allSettings.PositionManager.StepSizes.StepSizes = m_stepSizes
             'managers
             m_positionManager.SaveSettings()
             With m_allSettings.Silverpak
@@ -425,7 +407,7 @@ Namespace CamliftController
             updateStatusStrip_gui("Stopping...")
         End Sub
         Private Sub moveStep_gui(ByVal UpNotDown As Boolean)
-            Dim steps As Integer = m_StepSizes(tkbDist.Value - 1)
+            Dim steps As Integer = m_stepSizes(tkbDist.Value - 1).Value
             updateStatusStrip_gui("Moving " & IIf(UpNotDown, "Up", "Down") & " " & steps & " steps...")
             m_movementMode = enuMovementMode.Absolute
             moveToPosition_safe(m_silverpakManager.Position + If(UpNotDown, -steps, steps))
@@ -440,9 +422,6 @@ Namespace CamliftController
                 m_autorunStepper.Abort()
                 m_autorunMode = enuAutorunMode.Aborting
             End If
-            'If m_movementMode <> enuMovementMode.Initializing Then
-            '    m_movementMode = enuMovementMode.Stopped
-            'End If
             updateStatusStrip_gui("Emergency Stop")
         End Sub
 
@@ -450,7 +429,7 @@ Namespace CamliftController
             If tkbDist.Value = 10 Then
                 lblCurrentDist.Text = "Free"
             Else
-                lblCurrentDist.Text = m_StepSizes(tkbDist.Value - 1)
+                lblCurrentDist.Text = m_stepSizes(tkbDist.Value - 1).Value
             End If
         End Sub
 
@@ -504,18 +483,14 @@ Namespace CamliftController
             Next
         End Sub
 
-        Private Sub updateSteps_gui(ByVal steps As IEnumerable(Of KeyValuePair(Of String, Integer)))
-            Dim i = 0
-            For Each kvp In steps
+        Private Sub updateSteps_gui()
+            For i = 0 To m_stepSizes.Count - 1
                 Dim lblDist As Label = pnlDist.Controls("lblDist" & i + 1)
                 If i < LabeledStepsCount Then
-                    m_StepLabels(i) = kvp.Key
-                    lblDist.Text = m_StepLabels(i)
+                    lblDist.Text = m_stepSizes(i).Key
                 Else
-                    lblDist.Text = MicrostepsToMilimeters(m_StepSizes(i - 1)) & "mm"
+                    lblDist.Text = MicrostepsToMilimeters(m_stepSizes(i).Value) & "mm"
                 End If
-                m_StepSizes(i) = kvp.Value
-                i += 1
             Next
             updateCurrentDist_gui()
         End Sub

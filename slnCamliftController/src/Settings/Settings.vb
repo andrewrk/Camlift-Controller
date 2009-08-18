@@ -532,17 +532,42 @@ Namespace Settings
     Public Class StepSizeList
         Inherits SettingsList(Of Integer)
 
+        Public Shared ReadOnly Property DefaultStepSizes() As List(Of KeyValuePair(Of String, Integer))
+            Get
+                Static s_defaultStepLabels As String() = {"20x", "10x", "5x", "CF4", "CF3", "CF2", "", "", ""}
+                Static s_defaultStepSizes As Integer() = {5, 15, 40, 80, 190, 340, 1250, 2500, 5000}
+                Static s_cache As List(Of KeyValuePair(Of String, Integer)) = _
+                        (From i In Range(s_defaultStepLabels.Length) _
+                         Select New KeyValuePair(Of String, Integer)(s_defaultStepLabels(i), s_defaultStepSizes(i))).ToList
+                Return s_cache.ToList
+            End Get
+        End Property
+        ''' <summary>I can has Python?</summary>
+        Private Shared Function Range(ByVal toIndex As Integer) As Integer()
+            Dim rtnArr(toIndex - 1) As Integer
+            For i = 0 To toIndex - 1
+                rtnArr(i) = i
+            Next
+            Return rtnArr
+        End Function
+
         Public Property StepSizes() As List(Of KeyValuePair(Of String, Integer))
             Get
-                Return ContentsList
+                Return ContentsList.ToList
             End Get
             Set(ByVal value As List(Of KeyValuePair(Of String, Integer)))
+                If value.Count = DefaultStepSizes.Count Then
+                    value = value.ToList
+                Else
+                    value = DefaultStepSizes
+                End If
                 ContentsList = value
             End Set
         End Property
 
         Public Sub New(ByVal contents As Object)
             init(contents)
+            StepSizes = StepSizes ' validate
         End Sub
     End Class
 

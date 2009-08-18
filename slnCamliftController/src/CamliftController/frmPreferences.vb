@@ -2,10 +2,10 @@
 
     Public Class frmPreferences
 
-        Private m_steps As IEnumerable(Of KeyValuePair(Of String, Integer))
-        Private m_f_updateSteps As Action(Of IEnumerable(Of KeyValuePair(Of String, Integer)))
+        Private m_steps As List(Of KeyValuePair(Of String, Integer))
+        Private m_f_updateSteps As Action
 
-        Public Sub New(ByVal steps As IEnumerable(Of KeyValuePair(Of String, Integer)), ByVal f_updateSteps As Action(Of IEnumerable(Of KeyValuePair(Of String, Integer))))
+        Public Sub New(ByVal steps As List(Of KeyValuePair(Of String, Integer)), ByVal f_updateSteps As Action)
             InitializeComponent() ' This call is required by the Windows Form Designer.
 
             If steps.Count <> StepsCount Then Throw New ArgumentException()
@@ -13,34 +13,31 @@
             m_f_updateSteps = f_updateSteps
         End Sub
         Private Sub frmPreferences_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-
-            Dim i = 1
-            For Each kvp In m_steps
-                If i <= LabeledStepsCount Then
-                    Dim txtLabel As TextBox = grpStepSizes.Controls("txtLabel" & i)
-                    txtLabel.Text = kvp.Key
+            Dim defaultStepSizes = Settings.StepSizeList.DefaultStepSizes
+            For i = 0 To m_steps.Count - 1
+                If i < LabeledStepsCount Then
+                    Dim txtLabel As TextBox = grpStepSizes.Controls("txtLabel" & i + 1)
+                    txtLabel.Text = m_steps(i).Key
                     AddHandler txtLabel.TextChanged, AddressOf txt_TextChanged
 
-                    Dim lblLabelDefault As Label = grpStepSizes.Controls("lblLabelDefault" & i)
-                    lblLabelDefault.Text = frmControls.DefaultStepLabels(i - 1)
+                    Dim lblLabelDefault As Label = grpStepSizes.Controls("lblLabelDefault" & i + 1)
+                    lblLabelDefault.Text = defaultStepSizes(i).Key
 
-                    Dim txtStep As TextBox = grpStepSizes.Controls("txtStep" & i)
-                    txtStep.Text = kvp.Value
+                    Dim txtStep As TextBox = grpStepSizes.Controls("txtStep" & i + 1)
+                    txtStep.Text = m_steps(i).Value
                     AddHandler txtStep.TextChanged, AddressOf txt_TextChanged
 
-                    Dim lblDefault As Label = grpStepSizes.Controls("lblDefault" & i)
-                    lblDefault.Text = frmControls.DefaultStepSizes(i - 1)
+                    Dim lblDefault As Label = grpStepSizes.Controls("lblDefault" & i + 1)
+                    lblDefault.Text = defaultStepSizes(i).Value
                 Else
-                    Dim txtStep As TextBox = grpStepSizes.Controls("txtStep" & i)
+                    Dim txtStep As TextBox = grpStepSizes.Controls("txtStep" & i + 1)
                     AddHandler txtStep.TextChanged, AddressOf txtStep7_9_TextChanged
-                    txtStep.Text = kvp.Value
+                    txtStep.Text = m_steps(i).Value
                     AddHandler txtStep.TextChanged, AddressOf txt_TextChanged
 
-                    Dim lblDefault As Label = grpStepSizes.Controls("lblDefault" & i)
-                    lblDefault.Text = frmControls.DefaultStepSizes(i - 1)
+                    Dim lblDefault As Label = grpStepSizes.Controls("lblDefault" & i + 1)
+                    lblDefault.Text = defaultStepSizes(i).Value
                 End If
-
-                i += 1
             Next
         End Sub
 
@@ -94,19 +91,18 @@
         End Sub
 
         Private Function ApplyChanges() As Boolean
-            Dim stepSizes As New List(Of KeyValuePair(Of String, Integer))
-            For i As Integer = 1 To StepsCount
+            For i As Integer = 1 To StepsCount - 1
                 Dim name As String = Nothing
-                If i <= LabeledStepsCount Then
-                    Dim txtLabel As TextBox = grpStepSizes.Controls("txtLabel" & i)
+                If i < LabeledStepsCount Then
+                    Dim txtLabel As TextBox = grpStepSizes.Controls("txtLabel" & i + 1)
                     name = txtLabel.Text
                 End If
-                Dim txtStep As TextBox = grpStepSizes.Controls("txtStep" & i)
+                Dim txtStep As TextBox = grpStepSizes.Controls("txtStep" & i + 1)
                 If Not ValidateRange(txtStep, 1, Silverpak23CE.SilverpakManager.DefaultMaxPosition) Then Return False
 
-                stepSizes.Add(New KeyValuePair(Of String, Integer)(name, txtStep.Text))
+                m_steps(i) = New KeyValuePair(Of String, Integer)(name, txtStep.Text)
             Next
-            m_f_updateSteps(stepSizes)
+            m_f_updateSteps()
             Return True
         End Function
     End Class
