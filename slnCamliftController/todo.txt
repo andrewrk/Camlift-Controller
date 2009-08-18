@@ -10,7 +10,6 @@
 		- Manage Memory Registers
 	- Save setup (fancier)
 	- Fix calculation discrepencies
-	- Cancel Cleanly
 * test multiple monitor persistent startup position
 
 Version 3.0
