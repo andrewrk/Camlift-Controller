@@ -78,6 +78,7 @@
             Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel
             Me.btnLiveView = New System.Windows.Forms.Button
             Me.btnTakePic = New System.Windows.Forms.Button
+            Me.Label1 = New System.Windows.Forms.Label
             Me.stsStatusStrip.SuspendLayout()
             CType(Me.tkbPos, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.cmsPosition.SuspendLayout()
@@ -95,7 +96,7 @@
             'stsStatusStrip
             '
             Me.stsStatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tslStatus})
-            Me.stsStatusStrip.Location = New System.Drawing.Point(0, 583)
+            Me.stsStatusStrip.Location = New System.Drawing.Point(0, 601)
             Me.stsStatusStrip.Name = "stsStatusStrip"
             Me.stsStatusStrip.Size = New System.Drawing.Size(186, 22)
             Me.stsStatusStrip.SizingGrip = False
@@ -117,7 +118,7 @@
             Me.tkbPos.Maximum = 1000000
             Me.tkbPos.Name = "tkbPos"
             Me.tkbPos.Orientation = System.Windows.Forms.Orientation.Vertical
-            Me.tkbPos.Size = New System.Drawing.Size(45, 559)
+            Me.tkbPos.Size = New System.Drawing.Size(45, 577)
             Me.tkbPos.SmallChange = 10000
             Me.tkbPos.TabIndex = 9
             Me.tkbPos.TickFrequency = 10000
@@ -191,19 +192,20 @@
             '
             'grpDist
             '
+            Me.grpDist.Controls.Add(Me.lblCurrentDist)
             Me.grpDist.Controls.Add(Me.pnlDist)
             Me.grpDist.Controls.Add(Me.tkbDist)
             Me.grpDist.Location = New System.Drawing.Point(14, 165)
             Me.grpDist.Name = "grpDist"
-            Me.grpDist.Size = New System.Drawing.Size(108, 188)
+            Me.grpDist.Size = New System.Drawing.Size(108, 204)
             Me.grpDist.TabIndex = 3
             Me.grpDist.TabStop = False
             Me.grpDist.Text = "Distance"
             '
             'pnlDist
             '
-            Me.pnlDist.Controls.Add(Me.lblCurrentDist)
             Me.pnlDist.Controls.Add(Me.lblDist1)
+            Me.pnlDist.Controls.Add(Me.Label1)
             Me.pnlDist.Controls.Add(Me.lblDist9)
             Me.pnlDist.Controls.Add(Me.lblDist2)
             Me.pnlDist.Controls.Add(Me.lblDist8)
@@ -212,20 +214,20 @@
             Me.pnlDist.Controls.Add(Me.lblDist4)
             Me.pnlDist.Controls.Add(Me.lblDist6)
             Me.pnlDist.Controls.Add(Me.lblDist5)
-            Me.pnlDist.Location = New System.Drawing.Point(46, 19)
+            Me.pnlDist.Location = New System.Drawing.Point(46, 35)
             Me.pnlDist.Name = "pnlDist"
-            Me.pnlDist.Size = New System.Drawing.Size(51, 163)
+            Me.pnlDist.Size = New System.Drawing.Size(56, 163)
             Me.pnlDist.TabIndex = 11
             '
             'lblCurrentDist
             '
             Me.lblCurrentDist.AutoSize = True
-            Me.lblCurrentDist.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.lblCurrentDist.Location = New System.Drawing.Point(4, 8)
+            Me.lblCurrentDist.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            Me.lblCurrentDist.Location = New System.Drawing.Point(6, 16)
             Me.lblCurrentDist.Name = "lblCurrentDist"
-            Me.lblCurrentDist.Size = New System.Drawing.Size(33, 12)
+            Me.lblCurrentDist.Size = New System.Drawing.Size(28, 13)
             Me.lblCurrentDist.TabIndex = 1
-            Me.lblCurrentDist.Text = "Infinite"
+            Me.lblCurrentDist.Text = "Free"
             '
             'lblDist1
             '
@@ -322,7 +324,7 @@
             Me.tkbDist.BackColor = System.Drawing.Color.Black
             Me.tkbDist.Enabled = False
             Me.tkbDist.LargeChange = 1
-            Me.tkbDist.Location = New System.Drawing.Point(9, 20)
+            Me.tkbDist.Location = New System.Drawing.Point(9, 36)
             Me.tkbDist.Minimum = 1
             Me.tkbDist.Name = "tkbDist"
             Me.tkbDist.Orientation = System.Windows.Forms.Orientation.Vertical
@@ -465,7 +467,7 @@
             Me.GroupBox1.Controls.Add(Me.btnUp)
             Me.GroupBox1.Location = New System.Drawing.Point(3, 3)
             Me.GroupBox1.Name = "GroupBox1"
-            Me.GroupBox1.Size = New System.Drawing.Size(128, 361)
+            Me.GroupBox1.Size = New System.Drawing.Size(128, 375)
             Me.GroupBox1.TabIndex = 19
             Me.GroupBox1.TabStop = False
             Me.GroupBox1.Text = "Motor"
@@ -497,7 +499,7 @@
             Me.GroupBox2.Controls.Add(Me.btnAutorun)
             Me.GroupBox2.Controls.Add(Me.btnAutoStart)
             Me.GroupBox2.Controls.Add(Me.btnAutoStop)
-            Me.GroupBox2.Location = New System.Drawing.Point(3, 370)
+            Me.GroupBox2.Location = New System.Drawing.Point(3, 384)
             Me.GroupBox2.Name = "GroupBox2"
             Me.GroupBox2.Size = New System.Drawing.Size(128, 109)
             Me.GroupBox2.TabIndex = 20
@@ -530,7 +532,7 @@
             Me.FlowLayoutPanel2.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
             Me.FlowLayoutPanel2.Location = New System.Drawing.Point(45, 24)
             Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
-            Me.FlowLayoutPanel2.Size = New System.Drawing.Size(141, 559)
+            Me.FlowLayoutPanel2.Size = New System.Drawing.Size(141, 577)
             Me.FlowLayoutPanel2.TabIndex = 21
             '
             'TableLayoutPanel1
@@ -541,7 +543,7 @@
             Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
             Me.TableLayoutPanel1.Controls.Add(Me.btnLiveView, 1, 0)
             Me.TableLayoutPanel1.Controls.Add(Me.btnTakePic, 1, 1)
-            Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 485)
+            Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 499)
             Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
             Me.TableLayoutPanel1.RowCount = 2
             Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle)
@@ -571,13 +573,23 @@
             Me.btnTakePic.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
             Me.btnTakePic.UseVisualStyleBackColor = True
             '
+            'Label1
+            '
+            Me.Label1.AutoSize = True
+            Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            Me.Label1.Location = New System.Drawing.Point(3, 8)
+            Me.Label1.Name = "Label1"
+            Me.Label1.Size = New System.Drawing.Size(28, 13)
+            Me.Label1.TabIndex = 2
+            Me.Label1.Text = "Free"
+            '
             'frmControls
             '
             Me.AcceptButton = Me.btnGo
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.AutoSize = True
-            Me.ClientSize = New System.Drawing.Size(186, 605)
+            Me.ClientSize = New System.Drawing.Size(186, 623)
             Me.Controls.Add(Me.FlowLayoutPanel2)
             Me.Controls.Add(Me.tkbPos)
             Me.Controls.Add(Me.stsStatusStrip)
@@ -666,6 +678,7 @@
         Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
         Friend WithEvents lblAutoStop As System.Windows.Forms.Label
         Friend WithEvents lblAutoStart As System.Windows.Forms.Label
+        Friend WithEvents Label1 As System.Windows.Forms.Label
     End Class
 
 End Namespace
