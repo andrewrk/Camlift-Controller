@@ -215,6 +215,10 @@
     <Content Include="help.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Up.png" />
+    <None Include="Resources\Down.png" />
+    <None Include="Resources\InsertPictureHS.png" />
+    <None Include="Resources\icon_reel.png" />
     <Content Include="settings\objectives.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

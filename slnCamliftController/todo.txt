@@ -13,9 +13,7 @@
 	- Fix calculation discrepencies
 	- Cancel Cleanly
 * close form should stop motor
-* fix design of frmControls
-	- move Load and Store to context menu of txtPos
-	- Arrang buttons and stuff
+* bug: start the form, press go
 
 Version 3.0
 * instead of a message box for silverpak, show frmcontrols and disable everything except a button labeled "Initialize Motor"

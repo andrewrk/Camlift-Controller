@@ -53,18 +53,6 @@ Namespace CamliftController
                     Me.Items.Add(initValueMenuItem_safe("Mem" & i, mem, MemHandler))
                     i += 1
                 Next
-
-                Me.Items.Add(New ToolStripSeparator) ' -----------------------------
-
-                'Manage Memory Registers...
-                tsmiMemManage = New ToolStripMenuItem("Manage Memory Registers...")
-                Me.Items.Add(tsmiMemManage)
-
-                Me.Items.Add(New ToolStripSeparator) ' -----------------------------
-
-                Me.Items.Add(initValueMenuItem_safe("Autorun Start", _nest.m_smartStepsManager.LastAutorunRun.AutorunStart, AutorunStartHandler))
-                Me.Items.Add(initValueMenuItem_safe("Autorun Stop", _nest.m_smartStepsManager.LastAutorunRun.AutorunStop, AutorunStopHandler))
-
             End Sub
             Private Sub tsmiMemManage_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmiMemManage.Click
                 MsgBox("Manually set the values of each register," & vbCrLf & "adjust the number of registers," & vbCrLf & "ect...")

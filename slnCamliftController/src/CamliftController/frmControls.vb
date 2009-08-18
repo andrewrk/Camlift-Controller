@@ -151,13 +151,13 @@ Namespace CamliftController
             If ValidateNumeric(txtPos, True) Then moveAbsolute_gui(txtPos.Text)
         End Sub
 
-        Private Sub btnLoad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLoad.Click
+        Private Sub btnLoad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
             Dim cms = m_positionManager.MakeLoadMenu(AddressOf loadPosition_safe)
-            cms.Show(btnLoad, btnLoad.Width, 0)
+            'cms.Show(btnLoad, btnLoad.Width, 0)
         End Sub
-        Private Sub btnStore_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStore.Click
+        Private Sub btnStore_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
             Dim cmsStoreLoad = m_positionManager.MakeStoreMenu(txtPos.Text)
-            cmsStoreLoad.Show(btnStore, btnStore.Width, 0)
+            'cmsStoreLoad.Show(btnStore, btnStore.Width, 0)
         End Sub
 
         Private Sub btnUp_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles btnUp.MouseDown
@@ -468,11 +468,9 @@ Namespace CamliftController
                 AdvancedToolStripMenuItem, _
                 SavePicturesFolderMenuItem}
             Static otherControls As Control() = { _
-                btnLoad, _
                 btnAutorun, _
                 btnAutoStart, _
                 btnAutoStop, _
-                btnStore, _
                 btnTakePic, _
                 btnLiveView, _
                 tkbDist}
@@ -559,12 +557,57 @@ Namespace CamliftController
 
         End Sub
 
-        Private Sub btnAutoStart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAutoStart.Click
+        Private Sub SetAutorunStart()
             If ValidateNumeric(txtPos, True) Then m_smartStepsManager.LastAutorunRun.AutorunStart = Val(txtPos.Text)
         End Sub
 
-        Private Sub btnAutoStop_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAutoStop.Click
+        Private Sub SetAutorunStop()
             If ValidateNumeric(txtPos, True) Then m_smartStepsManager.LastAutorunRun.AutorunStop = Val(txtPos.Text)
+        End Sub
+
+        Private Sub btnAutoStart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAutoStart.Click
+            SetAutorunStart()
+        End Sub
+
+        Private Sub btnAutoStop_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnAutoStop.Click
+            SetAutorunStop()
+        End Sub
+
+        Private Sub cmsPosition_Opening(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles cmsPosition.Opening
+            tsmLoad.DropDownItems.Clear()
+            Dim loadItems = m_positionManager.MakeLoadMenu(AddressOf loadPosition_safe).Items
+            While loadItems.Count > 0
+                tsmLoad.DropDownItems.Add(loadItems(0))
+            End While
+
+            tsmStore.DropDownItems.Clear()
+            Dim storeItems As ToolStripItemCollection = m_positionManager.MakeStoreMenu(txtPos.Text).Items
+            While storeItems.Count > 0
+                tsmStore.DropDownItems.Add(storeItems(0))
+            End While
+
+        End Sub
+
+        Private Function initValueMenuItem_safe(ByVal baseTitle As String, ByVal value As Object, ByVal clickHandler As EventHandler) As ToolStripMenuItem
+            Dim tempText = baseTitle
+            Dim valueIsNull = value Is Nothing OrElse value.ToString = ""
+            If Not valueIsNull Then tempText &= " = " & value
+            Dim tsmi = New ToolStripMenuItem(tempText)
+            tsmi.Enabled = Not valueIsNull
+            AddHandler tsmi.Click, clickHandler
+            Return tsmi
+        End Function
+
+        Private Sub SetAutorunStartToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SetAutorunStartToolStripMenuItem.Click
+            SetAutorunStart()
+        End Sub
+
+        Private Sub SetAutorunStopHereToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SetAutorunStopHereToolStripMenuItem.Click
+            SetAutorunStop()
+        End Sub
+
+        Private Sub ManageMemoryRegistersToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ManageMemoryRegistersToolStripMenuItem.Click
+            MsgBox("Manually set the values of each register," & vbCrLf & "adjust the number of registers," & vbCrLf & "ect...")
         End Sub
     End Class
 
