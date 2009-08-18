@@ -76,6 +76,8 @@
             Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel
             Me.btnLiveView = New System.Windows.Forms.Button
             Me.btnTakePic = New System.Windows.Forms.Button
+            Me.lblAutoStart = New System.Windows.Forms.Label
+            Me.lblAutoStop = New System.Windows.Forms.Label
             Me.stsStatusStrip.SuspendLayout()
             CType(Me.tkbPos, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.cmsPosition.SuspendLayout()
@@ -218,9 +220,10 @@
             'lblCurrentDist
             '
             Me.lblCurrentDist.AutoSize = True
+            Me.lblCurrentDist.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
             Me.lblCurrentDist.Location = New System.Drawing.Point(4, 8)
             Me.lblCurrentDist.Name = "lblCurrentDist"
-            Me.lblCurrentDist.Size = New System.Drawing.Size(38, 13)
+            Me.lblCurrentDist.Size = New System.Drawing.Size(33, 12)
             Me.lblCurrentDist.TabIndex = 1
             Me.lblCurrentDist.Text = "Infinite"
             '
@@ -437,18 +440,18 @@
             '
             'btnAutoStart
             '
-            Me.btnAutoStart.Location = New System.Drawing.Point(14, 60)
+            Me.btnAutoStart.Location = New System.Drawing.Point(3, 60)
             Me.btnAutoStart.Name = "btnAutoStart"
-            Me.btnAutoStart.Size = New System.Drawing.Size(97, 20)
+            Me.btnAutoStart.Size = New System.Drawing.Size(73, 20)
             Me.btnAutoStart.TabIndex = 17
             Me.btnAutoStart.Text = "Sta&rt Here"
             Me.btnAutoStart.UseVisualStyleBackColor = True
             '
             'btnAutoStop
             '
-            Me.btnAutoStop.Location = New System.Drawing.Point(14, 80)
+            Me.btnAutoStop.Location = New System.Drawing.Point(3, 82)
             Me.btnAutoStop.Name = "btnAutoStop"
-            Me.btnAutoStop.Size = New System.Drawing.Size(97, 20)
+            Me.btnAutoStop.Size = New System.Drawing.Size(73, 20)
             Me.btnAutoStop.TabIndex = 18
             Me.btnAutoStop.Text = "Sto&p Here"
             Me.btnAutoStop.UseVisualStyleBackColor = True
@@ -489,6 +492,8 @@
             '
             'GroupBox2
             '
+            Me.GroupBox2.Controls.Add(Me.lblAutoStop)
+            Me.GroupBox2.Controls.Add(Me.lblAutoStart)
             Me.GroupBox2.Controls.Add(Me.btnAutorun)
             Me.GroupBox2.Controls.Add(Me.btnAutoStart)
             Me.GroupBox2.Controls.Add(Me.btnAutoStop)
@@ -550,6 +555,24 @@
             Me.btnTakePic.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
             Me.btnTakePic.UseVisualStyleBackColor = True
             '
+            'lblAutoStart
+            '
+            Me.lblAutoStart.AutoSize = True
+            Me.lblAutoStart.Location = New System.Drawing.Point(82, 64)
+            Me.lblAutoStart.Name = "lblAutoStart"
+            Me.lblAutoStart.Size = New System.Drawing.Size(13, 13)
+            Me.lblAutoStart.TabIndex = 19
+            Me.lblAutoStart.Text = "0"
+            '
+            'lblAutoStop
+            '
+            Me.lblAutoStop.AutoSize = True
+            Me.lblAutoStop.Location = New System.Drawing.Point(82, 86)
+            Me.lblAutoStop.Name = "lblAutoStop"
+            Me.lblAutoStop.Size = New System.Drawing.Size(13, 13)
+            Me.lblAutoStop.TabIndex = 19
+            Me.lblAutoStop.Text = "0"
+            '
             'frmControls
             '
             Me.AcceptButton = Me.btnGo
@@ -586,6 +609,7 @@
             Me.GroupBox1.ResumeLayout(False)
             Me.GroupBox1.PerformLayout()
             Me.GroupBox2.ResumeLayout(False)
+            Me.GroupBox2.PerformLayout()
             Me.FlowLayoutPanel2.ResumeLayout(False)
             Me.TableLayoutPanel1.ResumeLayout(False)
             Me.ResumeLayout(False)
@@ -642,6 +666,8 @@
         Friend WithEvents SetAutorunStartToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents SetAutorunStopHereToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
+        Friend WithEvents lblAutoStop As System.Windows.Forms.Label
+        Friend WithEvents lblAutoStart As System.Windows.Forms.Label
     End Class
 
 End Namespace

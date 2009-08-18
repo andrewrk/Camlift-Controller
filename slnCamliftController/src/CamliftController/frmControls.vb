@@ -558,10 +558,12 @@ Namespace CamliftController
 
         Private Sub SetAutorunStart()
             If ValidateNumeric(txtPos, True) Then m_smartStepsManager.LastAutorunRun.AutorunStart = Val(txtPos.Text)
+            lblAutoStart.Text = m_smartStepsManager.LastAutorunRun.AutorunStart
         End Sub
 
         Private Sub SetAutorunStop()
             If ValidateNumeric(txtPos, True) Then m_smartStepsManager.LastAutorunRun.AutorunStop = Val(txtPos.Text)
+            lblAutoStop.Text = m_smartStepsManager.LastAutorunRun.AutorunStop
         End Sub
 
         Private Sub btnAutoStart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAutoStart.Click
