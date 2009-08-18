@@ -45,7 +45,7 @@ Partial Class frmManageMemoryRegisters
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.OK_Button, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Cancel_Button, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(321, 270)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(208, 211)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -80,7 +80,7 @@ Partial Class frmManageMemoryRegisters
         Me.lstMem.IntegralHeight = False
         Me.lstMem.Location = New System.Drawing.Point(12, 12)
         Me.lstMem.Name = "lstMem"
-        Me.lstMem.Size = New System.Drawing.Size(294, 287)
+        Me.lstMem.Size = New System.Drawing.Size(181, 193)
         Me.lstMem.TabIndex = 0
         '
         'Label1
@@ -107,7 +107,7 @@ Partial Class frmManageMemoryRegisters
         Me.FlowLayoutPanel1.Controls.Add(Me.Label1)
         Me.FlowLayoutPanel1.Controls.Add(Me.txtValue)
         Me.FlowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(321, 12)
+        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(208, 12)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         Me.FlowLayoutPanel1.Size = New System.Drawing.Size(146, 39)
         Me.FlowLayoutPanel1.TabIndex = 4
@@ -134,7 +134,7 @@ Partial Class frmManageMemoryRegisters
         '
         'TableLayoutPanel2
         '
-        Me.TableLayoutPanel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.TableLayoutPanel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.TableLayoutPanel2.AutoSize = True
         Me.TableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.TableLayoutPanel2.ColumnCount = 2
@@ -142,7 +142,7 @@ Partial Class frmManageMemoryRegisters
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel2.Controls.Add(Me.btnAdd, 0, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.btnRemove, 1, 0)
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(321, 99)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(12, 211)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -155,13 +155,14 @@ Partial Class frmManageMemoryRegisters
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.Cancel_Button
-        Me.ClientSize = New System.Drawing.Size(479, 311)
+        Me.ClientSize = New System.Drawing.Size(366, 252)
         Me.Controls.Add(Me.TableLayoutPanel2)
         Me.Controls.Add(Me.FlowLayoutPanel1)
         Me.Controls.Add(Me.lstMem)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(316, 136)
         Me.Name = "frmManageMemoryRegisters"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
