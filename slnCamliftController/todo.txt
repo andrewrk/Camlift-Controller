@@ -2,8 +2,6 @@
 * auto run
 	- Save setup (fancier)
 	- Fix calculation discrepencies
-* make sure every dialog has mnemonics and correct tab order
-
 
 Version 3.0
 * lazy motor - don't try to initialize until motor is needed
@@ -11,3 +9,4 @@ Version 3.0
 * park distance. Never really go to 0 except for initialization. the perceived "0" is really parkDistance, this prevents switch-sitting hardware bugs.
 * right click step sizes to bring up edit dialog
 * auto run -> unplug camera during run -> exit -> assertion failed
+* get rid of that warning message about the silverpak dispose thing

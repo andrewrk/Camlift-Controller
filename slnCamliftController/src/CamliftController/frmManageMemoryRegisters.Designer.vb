@@ -50,7 +50,7 @@ Partial Class frmManageMemoryRegisters
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(146, 29)
-        Me.TableLayoutPanel1.TabIndex = 0
+        Me.TableLayoutPanel1.TabIndex = 3
         '
         'OK_Button
         '
@@ -58,7 +58,7 @@ Partial Class frmManageMemoryRegisters
         Me.OK_Button.Location = New System.Drawing.Point(3, 3)
         Me.OK_Button.Name = "OK_Button"
         Me.OK_Button.Size = New System.Drawing.Size(67, 23)
-        Me.OK_Button.TabIndex = 5
+        Me.OK_Button.TabIndex = 0
         Me.OK_Button.Text = "&OK"
         '
         'Cancel_Button
@@ -68,7 +68,7 @@ Partial Class frmManageMemoryRegisters
         Me.Cancel_Button.Location = New System.Drawing.Point(76, 3)
         Me.Cancel_Button.Name = "Cancel_Button"
         Me.Cancel_Button.Size = New System.Drawing.Size(67, 23)
-        Me.Cancel_Button.TabIndex = 6
+        Me.Cancel_Button.TabIndex = 1
         Me.Cancel_Button.Text = "&Cancel"
         '
         'lstMem
@@ -89,15 +89,15 @@ Partial Class frmManageMemoryRegisters
         Me.Label1.Location = New System.Drawing.Point(3, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(37, 13)
-        Me.Label1.TabIndex = 1
-        Me.Label1.Text = "Value:"
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "&Value:"
         '
         'txtValue
         '
         Me.txtValue.Location = New System.Drawing.Point(3, 16)
         Me.txtValue.Name = "txtValue"
         Me.txtValue.Size = New System.Drawing.Size(140, 20)
-        Me.txtValue.TabIndex = 2
+        Me.txtValue.TabIndex = 1
         '
         'FlowLayoutPanel1
         '
@@ -110,14 +110,14 @@ Partial Class frmManageMemoryRegisters
         Me.FlowLayoutPanel1.Location = New System.Drawing.Point(208, 12)
         Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
         Me.FlowLayoutPanel1.Size = New System.Drawing.Size(146, 39)
-        Me.FlowLayoutPanel1.TabIndex = 4
+        Me.FlowLayoutPanel1.TabIndex = 1
         '
         'btnAdd
         '
         Me.btnAdd.Location = New System.Drawing.Point(3, 3)
         Me.btnAdd.Name = "btnAdd"
         Me.btnAdd.Size = New System.Drawing.Size(59, 23)
-        Me.btnAdd.TabIndex = 3
+        Me.btnAdd.TabIndex = 0
         Me.btnAdd.Text = "&Add"
         Me.btnAdd.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.btnAdd.UseVisualStyleBackColor = True
@@ -127,7 +127,7 @@ Partial Class frmManageMemoryRegisters
         Me.btnRemove.Location = New System.Drawing.Point(68, 3)
         Me.btnRemove.Name = "btnRemove"
         Me.btnRemove.Size = New System.Drawing.Size(59, 23)
-        Me.btnRemove.TabIndex = 4
+        Me.btnRemove.TabIndex = 1
         Me.btnRemove.Text = "&Remove"
         Me.btnRemove.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.btnRemove.UseVisualStyleBackColor = True
@@ -147,7 +147,7 @@ Partial Class frmManageMemoryRegisters
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel2.Size = New System.Drawing.Size(130, 29)
-        Me.TableLayoutPanel2.TabIndex = 6
+        Me.TableLayoutPanel2.TabIndex = 2
         '
         'frmManageMemoryRegisters
         '

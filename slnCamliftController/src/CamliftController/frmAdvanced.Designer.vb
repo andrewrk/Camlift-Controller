@@ -46,8 +46,8 @@
             Me.btnApply.Location = New System.Drawing.Point(174, 200)
             Me.btnApply.Name = "btnApply"
             Me.btnApply.Size = New System.Drawing.Size(75, 23)
-            Me.btnApply.TabIndex = 0
-            Me.btnApply.Text = "Apply"
+            Me.btnApply.TabIndex = 4
+            Me.btnApply.Text = "&Apply"
             Me.btnApply.UseVisualStyleBackColor = True
             '
             'btnOk
@@ -55,8 +55,8 @@
             Me.btnOk.Location = New System.Drawing.Point(12, 200)
             Me.btnOk.Name = "btnOk"
             Me.btnOk.Size = New System.Drawing.Size(75, 23)
-            Me.btnOk.TabIndex = 1
-            Me.btnOk.Text = "OK"
+            Me.btnOk.TabIndex = 2
+            Me.btnOk.Text = "&OK"
             Me.btnOk.UseVisualStyleBackColor = True
             '
             'btnCancel
@@ -65,8 +65,8 @@
             Me.btnCancel.Location = New System.Drawing.Point(93, 200)
             Me.btnCancel.Name = "btnCancel"
             Me.btnCancel.Size = New System.Drawing.Size(75, 23)
-            Me.btnCancel.TabIndex = 2
-            Me.btnCancel.Text = "Cancel"
+            Me.btnCancel.TabIndex = 3
+            Me.btnCancel.Text = "&Cancel"
             Me.btnCancel.UseVisualStyleBackColor = True
             '
             'grpAdvancedSettings
@@ -82,7 +82,7 @@
             Me.grpAdvancedSettings.Location = New System.Drawing.Point(12, 12)
             Me.grpAdvancedSettings.Name = "grpAdvancedSettings"
             Me.grpAdvancedSettings.Size = New System.Drawing.Size(237, 126)
-            Me.grpAdvancedSettings.TabIndex = 3
+            Me.grpAdvancedSettings.TabIndex = 0
             Me.grpAdvancedSettings.TabStop = False
             Me.grpAdvancedSettings.Text = "Advanced Settings"
             '
@@ -91,8 +91,8 @@
             Me.btnUnlock.Location = New System.Drawing.Point(8, 97)
             Me.btnUnlock.Name = "btnUnlock"
             Me.btnUnlock.Size = New System.Drawing.Size(75, 23)
-            Me.btnUnlock.TabIndex = 7
-            Me.btnUnlock.Text = "Edit Settings"
+            Me.btnUnlock.TabIndex = 6
+            Me.btnUnlock.Text = "Edit &Settings"
             Me.btnUnlock.UseVisualStyleBackColor = True
             '
             'txtCurrent
@@ -101,7 +101,7 @@
             Me.txtCurrent.Location = New System.Drawing.Point(131, 71)
             Me.txtCurrent.Name = "txtCurrent"
             Me.txtCurrent.Size = New System.Drawing.Size(100, 20)
-            Me.txtCurrent.TabIndex = 4
+            Me.txtCurrent.TabIndex = 5
             Me.txtCurrent.Visible = False
             '
             'lblCurrentLabel
@@ -111,8 +111,8 @@
             Me.lblCurrentLabel.Location = New System.Drawing.Point(6, 74)
             Me.lblCurrentLabel.Name = "lblCurrentLabel"
             Me.lblCurrentLabel.Size = New System.Drawing.Size(87, 13)
-            Me.lblCurrentLabel.TabIndex = 5
-            Me.lblCurrentLabel.Text = "Running Current:"
+            Me.lblCurrentLabel.TabIndex = 4
+            Me.lblCurrentLabel.Text = "Running &Current:"
             Me.lblCurrentLabel.Visible = False
             '
             'btnRestoreDefaults
@@ -121,8 +121,8 @@
             Me.btnRestoreDefaults.Location = New System.Drawing.Point(134, 97)
             Me.btnRestoreDefaults.Name = "btnRestoreDefaults"
             Me.btnRestoreDefaults.Size = New System.Drawing.Size(97, 23)
-            Me.btnRestoreDefaults.TabIndex = 6
-            Me.btnRestoreDefaults.Text = "Restore Defaults"
+            Me.btnRestoreDefaults.TabIndex = 7
+            Me.btnRestoreDefaults.Text = "Restore &Defaults"
             Me.btnRestoreDefaults.UseVisualStyleBackColor = True
             '
             'txtAcceleration
@@ -139,7 +139,7 @@
             Me.txtVelocity.Location = New System.Drawing.Point(131, 19)
             Me.txtVelocity.Name = "txtVelocity"
             Me.txtVelocity.Size = New System.Drawing.Size(100, 20)
-            Me.txtVelocity.TabIndex = 2
+            Me.txtVelocity.TabIndex = 1
             '
             'lblAccelerationLabel
             '
@@ -148,8 +148,8 @@
             Me.lblAccelerationLabel.Location = New System.Drawing.Point(6, 48)
             Me.lblAccelerationLabel.Name = "lblAccelerationLabel"
             Me.lblAccelerationLabel.Size = New System.Drawing.Size(99, 13)
-            Me.lblAccelerationLabel.TabIndex = 1
-            Me.lblAccelerationLabel.Text = "Motor Acceleration:"
+            Me.lblAccelerationLabel.TabIndex = 2
+            Me.lblAccelerationLabel.Text = "Motor &Acceleration:"
             '
             'lblVelocityLabel
             '
@@ -159,7 +159,7 @@
             Me.lblVelocityLabel.Name = "lblVelocityLabel"
             Me.lblVelocityLabel.Size = New System.Drawing.Size(77, 13)
             Me.lblVelocityLabel.TabIndex = 0
-            Me.lblVelocityLabel.Text = "Motor Velocity:"
+            Me.lblVelocityLabel.Text = "Motor &Velocity:"
             '
             'lblRolloverHelp
             '
@@ -168,7 +168,7 @@
             Me.lblRolloverHelp.Location = New System.Drawing.Point(12, 141)
             Me.lblRolloverHelp.Name = "lblRolloverHelp"
             Me.lblRolloverHelp.Size = New System.Drawing.Size(237, 56)
-            Me.lblRolloverHelp.TabIndex = 4
+            Me.lblRolloverHelp.TabIndex = 1
             '
             'frmAdvanced
             '

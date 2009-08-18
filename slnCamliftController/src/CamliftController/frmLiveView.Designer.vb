@@ -61,7 +61,7 @@
             Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
             Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.TableLayoutPanel1.Size = New System.Drawing.Size(577, 429)
-            Me.TableLayoutPanel1.TabIndex = 1
+            Me.TableLayoutPanel1.TabIndex = 0
             '
             'tlpMain
             '
@@ -87,7 +87,7 @@
             Me.FlowLayoutPanel2.Location = New System.Drawing.Point(404, 3)
             Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
             Me.FlowLayoutPanel2.Size = New System.Drawing.Size(164, 376)
-            Me.FlowLayoutPanel2.TabIndex = 1
+            Me.FlowLayoutPanel2.TabIndex = 0
             '
             'GroupBox1
             '
@@ -97,7 +97,7 @@
             Me.GroupBox1.Size = New System.Drawing.Size(158, 82)
             Me.GroupBox1.TabIndex = 0
             Me.GroupBox1.TabStop = False
-            Me.GroupBox1.Text = "White Balance"
+            Me.GroupBox1.Text = "&White Balance"
             '
             'cboWhiteBalance
             '
@@ -147,7 +147,7 @@
             Me.FlowLayoutPanel3.Location = New System.Drawing.Point(3, 3)
             Me.FlowLayoutPanel3.Name = "FlowLayoutPanel3"
             Me.FlowLayoutPanel3.Size = New System.Drawing.Size(289, 29)
-            Me.FlowLayoutPanel3.TabIndex = 2
+            Me.FlowLayoutPanel3.TabIndex = 0
             Me.FlowLayoutPanel3.WrapContents = False
             '
             'btnGrid
@@ -156,7 +156,7 @@
             Me.btnGrid.Name = "btnGrid"
             Me.btnGrid.Size = New System.Drawing.Size(75, 23)
             Me.btnGrid.TabIndex = 0
-            Me.btnGrid.Text = "Grid"
+            Me.btnGrid.Text = "&Grid"
             Me.btnGrid.UseVisualStyleBackColor = True
             '
             'btnZoomOut
@@ -165,7 +165,7 @@
             Me.btnZoomOut.Name = "btnZoomOut"
             Me.btnZoomOut.Size = New System.Drawing.Size(75, 23)
             Me.btnZoomOut.TabIndex = 1
-            Me.btnZoomOut.Text = "Zoom Out"
+            Me.btnZoomOut.Text = "Zoom &Out"
             Me.btnZoomOut.UseVisualStyleBackColor = True
             '
             'lblZoom
@@ -174,7 +174,7 @@
             Me.lblZoom.Location = New System.Drawing.Point(165, 0)
             Me.lblZoom.Name = "lblZoom"
             Me.lblZoom.Size = New System.Drawing.Size(40, 29)
-            Me.lblZoom.TabIndex = 3
+            Me.lblZoom.TabIndex = 2
             Me.lblZoom.Text = "100%"
             Me.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
@@ -183,8 +183,8 @@
             Me.btnZoomIn.Location = New System.Drawing.Point(211, 3)
             Me.btnZoomIn.Name = "btnZoomIn"
             Me.btnZoomIn.Size = New System.Drawing.Size(75, 23)
-            Me.btnZoomIn.TabIndex = 2
-            Me.btnZoomIn.Text = "Zoom In"
+            Me.btnZoomIn.TabIndex = 3
+            Me.btnZoomIn.Text = "Zoom &In"
             Me.btnZoomIn.UseVisualStyleBackColor = True
             '
             'FlowLayoutPanel1
@@ -196,7 +196,7 @@
             Me.FlowLayoutPanel1.Location = New System.Drawing.Point(487, 3)
             Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
             Me.FlowLayoutPanel1.Size = New System.Drawing.Size(81, 29)
-            Me.FlowLayoutPanel1.TabIndex = 0
+            Me.FlowLayoutPanel1.TabIndex = 1
             '
             'btnClose
             '
@@ -205,7 +205,7 @@
             Me.btnClose.Name = "btnClose"
             Me.btnClose.Size = New System.Drawing.Size(75, 23)
             Me.btnClose.TabIndex = 0
-            Me.btnClose.Text = "Close"
+            Me.btnClose.Text = "&Close"
             Me.btnClose.UseVisualStyleBackColor = True
             '
             'frmLiveView
@@ -216,6 +216,7 @@
             Me.ClientSize = New System.Drawing.Size(577, 429)
             Me.Controls.Add(Me.TableLayoutPanel1)
             Me.Name = "frmLiveView"
+            Me.ShowIcon = False
             Me.Text = "Live View"
             Me.TableLayoutPanel1.ResumeLayout(False)
             Me.TableLayoutPanel1.PerformLayout()

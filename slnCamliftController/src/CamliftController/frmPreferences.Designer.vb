@@ -84,8 +84,8 @@
             Me.btnCancel.Location = New System.Drawing.Point(92, 313)
             Me.btnCancel.Name = "btnCancel"
             Me.btnCancel.Size = New System.Drawing.Size(75, 23)
-            Me.btnCancel.TabIndex = 17
-            Me.btnCancel.Text = "Cancel"
+            Me.btnCancel.TabIndex = 2
+            Me.btnCancel.Text = "&Cancel"
             Me.btnCancel.UseVisualStyleBackColor = True
             '
             'grpStepSizes
@@ -140,7 +140,7 @@
             Me.grpStepSizes.Location = New System.Drawing.Point(12, 12)
             Me.grpStepSizes.Name = "grpStepSizes"
             Me.grpStepSizes.Size = New System.Drawing.Size(236, 295)
-            Me.grpStepSizes.TabIndex = 1
+            Me.grpStepSizes.TabIndex = 0
             Me.grpStepSizes.TabStop = False
             Me.grpStepSizes.Text = "Step Settings"
             '
@@ -150,7 +150,7 @@
             Me.lblLabel9.Location = New System.Drawing.Point(28, 34)
             Me.lblLabel9.Name = "lblLabel9"
             Me.lblLabel9.Size = New System.Drawing.Size(26, 13)
-            Me.lblLabel9.TabIndex = 55
+            Me.lblLabel9.TabIndex = 5
             Me.lblLabel9.Text = "CF2"
             '
             'lblLabel8
@@ -159,7 +159,7 @@
             Me.lblLabel8.Location = New System.Drawing.Point(28, 60)
             Me.lblLabel8.Name = "lblLabel8"
             Me.lblLabel8.Size = New System.Drawing.Size(26, 13)
-            Me.lblLabel8.TabIndex = 54
+            Me.lblLabel8.TabIndex = 9
             Me.lblLabel8.Text = "CF2"
             '
             'lblLabel7
@@ -168,7 +168,7 @@
             Me.lblLabel7.Location = New System.Drawing.Point(28, 86)
             Me.lblLabel7.Name = "lblLabel7"
             Me.lblLabel7.Size = New System.Drawing.Size(26, 13)
-            Me.lblLabel7.TabIndex = 53
+            Me.lblLabel7.TabIndex = 13
             Me.lblLabel7.Text = "CF2"
             '
             'lblLabelDefault6
@@ -177,7 +177,7 @@
             Me.lblLabelDefault6.Location = New System.Drawing.Point(78, 112)
             Me.lblLabelDefault6.Name = "lblLabelDefault6"
             Me.lblLabelDefault6.Size = New System.Drawing.Size(26, 13)
-            Me.lblLabelDefault6.TabIndex = 52
+            Me.lblLabelDefault6.TabIndex = 18
             Me.lblLabelDefault6.Text = "CF2"
             '
             'lblLabelDefault5
@@ -186,7 +186,7 @@
             Me.lblLabelDefault5.Location = New System.Drawing.Point(78, 138)
             Me.lblLabelDefault5.Name = "lblLabelDefault5"
             Me.lblLabelDefault5.Size = New System.Drawing.Size(26, 13)
-            Me.lblLabelDefault5.TabIndex = 51
+            Me.lblLabelDefault5.TabIndex = 23
             Me.lblLabelDefault5.Text = "CF3"
             '
             'lblLabelDefault4
@@ -195,7 +195,7 @@
             Me.lblLabelDefault4.Location = New System.Drawing.Point(78, 164)
             Me.lblLabelDefault4.Name = "lblLabelDefault4"
             Me.lblLabelDefault4.Size = New System.Drawing.Size(26, 13)
-            Me.lblLabelDefault4.TabIndex = 50
+            Me.lblLabelDefault4.TabIndex = 28
             Me.lblLabelDefault4.Text = "CF4"
             '
             'lblLabelDefault3
@@ -204,7 +204,7 @@
             Me.lblLabelDefault3.Location = New System.Drawing.Point(78, 190)
             Me.lblLabelDefault3.Name = "lblLabelDefault3"
             Me.lblLabelDefault3.Size = New System.Drawing.Size(24, 13)
-            Me.lblLabelDefault3.TabIndex = 49
+            Me.lblLabelDefault3.TabIndex = 33
             Me.lblLabelDefault3.Text = "10x"
             '
             'lblLabelDefault2
@@ -213,7 +213,7 @@
             Me.lblLabelDefault2.Location = New System.Drawing.Point(78, 216)
             Me.lblLabelDefault2.Name = "lblLabelDefault2"
             Me.lblLabelDefault2.Size = New System.Drawing.Size(33, 13)
-            Me.lblLabelDefault2.TabIndex = 48
+            Me.lblLabelDefault2.TabIndex = 38
             Me.lblLabelDefault2.Text = "10x +"
             '
             'lblLabelDefault1
@@ -222,7 +222,7 @@
             Me.lblLabelDefault1.Location = New System.Drawing.Point(78, 242)
             Me.lblLabelDefault1.Name = "lblLabelDefault1"
             Me.lblLabelDefault1.Size = New System.Drawing.Size(24, 13)
-            Me.lblLabelDefault1.TabIndex = 47
+            Me.lblLabelDefault1.TabIndex = 43
             Me.lblLabelDefault1.Text = "20x"
             '
             'txtLabel1
@@ -230,7 +230,7 @@
             Me.txtLabel1.Location = New System.Drawing.Point(28, 240)
             Me.txtLabel1.Name = "txtLabel1"
             Me.txtLabel1.Size = New System.Drawing.Size(44, 20)
-            Me.txtLabel1.TabIndex = 13
+            Me.txtLabel1.TabIndex = 42
             Me.txtLabel1.Text = "CF 9"
             '
             'txtLabel2
@@ -238,7 +238,7 @@
             Me.txtLabel2.Location = New System.Drawing.Point(28, 214)
             Me.txtLabel2.Name = "txtLabel2"
             Me.txtLabel2.Size = New System.Drawing.Size(44, 20)
-            Me.txtLabel2.TabIndex = 11
+            Me.txtLabel2.TabIndex = 37
             Me.txtLabel2.Text = "CF 9"
             '
             'txtLabel3
@@ -246,7 +246,7 @@
             Me.txtLabel3.Location = New System.Drawing.Point(28, 188)
             Me.txtLabel3.Name = "txtLabel3"
             Me.txtLabel3.Size = New System.Drawing.Size(44, 20)
-            Me.txtLabel3.TabIndex = 9
+            Me.txtLabel3.TabIndex = 32
             Me.txtLabel3.Text = "CF 9"
             '
             'txtLabel4
@@ -254,7 +254,7 @@
             Me.txtLabel4.Location = New System.Drawing.Point(28, 162)
             Me.txtLabel4.Name = "txtLabel4"
             Me.txtLabel4.Size = New System.Drawing.Size(44, 20)
-            Me.txtLabel4.TabIndex = 7
+            Me.txtLabel4.TabIndex = 27
             Me.txtLabel4.Text = "CF 9"
             '
             'txtLabel5
@@ -262,7 +262,7 @@
             Me.txtLabel5.Location = New System.Drawing.Point(28, 136)
             Me.txtLabel5.Name = "txtLabel5"
             Me.txtLabel5.Size = New System.Drawing.Size(44, 20)
-            Me.txtLabel5.TabIndex = 5
+            Me.txtLabel5.TabIndex = 22
             Me.txtLabel5.Text = "CF 9"
             '
             'lblDefaultSizeLabel
@@ -271,7 +271,7 @@
             Me.lblDefaultSizeLabel.Location = New System.Drawing.Point(189, 16)
             Me.lblDefaultSizeLabel.Name = "lblDefaultSizeLabel"
             Me.lblDefaultSizeLabel.Size = New System.Drawing.Size(41, 13)
-            Me.lblDefaultSizeLabel.TabIndex = 41
+            Me.lblDefaultSizeLabel.TabIndex = 3
             Me.lblDefaultSizeLabel.Text = "Default"
             '
             'lblLabelLabel
@@ -280,7 +280,7 @@
             Me.lblLabelLabel.Location = New System.Drawing.Point(25, 16)
             Me.lblLabelLabel.Name = "lblLabelLabel"
             Me.lblLabelLabel.Size = New System.Drawing.Size(33, 13)
-            Me.lblLabelLabel.TabIndex = 40
+            Me.lblLabelLabel.TabIndex = 0
             Me.lblLabelLabel.Text = "Label"
             '
             'txtLabel6
@@ -288,7 +288,7 @@
             Me.txtLabel6.Location = New System.Drawing.Point(28, 110)
             Me.txtLabel6.Name = "txtLabel6"
             Me.txtLabel6.Size = New System.Drawing.Size(44, 20)
-            Me.txtLabel6.TabIndex = 3
+            Me.txtLabel6.TabIndex = 17
             Me.txtLabel6.Text = "CF 9"
             '
             'btnRestoreDefaults
@@ -296,8 +296,8 @@
             Me.btnRestoreDefaults.Location = New System.Drawing.Point(136, 266)
             Me.btnRestoreDefaults.Name = "btnRestoreDefaults"
             Me.btnRestoreDefaults.Size = New System.Drawing.Size(94, 23)
-            Me.btnRestoreDefaults.TabIndex = 15
-            Me.btnRestoreDefaults.Text = "Restore Defaults"
+            Me.btnRestoreDefaults.TabIndex = 46
+            Me.btnRestoreDefaults.Text = "Restore &Defaults"
             Me.btnRestoreDefaults.UseVisualStyleBackColor = True
             '
             'lblDefault1
@@ -306,7 +306,7 @@
             Me.lblDefault1.Location = New System.Drawing.Point(189, 242)
             Me.lblDefault1.Name = "lblDefault1"
             Me.lblDefault1.Size = New System.Drawing.Size(13, 13)
-            Me.lblDefault1.TabIndex = 38
+            Me.lblDefault1.TabIndex = 45
             Me.lblDefault1.Text = "5"
             '
             'lblDefault2
@@ -315,7 +315,7 @@
             Me.lblDefault2.Location = New System.Drawing.Point(189, 216)
             Me.lblDefault2.Name = "lblDefault2"
             Me.lblDefault2.Size = New System.Drawing.Size(19, 13)
-            Me.lblDefault2.TabIndex = 37
+            Me.lblDefault2.TabIndex = 40
             Me.lblDefault2.Text = "15"
             '
             'lblDefault3
@@ -324,7 +324,7 @@
             Me.lblDefault3.Location = New System.Drawing.Point(189, 190)
             Me.lblDefault3.Name = "lblDefault3"
             Me.lblDefault3.Size = New System.Drawing.Size(19, 13)
-            Me.lblDefault3.TabIndex = 36
+            Me.lblDefault3.TabIndex = 35
             Me.lblDefault3.Text = "20"
             '
             'lblDefault4
@@ -333,7 +333,7 @@
             Me.lblDefault4.Location = New System.Drawing.Point(189, 164)
             Me.lblDefault4.Name = "lblDefault4"
             Me.lblDefault4.Size = New System.Drawing.Size(19, 13)
-            Me.lblDefault4.TabIndex = 35
+            Me.lblDefault4.TabIndex = 30
             Me.lblDefault4.Text = "80"
             '
             'lblDefault5
@@ -342,7 +342,7 @@
             Me.lblDefault5.Location = New System.Drawing.Point(189, 138)
             Me.lblDefault5.Name = "lblDefault5"
             Me.lblDefault5.Size = New System.Drawing.Size(25, 13)
-            Me.lblDefault5.TabIndex = 34
+            Me.lblDefault5.TabIndex = 25
             Me.lblDefault5.Text = "190"
             '
             'lblDefault6
@@ -351,7 +351,7 @@
             Me.lblDefault6.Location = New System.Drawing.Point(189, 112)
             Me.lblDefault6.Name = "lblDefault6"
             Me.lblDefault6.Size = New System.Drawing.Size(25, 13)
-            Me.lblDefault6.TabIndex = 33
+            Me.lblDefault6.TabIndex = 20
             Me.lblDefault6.Text = "340"
             '
             'lblDefault7
@@ -360,7 +360,7 @@
             Me.lblDefault7.Location = New System.Drawing.Point(189, 86)
             Me.lblDefault7.Name = "lblDefault7"
             Me.lblDefault7.Size = New System.Drawing.Size(31, 13)
-            Me.lblDefault7.TabIndex = 32
+            Me.lblDefault7.TabIndex = 15
             Me.lblDefault7.Text = "1250"
             '
             'lblDefault8
@@ -369,7 +369,7 @@
             Me.lblDefault8.Location = New System.Drawing.Point(189, 60)
             Me.lblDefault8.Name = "lblDefault8"
             Me.lblDefault8.Size = New System.Drawing.Size(31, 13)
-            Me.lblDefault8.TabIndex = 31
+            Me.lblDefault8.TabIndex = 11
             Me.lblDefault8.Text = "2500"
             '
             'lblDefault9
@@ -378,7 +378,7 @@
             Me.lblDefault9.Location = New System.Drawing.Point(189, 34)
             Me.lblDefault9.Name = "lblDefault9"
             Me.lblDefault9.Size = New System.Drawing.Size(31, 13)
-            Me.lblDefault9.TabIndex = 30
+            Me.lblDefault9.TabIndex = 7
             Me.lblDefault9.Text = "5000"
             '
             'lblDefaultLabel
@@ -387,7 +387,7 @@
             Me.lblDefaultLabel.Location = New System.Drawing.Point(78, 16)
             Me.lblDefaultLabel.Name = "lblDefaultLabel"
             Me.lblDefaultLabel.Size = New System.Drawing.Size(41, 13)
-            Me.lblDefaultLabel.TabIndex = 29
+            Me.lblDefaultLabel.TabIndex = 1
             Me.lblDefaultLabel.Text = "Default"
             '
             'lslSizeLabel
@@ -396,7 +396,7 @@
             Me.lslSizeLabel.Location = New System.Drawing.Point(125, 16)
             Me.lslSizeLabel.Name = "lslSizeLabel"
             Me.lslSizeLabel.Size = New System.Drawing.Size(27, 13)
-            Me.lslSizeLabel.TabIndex = 28
+            Me.lslSizeLabel.TabIndex = 2
             Me.lslSizeLabel.Text = "Size"
             '
             'lblSizeLabel1
@@ -405,7 +405,7 @@
             Me.lblSizeLabel1.Location = New System.Drawing.Point(6, 242)
             Me.lblSizeLabel1.Name = "lblSizeLabel1"
             Me.lblSizeLabel1.Size = New System.Drawing.Size(16, 13)
-            Me.lblSizeLabel1.TabIndex = 27
+            Me.lblSizeLabel1.TabIndex = 41
             Me.lblSizeLabel1.Text = "1)"
             '
             'lblSizeLabel2
@@ -414,7 +414,7 @@
             Me.lblSizeLabel2.Location = New System.Drawing.Point(6, 216)
             Me.lblSizeLabel2.Name = "lblSizeLabel2"
             Me.lblSizeLabel2.Size = New System.Drawing.Size(16, 13)
-            Me.lblSizeLabel2.TabIndex = 26
+            Me.lblSizeLabel2.TabIndex = 36
             Me.lblSizeLabel2.Text = "2)"
             '
             'lblSizeLabel3
@@ -423,7 +423,7 @@
             Me.lblSizeLabel3.Location = New System.Drawing.Point(6, 190)
             Me.lblSizeLabel3.Name = "lblSizeLabel3"
             Me.lblSizeLabel3.Size = New System.Drawing.Size(16, 13)
-            Me.lblSizeLabel3.TabIndex = 25
+            Me.lblSizeLabel3.TabIndex = 31
             Me.lblSizeLabel3.Text = "3)"
             '
             'lblSizeLabel4
@@ -432,7 +432,7 @@
             Me.lblSizeLabel4.Location = New System.Drawing.Point(6, 164)
             Me.lblSizeLabel4.Name = "lblSizeLabel4"
             Me.lblSizeLabel4.Size = New System.Drawing.Size(16, 13)
-            Me.lblSizeLabel4.TabIndex = 24
+            Me.lblSizeLabel4.TabIndex = 26
             Me.lblSizeLabel4.Text = "4)"
             '
             'lblSizeLabel5
@@ -441,7 +441,7 @@
             Me.lblSizeLabel5.Location = New System.Drawing.Point(6, 138)
             Me.lblSizeLabel5.Name = "lblSizeLabel5"
             Me.lblSizeLabel5.Size = New System.Drawing.Size(16, 13)
-            Me.lblSizeLabel5.TabIndex = 23
+            Me.lblSizeLabel5.TabIndex = 21
             Me.lblSizeLabel5.Text = "5)"
             '
             'lblSizeLabel6
@@ -450,7 +450,7 @@
             Me.lblSizeLabel6.Location = New System.Drawing.Point(6, 112)
             Me.lblSizeLabel6.Name = "lblSizeLabel6"
             Me.lblSizeLabel6.Size = New System.Drawing.Size(16, 13)
-            Me.lblSizeLabel6.TabIndex = 22
+            Me.lblSizeLabel6.TabIndex = 16
             Me.lblSizeLabel6.Text = "6)"
             '
             'lblSizeLabel7
@@ -459,7 +459,7 @@
             Me.lblSizeLabel7.Location = New System.Drawing.Point(6, 86)
             Me.lblSizeLabel7.Name = "lblSizeLabel7"
             Me.lblSizeLabel7.Size = New System.Drawing.Size(16, 13)
-            Me.lblSizeLabel7.TabIndex = 21
+            Me.lblSizeLabel7.TabIndex = 12
             Me.lblSizeLabel7.Text = "7)"
             '
             'lblSizeLabel8
@@ -468,7 +468,7 @@
             Me.lblSizeLabel8.Location = New System.Drawing.Point(6, 60)
             Me.lblSizeLabel8.Name = "lblSizeLabel8"
             Me.lblSizeLabel8.Size = New System.Drawing.Size(16, 13)
-            Me.lblSizeLabel8.TabIndex = 20
+            Me.lblSizeLabel8.TabIndex = 8
             Me.lblSizeLabel8.Text = "8)"
             '
             'txtStep8
@@ -476,7 +476,7 @@
             Me.txtStep8.Location = New System.Drawing.Point(128, 58)
             Me.txtStep8.Name = "txtStep8"
             Me.txtStep8.Size = New System.Drawing.Size(55, 20)
-            Me.txtStep8.TabIndex = 1
+            Me.txtStep8.TabIndex = 10
             Me.txtStep8.Text = "1"
             '
             'txtStep7
@@ -484,7 +484,7 @@
             Me.txtStep7.Location = New System.Drawing.Point(128, 84)
             Me.txtStep7.Name = "txtStep7"
             Me.txtStep7.Size = New System.Drawing.Size(55, 20)
-            Me.txtStep7.TabIndex = 2
+            Me.txtStep7.TabIndex = 14
             Me.txtStep7.Text = "0"
             '
             'txtStep6
@@ -492,7 +492,7 @@
             Me.txtStep6.Location = New System.Drawing.Point(128, 110)
             Me.txtStep6.Name = "txtStep6"
             Me.txtStep6.Size = New System.Drawing.Size(55, 20)
-            Me.txtStep6.TabIndex = 4
+            Me.txtStep6.TabIndex = 19
             Me.txtStep6.Text = "0"
             '
             'txtStep5
@@ -500,7 +500,7 @@
             Me.txtStep5.Location = New System.Drawing.Point(128, 136)
             Me.txtStep5.Name = "txtStep5"
             Me.txtStep5.Size = New System.Drawing.Size(55, 20)
-            Me.txtStep5.TabIndex = 6
+            Me.txtStep5.TabIndex = 24
             Me.txtStep5.Text = "0"
             '
             'txtStep4
@@ -508,7 +508,7 @@
             Me.txtStep4.Location = New System.Drawing.Point(128, 162)
             Me.txtStep4.Name = "txtStep4"
             Me.txtStep4.Size = New System.Drawing.Size(55, 20)
-            Me.txtStep4.TabIndex = 8
+            Me.txtStep4.TabIndex = 29
             Me.txtStep4.Text = "0"
             '
             'txtStep3
@@ -516,7 +516,7 @@
             Me.txtStep3.Location = New System.Drawing.Point(128, 188)
             Me.txtStep3.Name = "txtStep3"
             Me.txtStep3.Size = New System.Drawing.Size(55, 20)
-            Me.txtStep3.TabIndex = 10
+            Me.txtStep3.TabIndex = 34
             Me.txtStep3.Text = "0"
             '
             'txtStep2
@@ -524,7 +524,7 @@
             Me.txtStep2.Location = New System.Drawing.Point(128, 214)
             Me.txtStep2.Name = "txtStep2"
             Me.txtStep2.Size = New System.Drawing.Size(55, 20)
-            Me.txtStep2.TabIndex = 12
+            Me.txtStep2.TabIndex = 39
             Me.txtStep2.Text = "0"
             '
             'txtStep1
@@ -532,7 +532,7 @@
             Me.txtStep1.Location = New System.Drawing.Point(128, 240)
             Me.txtStep1.Name = "txtStep1"
             Me.txtStep1.Size = New System.Drawing.Size(55, 20)
-            Me.txtStep1.TabIndex = 14
+            Me.txtStep1.TabIndex = 44
             Me.txtStep1.Text = "0"
             '
             'txtStep9
@@ -541,7 +541,7 @@
             Me.txtStep9.Location = New System.Drawing.Point(128, 32)
             Me.txtStep9.Name = "txtStep9"
             Me.txtStep9.Size = New System.Drawing.Size(55, 20)
-            Me.txtStep9.TabIndex = 0
+            Me.txtStep9.TabIndex = 6
             Me.txtStep9.Text = "0"
             '
             'lblSizeLabel9
@@ -550,7 +550,7 @@
             Me.lblSizeLabel9.Location = New System.Drawing.Point(6, 34)
             Me.lblSizeLabel9.Name = "lblSizeLabel9"
             Me.lblSizeLabel9.Size = New System.Drawing.Size(16, 13)
-            Me.lblSizeLabel9.TabIndex = 0
+            Me.lblSizeLabel9.TabIndex = 4
             Me.lblSizeLabel9.Text = "9)"
             '
             'btnApply
@@ -559,8 +559,8 @@
             Me.btnApply.Location = New System.Drawing.Point(173, 313)
             Me.btnApply.Name = "btnApply"
             Me.btnApply.Size = New System.Drawing.Size(75, 23)
-            Me.btnApply.TabIndex = 18
-            Me.btnApply.Text = "Apply"
+            Me.btnApply.TabIndex = 3
+            Me.btnApply.Text = "&Apply"
             Me.btnApply.UseVisualStyleBackColor = True
             '
             'btnOk
@@ -568,8 +568,8 @@
             Me.btnOk.Location = New System.Drawing.Point(12, 313)
             Me.btnOk.Name = "btnOk"
             Me.btnOk.Size = New System.Drawing.Size(75, 23)
-            Me.btnOk.TabIndex = 16
-            Me.btnOk.Text = "OK"
+            Me.btnOk.TabIndex = 1
+            Me.btnOk.Text = "&OK"
             Me.btnOk.UseVisualStyleBackColor = True
             '
             'frmPreferences

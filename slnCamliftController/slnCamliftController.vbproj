@@ -115,7 +115,7 @@
     <Compile Include="src\CamliftController\frmPosition.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\CamliftController\PositionManager.vb">
+    <Compile Include="src\PositionManager.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\CamliftController\frmLiveView.Designer.vb">

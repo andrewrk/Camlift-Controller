@@ -100,7 +100,7 @@
             Me.stsStatusStrip.Name = "stsStatusStrip"
             Me.stsStatusStrip.Size = New System.Drawing.Size(186, 22)
             Me.stsStatusStrip.SizingGrip = False
-            Me.stsStatusStrip.TabIndex = 0
+            Me.stsStatusStrip.TabIndex = 3
             Me.stsStatusStrip.Text = "StatusStrip1"
             '
             'tslStatus
@@ -120,7 +120,8 @@
             Me.tkbPos.Orientation = System.Windows.Forms.Orientation.Vertical
             Me.tkbPos.Size = New System.Drawing.Size(45, 577)
             Me.tkbPos.SmallChange = 10000
-            Me.tkbPos.TabIndex = 9
+            Me.tkbPos.TabIndex = 1
+            Me.tkbPos.TabStop = False
             Me.tkbPos.TickFrequency = 10000
             Me.tkbPos.Value = 1000000
             '
@@ -130,7 +131,7 @@
             Me.btnGo.Location = New System.Drawing.Point(60, 3)
             Me.btnGo.Name = "btnGo"
             Me.btnGo.Size = New System.Drawing.Size(31, 23)
-            Me.btnGo.TabIndex = 3
+            Me.btnGo.TabIndex = 1
             Me.btnGo.Text = "&Go"
             Me.btnGo.UseVisualStyleBackColor = True
             '
@@ -142,7 +143,7 @@
             Me.txtPos.Margin = New System.Windows.Forms.Padding(3, 4, 3, 3)
             Me.txtPos.Name = "txtPos"
             Me.txtPos.Size = New System.Drawing.Size(51, 20)
-            Me.txtPos.TabIndex = 2
+            Me.txtPos.TabIndex = 0
             '
             'cmsPosition
             '
@@ -198,7 +199,7 @@
             Me.grpDist.Location = New System.Drawing.Point(14, 165)
             Me.grpDist.Name = "grpDist"
             Me.grpDist.Size = New System.Drawing.Size(108, 204)
-            Me.grpDist.TabIndex = 3
+            Me.grpDist.TabIndex = 4
             Me.grpDist.TabStop = False
             Me.grpDist.Text = "Distance"
             '
@@ -209,7 +210,7 @@
             Me.lblCurrentDist.Location = New System.Drawing.Point(6, 16)
             Me.lblCurrentDist.Name = "lblCurrentDist"
             Me.lblCurrentDist.Size = New System.Drawing.Size(38, 13)
-            Me.lblCurrentDist.TabIndex = 1
+            Me.lblCurrentDist.TabIndex = 0
             Me.lblCurrentDist.Text = "Infinite"
             '
             'pnlDist
@@ -227,7 +228,7 @@
             Me.pnlDist.Location = New System.Drawing.Point(46, 35)
             Me.pnlDist.Name = "pnlDist"
             Me.pnlDist.Size = New System.Drawing.Size(56, 163)
-            Me.pnlDist.TabIndex = 11
+            Me.pnlDist.TabIndex = 2
             '
             'lblDist1
             '
@@ -236,7 +237,7 @@
             Me.lblDist1.Location = New System.Drawing.Point(3, 143)
             Me.lblDist1.Name = "lblDist1"
             Me.lblDist1.Size = New System.Drawing.Size(24, 13)
-            Me.lblDist1.TabIndex = 10
+            Me.lblDist1.TabIndex = 9
             Me.lblDist1.Text = "20x"
             '
             'Label1
@@ -246,7 +247,7 @@
             Me.Label1.Location = New System.Drawing.Point(3, 8)
             Me.Label1.Name = "Label1"
             Me.Label1.Size = New System.Drawing.Size(38, 13)
-            Me.Label1.TabIndex = 2
+            Me.Label1.TabIndex = 0
             Me.Label1.Text = "Infinite"
             '
             'lblDist9
@@ -256,7 +257,7 @@
             Me.lblDist9.Location = New System.Drawing.Point(3, 21)
             Me.lblDist9.Name = "lblDist9"
             Me.lblDist9.Size = New System.Drawing.Size(44, 13)
-            Me.lblDist9.TabIndex = 2
+            Me.lblDist9.TabIndex = 1
             Me.lblDist9.Text = "4.00mm"
             '
             'lblDist2
@@ -266,7 +267,7 @@
             Me.lblDist2.Location = New System.Drawing.Point(3, 127)
             Me.lblDist2.Name = "lblDist2"
             Me.lblDist2.Size = New System.Drawing.Size(33, 13)
-            Me.lblDist2.TabIndex = 9
+            Me.lblDist2.TabIndex = 8
             Me.lblDist2.Text = "10x +"
             '
             'lblDist8
@@ -276,7 +277,7 @@
             Me.lblDist8.Location = New System.Drawing.Point(3, 36)
             Me.lblDist8.Name = "lblDist8"
             Me.lblDist8.Size = New System.Drawing.Size(44, 13)
-            Me.lblDist8.TabIndex = 3
+            Me.lblDist8.TabIndex = 2
             Me.lblDist8.Text = "2.00mm"
             '
             'lblDist3
@@ -286,7 +287,7 @@
             Me.lblDist3.Location = New System.Drawing.Point(3, 111)
             Me.lblDist3.Name = "lblDist3"
             Me.lblDist3.Size = New System.Drawing.Size(24, 13)
-            Me.lblDist3.TabIndex = 8
+            Me.lblDist3.TabIndex = 7
             Me.lblDist3.Text = "10x"
             '
             'lblDist7
@@ -296,7 +297,7 @@
             Me.lblDist7.Location = New System.Drawing.Point(3, 51)
             Me.lblDist7.Name = "lblDist7"
             Me.lblDist7.Size = New System.Drawing.Size(44, 13)
-            Me.lblDist7.TabIndex = 4
+            Me.lblDist7.TabIndex = 3
             Me.lblDist7.Text = "1.00mm"
             '
             'lblDist4
@@ -306,7 +307,7 @@
             Me.lblDist4.Location = New System.Drawing.Point(3, 96)
             Me.lblDist4.Name = "lblDist4"
             Me.lblDist4.Size = New System.Drawing.Size(26, 13)
-            Me.lblDist4.TabIndex = 7
+            Me.lblDist4.TabIndex = 6
             Me.lblDist4.Text = "CF4"
             '
             'lblDist6
@@ -316,7 +317,7 @@
             Me.lblDist6.Location = New System.Drawing.Point(3, 66)
             Me.lblDist6.Name = "lblDist6"
             Me.lblDist6.Size = New System.Drawing.Size(26, 13)
-            Me.lblDist6.TabIndex = 5
+            Me.lblDist6.TabIndex = 4
             Me.lblDist6.Text = "CF2"
             '
             'lblDist5
@@ -326,7 +327,7 @@
             Me.lblDist5.Location = New System.Drawing.Point(3, 81)
             Me.lblDist5.Name = "lblDist5"
             Me.lblDist5.Size = New System.Drawing.Size(26, 13)
-            Me.lblDist5.TabIndex = 6
+            Me.lblDist5.TabIndex = 5
             Me.lblDist5.Text = "CF3"
             '
             'tkbDist
@@ -339,7 +340,7 @@
             Me.tkbDist.Name = "tkbDist"
             Me.tkbDist.Orientation = System.Windows.Forms.Orientation.Vertical
             Me.tkbDist.Size = New System.Drawing.Size(45, 160)
-            Me.tkbDist.TabIndex = 3
+            Me.tkbDist.TabIndex = 1
             Me.tkbDist.TabStop = False
             Me.tkbDist.Value = 10
             '
@@ -350,7 +351,7 @@
             Me.btnStop.Location = New System.Drawing.Point(14, 125)
             Me.btnStop.Name = "btnStop"
             Me.btnStop.Size = New System.Drawing.Size(97, 35)
-            Me.btnStop.TabIndex = 8
+            Me.btnStop.TabIndex = 3
             Me.btnStop.Text = "ST&OP !"
             Me.btnStop.UseVisualStyleBackColor = False
             '
@@ -360,7 +361,7 @@
             Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
             Me.MenuStrip1.Name = "MenuStrip1"
             Me.MenuStrip1.Size = New System.Drawing.Size(186, 24)
-            Me.MenuStrip1.TabIndex = 10
+            Me.MenuStrip1.TabIndex = 0
             Me.MenuStrip1.Text = "MenuStrip1"
             '
             'SettingsToolStripMenuItem
@@ -439,7 +440,7 @@
             Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
             Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
             Me.FlowLayoutPanel1.Size = New System.Drawing.Size(94, 29)
-            Me.FlowLayoutPanel1.TabIndex = 12
+            Me.FlowLayoutPanel1.TabIndex = 0
             '
             'btnAutorun
             '
@@ -455,7 +456,7 @@
             Me.btnAutoStart.Location = New System.Drawing.Point(3, 60)
             Me.btnAutoStart.Name = "btnAutoStart"
             Me.btnAutoStart.Size = New System.Drawing.Size(73, 20)
-            Me.btnAutoStart.TabIndex = 17
+            Me.btnAutoStart.TabIndex = 1
             Me.btnAutoStart.Text = "Sta&rt Here"
             Me.btnAutoStart.UseVisualStyleBackColor = True
             '
@@ -464,7 +465,7 @@
             Me.btnAutoStop.Location = New System.Drawing.Point(3, 82)
             Me.btnAutoStop.Name = "btnAutoStop"
             Me.btnAutoStop.Size = New System.Drawing.Size(73, 20)
-            Me.btnAutoStop.TabIndex = 18
+            Me.btnAutoStop.TabIndex = 2
             Me.btnAutoStop.Text = "Sto&p Here"
             Me.btnAutoStop.UseVisualStyleBackColor = True
             '
@@ -478,7 +479,7 @@
             Me.GroupBox1.Location = New System.Drawing.Point(3, 3)
             Me.GroupBox1.Name = "GroupBox1"
             Me.GroupBox1.Size = New System.Drawing.Size(128, 375)
-            Me.GroupBox1.TabIndex = 19
+            Me.GroupBox1.TabIndex = 0
             Me.GroupBox1.TabStop = False
             Me.GroupBox1.Text = "Motor"
             '
@@ -489,7 +490,7 @@
             Me.btnDown.Location = New System.Drawing.Point(14, 87)
             Me.btnDown.Name = "btnDown"
             Me.btnDown.Size = New System.Drawing.Size(97, 32)
-            Me.btnDown.TabIndex = 7
+            Me.btnDown.TabIndex = 2
             Me.btnDown.UseVisualStyleBackColor = True
             '
             'btnUp
@@ -499,7 +500,7 @@
             Me.btnUp.Location = New System.Drawing.Point(14, 49)
             Me.btnUp.Name = "btnUp"
             Me.btnUp.Size = New System.Drawing.Size(97, 32)
-            Me.btnUp.TabIndex = 6
+            Me.btnUp.TabIndex = 1
             Me.btnUp.UseVisualStyleBackColor = True
             '
             'GroupBox2
@@ -512,7 +513,7 @@
             Me.GroupBox2.Location = New System.Drawing.Point(3, 384)
             Me.GroupBox2.Name = "GroupBox2"
             Me.GroupBox2.Size = New System.Drawing.Size(128, 109)
-            Me.GroupBox2.TabIndex = 20
+            Me.GroupBox2.TabIndex = 1
             Me.GroupBox2.TabStop = False
             Me.GroupBox2.Text = "Autorun"
             '
@@ -522,7 +523,7 @@
             Me.lblAutoStop.Location = New System.Drawing.Point(82, 86)
             Me.lblAutoStop.Name = "lblAutoStop"
             Me.lblAutoStop.Size = New System.Drawing.Size(0, 13)
-            Me.lblAutoStop.TabIndex = 19
+            Me.lblAutoStop.TabIndex = 4
             '
             'lblAutoStart
             '
@@ -530,7 +531,7 @@
             Me.lblAutoStart.Location = New System.Drawing.Point(82, 64)
             Me.lblAutoStart.Name = "lblAutoStart"
             Me.lblAutoStart.Size = New System.Drawing.Size(0, 13)
-            Me.lblAutoStart.TabIndex = 19
+            Me.lblAutoStart.TabIndex = 3
             '
             'FlowLayoutPanel2
             '
@@ -543,7 +544,7 @@
             Me.FlowLayoutPanel2.Location = New System.Drawing.Point(45, 24)
             Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
             Me.FlowLayoutPanel2.Size = New System.Drawing.Size(141, 577)
-            Me.FlowLayoutPanel2.TabIndex = 21
+            Me.FlowLayoutPanel2.TabIndex = 2
             '
             'TableLayoutPanel1
             '
@@ -559,7 +560,7 @@
             Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.TableLayoutPanel1.Size = New System.Drawing.Size(128, 71)
-            Me.TableLayoutPanel1.TabIndex = 21
+            Me.TableLayoutPanel1.TabIndex = 2
             '
             'btnLiveView
             '
@@ -567,7 +568,7 @@
             Me.btnLiveView.Location = New System.Drawing.Point(15, 3)
             Me.btnLiveView.Name = "btnLiveView"
             Me.btnLiveView.Size = New System.Drawing.Size(97, 28)
-            Me.btnLiveView.TabIndex = 16
+            Me.btnLiveView.TabIndex = 0
             Me.btnLiveView.Text = "&Live View..."
             Me.btnLiveView.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
             Me.btnLiveView.UseVisualStyleBackColor = True
@@ -578,7 +579,7 @@
             Me.btnTakePic.Location = New System.Drawing.Point(15, 37)
             Me.btnTakePic.Name = "btnTakePic"
             Me.btnTakePic.Size = New System.Drawing.Size(97, 28)
-            Me.btnTakePic.TabIndex = 15
+            Me.btnTakePic.TabIndex = 1
             Me.btnTakePic.Text = "&Take Picture"
             Me.btnTakePic.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
             Me.btnTakePic.UseVisualStyleBackColor = True

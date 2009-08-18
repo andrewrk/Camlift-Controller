@@ -49,14 +49,14 @@ Partial Class frmAutoRunSetups
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel2.Size = New System.Drawing.Size(65, 29)
-        Me.TableLayoutPanel2.TabIndex = 10
+        Me.TableLayoutPanel2.TabIndex = 2
         '
         'btnDelete
         '
         Me.btnDelete.Location = New System.Drawing.Point(3, 3)
         Me.btnDelete.Name = "btnDelete"
         Me.btnDelete.Size = New System.Drawing.Size(59, 23)
-        Me.btnDelete.TabIndex = 5
+        Me.btnDelete.TabIndex = 0
         Me.btnDelete.Text = "&Delete"
         Me.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.btnDelete.UseVisualStyleBackColor = True
@@ -74,7 +74,7 @@ Partial Class frmAutoRunSetups
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(146, 29)
-        Me.TableLayoutPanel1.TabIndex = 8
+        Me.TableLayoutPanel1.TabIndex = 3
         '
         'btnOk
         '
@@ -82,7 +82,7 @@ Partial Class frmAutoRunSetups
         Me.btnOk.Location = New System.Drawing.Point(3, 3)
         Me.btnOk.Name = "btnOk"
         Me.btnOk.Size = New System.Drawing.Size(67, 23)
-        Me.btnOk.TabIndex = 5
+        Me.btnOk.TabIndex = 0
         Me.btnOk.Text = "&OK"
         '
         'btnCancel
@@ -92,7 +92,7 @@ Partial Class frmAutoRunSetups
         Me.btnCancel.Location = New System.Drawing.Point(76, 3)
         Me.btnCancel.Name = "btnCancel"
         Me.btnCancel.Size = New System.Drawing.Size(67, 23)
-        Me.btnCancel.TabIndex = 6
+        Me.btnCancel.TabIndex = 1
         Me.btnCancel.Text = "&Cancel"
         '
         'FlowLayoutPanel2
@@ -106,7 +106,7 @@ Partial Class frmAutoRunSetups
         Me.FlowLayoutPanel2.Location = New System.Drawing.Point(201, 12)
         Me.FlowLayoutPanel2.Name = "FlowLayoutPanel2"
         Me.FlowLayoutPanel2.Size = New System.Drawing.Size(146, 39)
-        Me.FlowLayoutPanel2.TabIndex = 11
+        Me.FlowLayoutPanel2.TabIndex = 1
         '
         'Label2
         '
@@ -114,15 +114,15 @@ Partial Class frmAutoRunSetups
         Me.Label2.Location = New System.Drawing.Point(3, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(38, 13)
-        Me.Label2.TabIndex = 1
-        Me.Label2.Text = "Name:"
+        Me.Label2.TabIndex = 0
+        Me.Label2.Text = "&Name:"
         '
         'txtName
         '
         Me.txtName.Location = New System.Drawing.Point(3, 16)
         Me.txtName.Name = "txtName"
         Me.txtName.Size = New System.Drawing.Size(140, 20)
-        Me.txtName.TabIndex = 2
+        Me.txtName.TabIndex = 1
         '
         'lstSetups
         '
@@ -135,7 +135,7 @@ Partial Class frmAutoRunSetups
         Me.lstSetups.Name = "lstSetups"
         Me.lstSetups.Size = New System.Drawing.Size(182, 167)
         Me.lstSetups.Sorted = True
-        Me.lstSetups.TabIndex = 12
+        Me.lstSetups.TabIndex = 0
         '
         'frmAutoRunSetups
         '

@@ -25,7 +25,6 @@ Partial Class frmPosition
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel
         Me.OK_Button = New System.Windows.Forms.Button
         Me.Cancel_Button = New System.Windows.Forms.Button
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel
         Me.btnRemove = New System.Windows.Forms.Button
         Me.lvwPositions = New System.Windows.Forms.ListView
         Me.ColumnHeader1 = New System.Windows.Forms.ColumnHeader
@@ -48,7 +47,7 @@ Partial Class frmPosition
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(146, 29)
-        Me.TableLayoutPanel1.TabIndex = 2
+        Me.TableLayoutPanel1.TabIndex = 4
         '
         'OK_Button
         '
@@ -69,28 +68,13 @@ Partial Class frmPosition
         Me.Cancel_Button.TabIndex = 1
         Me.Cancel_Button.Text = "&Cancel"
         '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel2.AutoSize = True
-        Me.TableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.TableLayoutPanel2.ColumnCount = 2
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(12, 253)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 1
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(0, 0)
-        Me.TableLayoutPanel2.TabIndex = 1
-        '
         'btnRemove
         '
         Me.btnRemove.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnRemove.Location = New System.Drawing.Point(12, 198)
         Me.btnRemove.Name = "btnRemove"
         Me.btnRemove.Size = New System.Drawing.Size(59, 23)
-        Me.btnRemove.TabIndex = 4
+        Me.btnRemove.TabIndex = 1
         Me.btnRemove.Text = "&Delete"
         Me.btnRemove.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.btnRemove.UseVisualStyleBackColor = True
@@ -137,8 +121,8 @@ Partial Class frmPosition
         Me.lblAs.Location = New System.Drawing.Point(139, 196)
         Me.lblAs.Name = "lblAs"
         Me.lblAs.Size = New System.Drawing.Size(118, 23)
-        Me.lblAs.TabIndex = 4
-        Me.lblAs.Text = "Save as:"
+        Me.lblAs.TabIndex = 2
+        Me.lblAs.Text = "Save &as:"
         Me.lblAs.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'frmPosition
@@ -152,7 +136,6 @@ Partial Class frmPosition
         Me.Controls.Add(Me.btnRemove)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.lvwPositions)
-        Me.Controls.Add(Me.TableLayoutPanel2)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -170,7 +153,6 @@ Partial Class frmPosition
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents OK_Button As System.Windows.Forms.Button
     Friend WithEvents Cancel_Button As System.Windows.Forms.Button
-    Friend WithEvents TableLayoutPanel2 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents btnRemove As System.Windows.Forms.Button
     Friend WithEvents lvwPositions As System.Windows.Forms.ListView
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
