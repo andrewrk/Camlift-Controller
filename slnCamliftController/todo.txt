@@ -16,3 +16,4 @@
 
 Version 3.0
 * instead of a message box for silverpak, show frmcontrols and disable everything except a button labeled "Initialize Motor"
+* park distance. Never really go to 0 except for initialization. the perceived "0" is really parkDistance, this prevents switch-sitting hardware bugs.
