@@ -150,16 +150,6 @@ Namespace CamliftController
         Private Sub btnGo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGo.Click
             If ValidateNumeric(txtPos, True) Then moveAbsolute_gui(txtPos.Text)
         End Sub
-
-        Private Sub btnLoad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-            Dim cms = m_positionManager.MakeLoadMenu(AddressOf loadPosition_safe)
-            'cms.Show(btnLoad, btnLoad.Width, 0)
-        End Sub
-        Private Sub btnStore_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-            Dim cmsStoreLoad = m_positionManager.MakeStoreMenu(txtPos.Text)
-            'cmsStoreLoad.Show(btnStore, btnStore.Width, 0)
-        End Sub
-
         Private Sub btnUp_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles btnUp.MouseDown
             If e.Button = Windows.Forms.MouseButtons.Left Then
                 If tkbDist.Value = 10 Then
