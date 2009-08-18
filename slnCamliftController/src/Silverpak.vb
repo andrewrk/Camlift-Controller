@@ -23,7 +23,7 @@ Public Class Silverpak
 
     End Sub
 
-    Public Shadows Sub Dispose()
+    Public Shadows Sub Dispose() Implements IDisposable.Dispose
         If Me.IsActive Then Me.StopMotor()
         MyBase.Dispose()
     End Sub
