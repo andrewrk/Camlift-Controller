@@ -5,7 +5,7 @@ Imports VisionaryDigital.Settings
 Namespace CamliftController
     Public Class PositionManager
 
-        Private m_memReg As Integer?()
+        Public m_memReg As Integer?()
 
         Private m_smartStepsManager As SmartStepsManager
 
@@ -54,9 +54,6 @@ Namespace CamliftController
                     i += 1
                 Next
             End Sub
-            Private Sub tsmiMemManage_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmiMemManage.Click
-                MsgBox("Manually set the values of each register," & vbCrLf & "adjust the number of registers," & vbCrLf & "ect...")
-            End Sub
 
             Private Function initValueMenuItem_safe(ByVal baseTitle As String, ByVal value As Object, ByVal clickHandler As EventHandler) As ToolStripMenuItem
                 Dim tempText = baseTitle
@@ -70,8 +67,6 @@ Namespace CamliftController
 
             Protected MustOverride ReadOnly Property DisableNull() As Boolean
             Protected MustOverride ReadOnly Property MemHandler() As EventHandler
-            Protected MustOverride ReadOnly Property AutorunStartHandler() As EventHandler
-            Protected MustOverride ReadOnly Property AutorunStopHandler() As EventHandler
 
         End Class
         Private Class LoadContextMenuStrip
@@ -99,17 +94,6 @@ Namespace CamliftController
             Private Sub tsmiLoadAutorunStop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
                 m_f_loadPosition.Invoke(_nest.m_smartStepsManager.LastAutorunRun.AutorunStop)
             End Sub
-
-            Protected Overrides ReadOnly Property AutorunStartHandler() As System.EventHandler
-                Get
-                    Return AddressOf tsmiLoadAutorunStart_Click
-                End Get
-            End Property
-            Protected Overrides ReadOnly Property AutorunStopHandler() As System.EventHandler
-                Get
-                    Return AddressOf tsmiLoadAutorunStop_Click
-                End Get
-            End Property
             Protected Overrides ReadOnly Property DisableNull() As Boolean
                 Get
                     Return True
@@ -146,17 +130,6 @@ Namespace CamliftController
             Private Sub tsmiStoreAutorunStop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
                 _nest.m_smartStepsManager.LastAutorunRun.AutorunStop = m_value
             End Sub
-
-            Protected Overrides ReadOnly Property AutorunStartHandler() As System.EventHandler
-                Get
-                    Return AddressOf tsmiStoreAutorunStart_Click
-                End Get
-            End Property
-            Protected Overrides ReadOnly Property AutorunStopHandler() As System.EventHandler
-                Get
-                    Return AddressOf tsmiStoreAutorunStop_Click
-                End Get
-            End Property
             Protected Overrides ReadOnly Property DisableNull() As Boolean
                 Get
                     Return False

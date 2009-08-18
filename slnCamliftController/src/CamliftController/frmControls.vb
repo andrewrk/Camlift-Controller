@@ -608,7 +608,9 @@ Namespace CamliftController
         End Sub
 
         Private Sub ManageMemoryRegistersToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ManageMemoryRegistersToolStripMenuItem.Click
-            MsgBox("Manually set the values of each register," & vbCrLf & "adjust the number of registers," & vbCrLf & "ect...")
+            Dim inst As New frmManageMemoryRegisters(m_positionManager)
+
+            inst.ShowDialog()
         End Sub
     End Class
 

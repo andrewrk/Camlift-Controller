@@ -72,12 +72,12 @@
             Me.btnDown = New System.Windows.Forms.Button
             Me.btnUp = New System.Windows.Forms.Button
             Me.GroupBox2 = New System.Windows.Forms.GroupBox
+            Me.lblAutoStop = New System.Windows.Forms.Label
+            Me.lblAutoStart = New System.Windows.Forms.Label
             Me.FlowLayoutPanel2 = New System.Windows.Forms.FlowLayoutPanel
             Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel
             Me.btnLiveView = New System.Windows.Forms.Button
             Me.btnTakePic = New System.Windows.Forms.Button
-            Me.lblAutoStart = New System.Windows.Forms.Label
-            Me.lblAutoStop = New System.Windows.Forms.Label
             Me.stsStatusStrip.SuspendLayout()
             CType(Me.tkbPos, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.cmsPosition.SuspendLayout()
@@ -504,6 +504,22 @@
             Me.GroupBox2.TabStop = False
             Me.GroupBox2.Text = "Autorun"
             '
+            'lblAutoStop
+            '
+            Me.lblAutoStop.AutoSize = True
+            Me.lblAutoStop.Location = New System.Drawing.Point(82, 86)
+            Me.lblAutoStop.Name = "lblAutoStop"
+            Me.lblAutoStop.Size = New System.Drawing.Size(0, 13)
+            Me.lblAutoStop.TabIndex = 19
+            '
+            'lblAutoStart
+            '
+            Me.lblAutoStart.AutoSize = True
+            Me.lblAutoStart.Location = New System.Drawing.Point(82, 64)
+            Me.lblAutoStart.Name = "lblAutoStart"
+            Me.lblAutoStart.Size = New System.Drawing.Size(0, 13)
+            Me.lblAutoStart.TabIndex = 19
+            '
             'FlowLayoutPanel2
             '
             Me.FlowLayoutPanel2.AutoSize = True
@@ -554,24 +570,6 @@
             Me.btnTakePic.Text = "&Take Picture"
             Me.btnTakePic.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
             Me.btnTakePic.UseVisualStyleBackColor = True
-            '
-            'lblAutoStart
-            '
-            Me.lblAutoStart.AutoSize = True
-            Me.lblAutoStart.Location = New System.Drawing.Point(82, 64)
-            Me.lblAutoStart.Name = "lblAutoStart"
-            Me.lblAutoStart.Size = New System.Drawing.Size(13, 13)
-            Me.lblAutoStart.TabIndex = 19
-            Me.lblAutoStart.Text = "0"
-            '
-            'lblAutoStop
-            '
-            Me.lblAutoStop.AutoSize = True
-            Me.lblAutoStop.Location = New System.Drawing.Point(82, 86)
-            Me.lblAutoStop.Name = "lblAutoStop"
-            Me.lblAutoStop.Size = New System.Drawing.Size(13, 13)
-            Me.lblAutoStop.TabIndex = 19
-            Me.lblAutoStop.Text = "0"
             '
             'frmControls
             '
