@@ -1,10 +1,5 @@
 ﻿Version 2.0
 * auto run
-	- Add an "Adjust overlap" setting where the user can adjust the percentage of overlap between slices.
-		Default 10%
-		 min 0%
-		 max ?%
-		 The user might see "0%" when it's really 10% and "-10%" when it's really 0%.
 	- Load:
 		- Saved Positions
 	- Save setup (fancier)
