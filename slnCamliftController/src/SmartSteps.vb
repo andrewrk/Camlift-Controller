@@ -149,6 +149,9 @@ Namespace SmartSteps
                 Catch ex As SdkException
                     AbortRun(ex)
                     Exit Sub
+                Catch ex As Exception
+                    AbortRun(Nothing)
+                    Exit Sub
                 End Try
 
                 ' check for abort
