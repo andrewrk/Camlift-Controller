@@ -103,7 +103,7 @@ Namespace CamliftController
             Me.TopMost = AlwaysOnTopToolStripMenuItem.Checked
         End Sub
         Private Sub UsersGuideToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles UsersGuideToolStripMenuItem.Click
-            System.Diagnostics.Process.Start("IExplore.exe", HelpFileName)
+            System.Diagnostics.Process.Start(HelpFileName)
         End Sub
         Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
             MsgBox(MsgBoxAboutMessage, MsgBoxStyle.Information, MsgBoxTitle)

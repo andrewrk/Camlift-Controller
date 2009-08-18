@@ -9,7 +9,6 @@
 		- Saved Positions
 	- Save setup (fancier)
 	- Fix calculation discrepencies
-* change hard code iexplore to default browser
 * auto run -> unplug camera during run -> exit -> assertion failed
 
 
