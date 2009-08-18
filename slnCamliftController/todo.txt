@@ -10,7 +10,6 @@
 		- Manage Memory Registers
 	- Save setup (fancier)
 	- Fix calculation discrepencies
-* test multiple monitor persistent startup position
 
 Version 3.0
 * instead of a message box for silverpak, show frmcontrols and disable everything except a button labeled "Initialize Motor"
