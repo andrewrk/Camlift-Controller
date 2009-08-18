@@ -427,7 +427,7 @@ Namespace CamliftController
 
         Private Sub updateCurrentDist_gui()
             If tkbDist.Value = 10 Then
-                lblCurrentDist.Text = "Free"
+                lblCurrentDist.Text = "Infinite"
             Else
                 lblCurrentDist.Text = m_stepSizes(tkbDist.Value - 1).Value
             End If

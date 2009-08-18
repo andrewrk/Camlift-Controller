@@ -40,9 +40,10 @@
             Me.SetAutorunStartToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.SetAutorunStopHereToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
             Me.grpDist = New System.Windows.Forms.GroupBox
-            Me.pnlDist = New System.Windows.Forms.Panel
             Me.lblCurrentDist = New System.Windows.Forms.Label
+            Me.pnlDist = New System.Windows.Forms.Panel
             Me.lblDist1 = New System.Windows.Forms.Label
+            Me.Label1 = New System.Windows.Forms.Label
             Me.lblDist9 = New System.Windows.Forms.Label
             Me.lblDist2 = New System.Windows.Forms.Label
             Me.lblDist8 = New System.Windows.Forms.Label
@@ -78,7 +79,6 @@
             Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel
             Me.btnLiveView = New System.Windows.Forms.Button
             Me.btnTakePic = New System.Windows.Forms.Button
-            Me.Label1 = New System.Windows.Forms.Label
             Me.stsStatusStrip.SuspendLayout()
             CType(Me.tkbPos, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.cmsPosition.SuspendLayout()
@@ -202,6 +202,16 @@
             Me.grpDist.TabStop = False
             Me.grpDist.Text = "Distance"
             '
+            'lblCurrentDist
+            '
+            Me.lblCurrentDist.AutoSize = True
+            Me.lblCurrentDist.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            Me.lblCurrentDist.Location = New System.Drawing.Point(6, 16)
+            Me.lblCurrentDist.Name = "lblCurrentDist"
+            Me.lblCurrentDist.Size = New System.Drawing.Size(38, 13)
+            Me.lblCurrentDist.TabIndex = 1
+            Me.lblCurrentDist.Text = "Infinite"
+            '
             'pnlDist
             '
             Me.pnlDist.Controls.Add(Me.lblDist1)
@@ -219,16 +229,6 @@
             Me.pnlDist.Size = New System.Drawing.Size(56, 163)
             Me.pnlDist.TabIndex = 11
             '
-            'lblCurrentDist
-            '
-            Me.lblCurrentDist.AutoSize = True
-            Me.lblCurrentDist.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.lblCurrentDist.Location = New System.Drawing.Point(6, 16)
-            Me.lblCurrentDist.Name = "lblCurrentDist"
-            Me.lblCurrentDist.Size = New System.Drawing.Size(28, 13)
-            Me.lblCurrentDist.TabIndex = 1
-            Me.lblCurrentDist.Text = "Free"
-            '
             'lblDist1
             '
             Me.lblDist1.AutoSize = True
@@ -238,6 +238,16 @@
             Me.lblDist1.Size = New System.Drawing.Size(24, 13)
             Me.lblDist1.TabIndex = 10
             Me.lblDist1.Text = "20x"
+            '
+            'Label1
+            '
+            Me.Label1.AutoSize = True
+            Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+            Me.Label1.Location = New System.Drawing.Point(3, 8)
+            Me.Label1.Name = "Label1"
+            Me.Label1.Size = New System.Drawing.Size(38, 13)
+            Me.Label1.TabIndex = 2
+            Me.Label1.Text = "Infinite"
             '
             'lblDist9
             '
@@ -572,16 +582,6 @@
             Me.btnTakePic.Text = "&Take Picture"
             Me.btnTakePic.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
             Me.btnTakePic.UseVisualStyleBackColor = True
-            '
-            'Label1
-            '
-            Me.Label1.AutoSize = True
-            Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.Label1.Location = New System.Drawing.Point(3, 8)
-            Me.Label1.Name = "Label1"
-            Me.Label1.Size = New System.Drawing.Size(28, 13)
-            Me.Label1.TabIndex = 2
-            Me.Label1.Text = "Free"
             '
             'frmControls
             '
