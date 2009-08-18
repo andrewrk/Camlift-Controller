@@ -505,7 +505,6 @@ Namespace Settings
     Public Class PositionManagerSettings
         Inherits SettingsDict
 
-        Private Const MemRegSizeName As String = "MemRegSize"
         Private m_MemRegSize As Integer = 5
         Public Property MemRegSize() As Integer
             Get
@@ -513,6 +512,32 @@ Namespace Settings
             End Get
             Set(ByVal value As Integer)
                 m_MemRegSize = value
+            End Set
+        End Property
+
+        Private m_StepSizes As New StepSizeList(Nothing)
+        Public Property StepSizes() As StepSizeList
+            Get
+                Return m_StepSizes
+            End Get
+            Set(ByVal value As StepSizeList)
+                m_StepSizes = value
+            End Set
+        End Property
+
+        Public Sub New(ByVal contents As Object)
+            init(contents)
+        End Sub
+    End Class
+    Public Class StepSizeList
+        Inherits SettingsList(Of Integer)
+
+        Public Property StepSizes() As List(Of KeyValuePair(Of String, Integer))
+            Get
+                Return ContentsList
+            End Get
+            Set(ByVal value As List(Of KeyValuePair(Of String, Integer)))
+                ContentsList = value
             End Set
         End Property
 

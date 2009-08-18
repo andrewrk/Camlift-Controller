@@ -211,7 +211,7 @@
             Me.grpSetup.Size = New System.Drawing.Size(263, 351)
             Me.grpSetup.TabIndex = 106
             Me.grpSetup.TabStop = False
-            Me.grpSetup.Text = "Settings"
+            Me.grpSetup.Text = "Setup"
             '
             'grpIris
             '

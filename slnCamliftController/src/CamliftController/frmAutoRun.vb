@@ -38,7 +38,6 @@ Namespace SmartSteps
             Next
             loadObjectives()
 
-
             Dim currentRun = New AutorunRunSettings(m_currentRun.GetContents)
             Dim currentSetup = New AutorunSetupSettings(m_currentSetup.GetContents)
 
@@ -164,6 +163,8 @@ Namespace SmartSteps
 
         Private Sub loadObjectives()
             fillGroupWithRadios(grpObjective, (From kvp In m_objecitveList.Objectives Select kvp.Key), AddressOf rdoObjective_CheckedChanged)
+            grpMag.Controls.Clear()
+            grpIris.Controls.Clear()
         End Sub
         Private Sub loadMags()
             Dim lastMagName = m_selectedMag.Key
@@ -249,7 +250,7 @@ Namespace SmartSteps
                     txtSlices.Text = Math.Ceiling((m_currentRun.AutorunStop - m_currentRun.AutorunStart) / stepSize) + 1
                 Else ' use slices
                     'show stop position
-                    txtStopPosition.Text = m_currentRun.AutorunStart + stepSize * m_currentRun.Slices
+                    txtStopPosition.Text = m_currentRun.AutorunStart + stepSize * (m_currentRun.Slices - 1)
                 End If
             Else
                 'invalid
