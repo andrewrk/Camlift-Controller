@@ -73,15 +73,18 @@ Namespace CamliftController
             Inherits StoreLoadContextMenuStrip
 
             Private m_f_loadPosition As Action(Of Integer)
+            Private m_posMan As PositionManager
 
             Public Sub New(ByVal nest As PositionManager, ByVal f_loadPosition As Action(Of Integer))
                 MyBase.New(nest)
 
+                m_posMan = nest
                 m_f_loadPosition = f_loadPosition
             End Sub
 
             Private Sub tsmiLoadSavedPosition_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmiSavedPosition.Click
-                MsgBox("Coming soon!", Title:=MsgBoxTitle)
+                Dim pos As New frmPosition(m_posMan.m_settings, DialogType.Load)
+                If pos.ShowDialog() = DialogResult.OK Then m_f_loadPosition(pos.SelectedPosition)
             End Sub
             Private Sub tsmiLoadMem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
                 Dim tsmi As ToolStripMenuItem = sender
@@ -109,15 +112,18 @@ Namespace CamliftController
             Inherits StoreLoadContextMenuStrip
 
             Private m_value As Integer
+            Private m_posMan As PositionManager
 
             Public Sub New(ByVal nest As PositionManager, ByVal value As Integer)
                 MyBase.New(nest)
 
                 m_value = value
+                m_posMan = nest
             End Sub
 
             Private Sub tsmiStoreSavedPosition_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsmiSavedPosition.Click
-                MsgBox("Coming soon!", Title:=MsgBoxTitle)
+                Dim pos As New frmPosition(m_posMan.m_settings, DialogType.Save, m_value)
+                pos.ShowDialog()
             End Sub
             Private Sub tsmiStoreMem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
                 Dim tsmi As ToolStripMenuItem = sender

@@ -525,10 +525,38 @@ Namespace Settings
             End Set
         End Property
 
+        Private m_positions As New PositionList(Nothing)
+        Public Property Positions() As PositionList
+            Get
+                Return m_positions
+            End Get
+            Set(ByVal value As PositionList)
+                m_positions = value
+            End Set
+        End Property
+
         Public Sub New(ByVal contents As Object)
             init(contents)
         End Sub
     End Class
+
+    Public Class PositionList
+        Inherits SettingsList(Of Integer)
+
+        Public Sub New(ByVal contents As Object)
+            init(contents)
+        End Sub
+
+        Public Property Positions() As List(Of KeyValuePair(Of String, Integer))
+            Get
+                Return ContentsList
+            End Get
+            Set(ByVal value As List(Of KeyValuePair(Of String, Integer)))
+                ContentsList = value
+            End Set
+        End Property
+    End Class
+
     Public Class StepSizeList
         Inherits SettingsList(Of Integer)
 

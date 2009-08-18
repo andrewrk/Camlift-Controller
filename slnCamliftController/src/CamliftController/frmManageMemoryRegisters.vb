@@ -27,6 +27,7 @@ Public Class frmManageMemoryRegisters
 
         lstMem.SelectedIndex = 0
         IgnoreTextChange = False
+        lstMem.Focus()
     End Sub
 
     Private Sub RefreshList()
@@ -37,6 +38,10 @@ Public Class frmManageMemoryRegisters
         Next
 
         btnRemove.Enabled = newReg.Count > 0
+    End Sub
+
+    Private Sub lstMem_MouseDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstMem.MouseDoubleClick
+        txtValue.Focus()
     End Sub
 
     Private Sub lstMem_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles lstMem.SelectedIndexChanged
@@ -52,7 +57,6 @@ Public Class frmManageMemoryRegisters
         End If
         IgnoreTextChange = False
 
-        txtValue.Focus()
     End Sub
 
     Private Sub txtValue_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtValue.TextChanged
