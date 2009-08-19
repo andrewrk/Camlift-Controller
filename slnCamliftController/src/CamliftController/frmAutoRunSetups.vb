@@ -66,7 +66,7 @@ Public Class frmAutoRunSetups
     End Sub
 
     Private Sub btnOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOk.Click
-        If GetSelectedIndex() = -1 Then Exit Sub
+        If m_mode = DialogType.Load AndAlso GetSelectedIndex() = -1 Then Exit Sub
 
         m_smartStepsManager.AutorunSetups.AutorunSetups = m_setups
         SelectedName = txtName.Text
