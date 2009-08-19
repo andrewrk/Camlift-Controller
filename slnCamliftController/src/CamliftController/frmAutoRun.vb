@@ -320,29 +320,47 @@ Namespace SmartSteps
         End Function
 
         Private Sub btnSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSave.Click
+            Dim setups As New frmAutoRunSetups(m_smartStepsManager, DialogType.Save)
 
-            Dim name = InputBox("Enter name (this will get fancier...):", MsgBoxTitle)
-            If name = "" Then Exit Sub
-            m_smartStepsManager.AutorunSetups.AutorunSetups.Add(New KeyValuePair(Of String, AutorunSetupSettings)(name, New AutorunSetupSettings(m_currentSetup.GetContents)))
-            m_smartStepsManager.SaveSettings()
+            If setups.ShowDialog() = Windows.Forms.DialogResult.OK Then
+                Dim newkvp As New KeyValuePair(Of String, AutorunSetupSettings)(setups.SelectedName, New AutorunSetupSettings(m_currentSetup.GetContents))
+                Dim found As Boolean = False
+                For i As Integer = 0 To m_smartStepsManager.AutorunSetups.AutorunSetups.Count - 1
+                    If m_smartStepsManager.AutorunSetups.AutorunSetups(i).Key = setups.SelectedName Then
+                        m_smartStepsManager.AutorunSetups.AutorunSetups(i) = newkvp
+                        found = True
+                        Exit For
+                    End If
+                Next
+
+                'not found
+                If Not found Then m_smartStepsManager.AutorunSetups.AutorunSetups.Add(newkvp)
+
+                m_smartStepsManager.SaveSettings()
+            End If
+
         End Sub
 
         Private Sub btnLoad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnLoad.Click
-            Dim allNames = ""
-            For Each kvp In m_smartStepsManager.AutorunSetups.AutorunSetups
-                allNames &= """" & kvp.Key & """, "
-            Next
-            allNames = If(allNames = "", "(none)", allNames.Substring(0, allNames.Length - 2))
-            Dim name = InputBox("Enter name (this will get fancier...):" & vbCrLf & "available names: " & allNames, MsgBoxTitle)
-            If name = "" Then Exit Sub
-            For Each kvp In m_smartStepsManager.AutorunSetups.AutorunSetups
-                If kvp.Key = name Then
-                    loadSetup(New AutorunSetupSettings(kvp.Value.GetContents))
-                    Exit Sub
-                End If
-            Next
-            'not found
-            MsgBox("name not found. (this will get fancier...)", , MsgBoxTitle)
+            If m_smartStepsManager.AutorunSetups.AutorunSetups.Count = 0 Then
+                MsgBox(MsgBoxNoSavedAutorunSetups, MsgBoxStyle.OkOnly)
+                Exit Sub
+            End If
+
+            Dim setups As New frmAutoRunSetups(m_smartStepsManager, DialogType.Load)
+
+            If setups.ShowDialog() = Windows.Forms.DialogResult.OK Then
+
+
+                For Each kvp In m_smartStepsManager.AutorunSetups.AutorunSetups
+                    If kvp.Key = setups.SelectedName Then
+                        loadSetup(New AutorunSetupSettings(kvp.Value.GetContents))
+                        Exit Sub
+                    End If
+                Next
+                'not found
+                Debug.Assert(False)
+            End If
         End Sub
 
     End Class

@@ -16,6 +16,7 @@ Public Module modMain
     Public Const MsgBoxTooManyCamerasMessage = "More than one camera found. Please make sure no other cameras are connected."
     Public Const MsgBoxDeviceIsBusyMessage = "Camera device is busy. You can disconnect the power to force it to reset."
 
+    Public Const MsgBoxNoSavedAutorunSetups As String = "There are no saved Autorun Setups. You can save them by pressing Save and then they will be available."
     Public Const ConnectionLostResult = "Connection Lost"
     Public Const MsgBoxTitle As String = "Camlift Controller"
     Public Const MsgBoxInitializationAbortedMessage As String = "Initialization was interrupted." & vbCrLf & vbCrLf & "Continue initialization?"

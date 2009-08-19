@@ -5,29 +5,30 @@ Public Class frmAutoRunSetups
 
     Private m_smartStepsManager As SmartStepsManager
     Private m_setups As List(Of KeyValuePair(Of String, AutorunSetupSettings))
-    Private m_saveMode As Boolean
-    Private m_selectedSelectedIndex As Integer = -1
+    Private m_mode As DialogType
 
-    Public Sub New(ByVal smartStepsManager As SmartStepsManager, ByVal saveMode As Boolean)
+    Public SelectedName As String
+
+    Public Sub New(ByVal smartStepsManager As SmartStepsManager, ByVal mode As DialogType)
         InitializeComponent() ' This call is required by the Windows Form Designer.
 
         m_smartStepsManager = smartStepsManager
-        m_setups = smartStepsManager.AutorunSetups.AutorunSetups.ToList
-        m_saveMode = saveMode
+        m_setups = smartStepsManager.AutorunSetups.AutorunSetups.ToList()
+        m_mode = mode
     End Sub
 
-    Private Sub frmAutoRunSetups_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        updatedSelection()
+    Private Sub lstSetups_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles lstSetups.DoubleClick
+        btnOk_Click(sender, e)
     End Sub
 
     Private Sub lstSetups_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstSetups.SelectedIndexChanged
-        m_selectedSelectedIndex = findNameInSetups(lstSetups.SelectedItem)
-        updatedSelection()
+        configureControls()
     End Sub
 
     Private Sub btnDelete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDelete.Click
-        lstSetups.Items.RemoveAt(lstSetups.SelectedIndex)
-        updatedSelection()
+        If lstSetups.SelectedIndex = -1 Then Exit Sub
+        m_setups.RemoveAt(lstSetups.SelectedIndex)
+        RefreshList()
     End Sub
 
     Private Sub txtName_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtName.GotFocus
@@ -38,13 +39,7 @@ Public Class frmAutoRunSetups
         lstSetups.Sorted = True
     End Sub
 
-    Private Sub txtName_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtName.TextChanged
-        Dim currentEntry = m_setups(m_selectedSelectedIndex)
-        m_setups(m_selectedSelectedIndex) = New KeyValuePair(Of String, AutorunSetupSettings)(txtName.Text, currentEntry.Value)
-        fillList()
-    End Sub
-
-    Private Sub fillList()
+    Private Sub RefreshList()
         Dim duplicateName = False 'TODO: add duplicate name detection
         lstSetups.Enabled = Not duplicateName
         btnOk.Enabled = Not duplicateName
@@ -52,41 +47,65 @@ Public Class frmAutoRunSetups
 
         lstSetups.Items.Clear()
         lstSetups.Items.AddRange(getNames())
-        lstSetups.SelectedItem = m_setups(m_selectedSelectedIndex).Key
+
+        configureControls()
     End Sub
     Private Function findNameInSetups(ByVal name As String) As Integer
-        Dim i = 0
-        For Each kvp In m_setups
-            If kvp.Key = name Then Return i
-            i += 1
+        For i As Integer = 0 To m_setups.Count - 1
+            If m_setups(i).Key = name Then Return i
         Next
-        Return -1
+        Return -1 ' not found
     End Function
     Private Function getNames() As String()
-        Return (From kvp In m_setups Select kvp.Key).ToArray
+        Return (From kvp In m_setups Select kvp.Key).ToArray()
     End Function
 
-    Private Sub updatedSelection()
+    Private Sub configureControls()
         If lstSetups.SelectedItems.Count = 0 Then
             btnDelete.Enabled = False
             txtName.Text = ""
             txtName.Enabled = False
+            btnOk.Enabled = False
         Else
             btnDelete.Enabled = True
             txtName.Text = lstSetups.SelectedItem
             txtName.Enabled = True
+            btnOk.Enabled = True
         End If
     End Sub
 
     Private Sub btnOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOk.Click
-        applySettings()
-        DialogResult = DialogResult.OK
+        If lstSetups.SelectedIndex = -1 Then Exit Sub
+
+        m_smartStepsManager.AutorunSetups.AutorunSetups = m_setups
+        SelectedName = txtName.Text
+
+        DialogResult = DialogResult.OK 'closes dialog
     End Sub
     Private Sub btnCancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancel.Click
-        DialogResult = DialogResult.Cancel
+        DialogResult = DialogResult.Cancel 'closes dialog
     End Sub
 
-    Private Sub applySettings()
-        m_smartStepsManager.AutorunSetups.AutorunSetups = m_setups.ToList
+    Private Sub frmAutoRunSetups_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
+        If m_mode = DialogType.Load Then
+            Me.Text = "Load an Autorun Setup"
+            btnOk.Text = "Load"
+            lblAs.Visible = False
+            txtName.Visible = False
+
+            lstSetups.Focus()
+        Else
+            Me.Text = "Save Autorun Setup"
+            btnOk.Text = "Save"
+            lblAs.Visible = True
+            txtName.Visible = True
+
+            txtName.Text = "setup name"
+            txtName.SelectAll()
+            txtName.Focus()
+        End If
+
+        RefreshList()
+
     End Sub
 End Class

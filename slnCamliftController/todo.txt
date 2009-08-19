@@ -1,7 +1,8 @@
 ﻿Version 2.0
 * auto run
-	- Save setup (fancier)
 	- Fix calculation discrepencies
+	- save setup not saving percentage overlap when program closes
+	- implement rename in auto run setups
 
 Version 3.0
 * lazy motor - don't try to initialize until motor is needed
