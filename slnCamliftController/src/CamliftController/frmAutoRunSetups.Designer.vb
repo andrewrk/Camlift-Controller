@@ -30,6 +30,7 @@ Partial Class frmAutoRunSetups
         Me.txtName = New System.Windows.Forms.TextBox
         Me.lvwSetups = New System.Windows.Forms.ListView
         Me.ColumnHeader1 = New System.Windows.Forms.ColumnHeader
+        Me.btnRename = New System.Windows.Forms.Button
         Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -103,6 +104,7 @@ Partial Class frmAutoRunSetups
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lvwSetups.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1})
         Me.lvwSetups.FullRowSelect = True
+        Me.lvwSetups.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None
         Me.lvwSetups.HideSelection = False
         Me.lvwSetups.LabelEdit = True
         Me.lvwSetups.Location = New System.Drawing.Point(12, 12)
@@ -117,7 +119,18 @@ Partial Class frmAutoRunSetups
         'ColumnHeader1
         '
         Me.ColumnHeader1.Text = "Name"
-        Me.ColumnHeader1.Width = 255
+        Me.ColumnHeader1.Width = 322
+        '
+        'btnRename
+        '
+        Me.btnRename.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnRename.Location = New System.Drawing.Point(77, 167)
+        Me.btnRename.Name = "btnRename"
+        Me.btnRename.Size = New System.Drawing.Size(59, 23)
+        Me.btnRename.TabIndex = 1
+        Me.btnRename.Text = "&Rename"
+        Me.btnRename.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.btnRename.UseVisualStyleBackColor = True
         '
         'frmAutoRunSetups
         '
@@ -127,6 +140,7 @@ Partial Class frmAutoRunSetups
         Me.CancelButton = Me.btnCancel
         Me.ClientSize = New System.Drawing.Size(352, 235)
         Me.Controls.Add(Me.lvwSetups)
+        Me.Controls.Add(Me.btnRename)
         Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.lblAs)
@@ -151,4 +165,5 @@ Partial Class frmAutoRunSetups
     Friend WithEvents btnDelete As System.Windows.Forms.Button
     Friend WithEvents lvwSetups As System.Windows.Forms.ListView
     Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
+    Friend WithEvents btnRename As System.Windows.Forms.Button
 End Class

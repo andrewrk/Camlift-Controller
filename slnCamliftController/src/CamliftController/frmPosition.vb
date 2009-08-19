@@ -69,6 +69,7 @@ Public Class frmPosition
 
         ignore = m_ignoreTextChange
 
+        ConfigureControls()
     End Sub
 
     Private Sub frmPosition_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
@@ -108,8 +109,20 @@ Public Class frmPosition
         OK_Button_Click(sender, e)
     End Sub
 
+    Private Sub ConfigureControls()
+        If lvwPositions.SelectedItems.Count = 0 Then
+            btnRemove.Enabled = False
+            btnRename.Enabled = False
+        Else
+            btnRemove.Enabled = True
+            btnRename.Enabled = True
+        End If
+    End Sub
+
     Private Sub lvwPositions_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvwPositions.SelectedIndexChanged
+        configurecontrols()
         If lvwPositions.SelectedItems.Count = 0 Then Exit Sub
+
         txtName.Text = lvwPositions.SelectedItems(0).Text
     End Sub
 
@@ -120,5 +133,10 @@ Public Class frmPosition
 
         m_newPositions.RemoveAt(index)
         RefreshList()
+    End Sub
+
+    Private Sub btnRename_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnRename.Click
+        If lvwPositions.SelectedItems.Count = 0 Then Exit Sub
+        lvwPositions.SelectedItems(0).BeginEdit()
     End Sub
 End Class

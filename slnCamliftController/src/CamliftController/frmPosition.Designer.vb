@@ -31,6 +31,7 @@ Partial Class frmPosition
         Me.ColumnHeader2 = New System.Windows.Forms.ColumnHeader
         Me.txtName = New System.Windows.Forms.TextBox
         Me.lblAs = New System.Windows.Forms.Label
+        Me.btnRename = New System.Windows.Forms.Button
         Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -125,6 +126,17 @@ Partial Class frmPosition
         Me.lblAs.Text = "Save &as:"
         Me.lblAs.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
+        'btnRename
+        '
+        Me.btnRename.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.btnRename.Location = New System.Drawing.Point(74, 198)
+        Me.btnRename.Name = "btnRename"
+        Me.btnRename.Size = New System.Drawing.Size(59, 23)
+        Me.btnRename.TabIndex = 1
+        Me.btnRename.Text = "&Rename"
+        Me.btnRename.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
+        Me.btnRename.UseVisualStyleBackColor = True
+        '
         'frmPosition
         '
         Me.AcceptButton = Me.OK_Button
@@ -133,6 +145,7 @@ Partial Class frmPosition
         Me.CancelButton = Me.Cancel_Button
         Me.ClientSize = New System.Drawing.Size(418, 265)
         Me.Controls.Add(Me.lblAs)
+        Me.Controls.Add(Me.btnRename)
         Me.Controls.Add(Me.btnRemove)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.lvwPositions)
@@ -159,5 +172,6 @@ Partial Class frmPosition
     Friend WithEvents ColumnHeader2 As System.Windows.Forms.ColumnHeader
     Friend WithEvents txtName As System.Windows.Forms.TextBox
     Friend WithEvents lblAs As System.Windows.Forms.Label
+    Friend WithEvents btnRename As System.Windows.Forms.Button
 
 End Class

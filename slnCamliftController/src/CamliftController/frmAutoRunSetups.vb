@@ -54,11 +54,13 @@ Public Class frmAutoRunSetups
     Private Sub configureControls()
         If lvwSetups.SelectedItems.Count = 0 Then
             btnDelete.Enabled = False
+            btnRename.Enabled = False
             txtName.Text = ""
             txtName.Enabled = False
             btnOk.Enabled = False
         Else
             btnDelete.Enabled = True
+            btnRename.Enabled = True
             txtName.Text = lvwSetups.SelectedItems(0).Text
             txtName.Enabled = True
             btnOk.Enabled = True
@@ -117,5 +119,10 @@ Public Class frmAutoRunSetups
 
     Private Sub lvwSetups_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvwSetups.SelectedIndexChanged
         configureControls()
+    End Sub
+
+    Private Sub btnRename_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRename.Click
+        If lvwSetups.SelectedItems.Count = 0 Then Exit Sub
+        lvwSetups.SelectedItems(0).BeginEdit()
     End Sub
 End Class
