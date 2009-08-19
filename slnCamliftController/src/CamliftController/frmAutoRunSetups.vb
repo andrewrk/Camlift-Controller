@@ -55,9 +55,7 @@ Public Class frmAutoRunSetups
         If lvwSetups.SelectedItems.Count = 0 Then
             btnDelete.Enabled = False
             btnRename.Enabled = False
-            txtName.Text = ""
-            txtName.Enabled = False
-            btnOk.Enabled = False
+            btnOk.Enabled = txtName.Text.Length > 0
         Else
             btnDelete.Enabled = True
             btnRename.Enabled = True
@@ -124,5 +122,9 @@ Public Class frmAutoRunSetups
     Private Sub btnRename_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRename.Click
         If lvwSetups.SelectedItems.Count = 0 Then Exit Sub
         lvwSetups.SelectedItems(0).BeginEdit()
+    End Sub
+
+    Private Sub txtName_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtName.TextChanged
+        configureControls()
     End Sub
 End Class

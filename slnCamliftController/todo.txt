@@ -1,6 +1,5 @@
 ﻿Version 2.0
 * auto run - Fix calculation discrepencies
-* glitchy disabled behavior on autorun setups
 
 Version 3.0
 * lazy motor - don't try to initialize until motor is needed
