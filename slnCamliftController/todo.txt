@@ -1,7 +1,6 @@
 ﻿Version 2.0
 * auto run
 	- Fix calculation discrepencies
-	- save setup not saving percentage overlap when program closes
 
 Version 3.0
 * lazy motor - don't try to initialize until motor is needed

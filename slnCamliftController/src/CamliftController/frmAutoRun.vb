@@ -148,6 +148,11 @@ Namespace SmartSteps
             End If
             loadStepSize(setup)
             txtDwell.Text = setup.Dwell
+            nudOverlap.Value = setup.SliceOverlap
+
+            checkCorrectRadio(grpObjective, setup.Objective)
+            checkcorrectradio(grpMag, setup.Mag)
+            checkcorrectradio(grpIris, setup.Iris)
         End Sub
         Private Sub loadStepSize(ByVal setup As AutorunSetupSettings)
             If Not setup.CalculateStepSize Then
@@ -228,12 +233,28 @@ Namespace SmartSteps
             If Not m_currentSetup.CalculateStepSize Then
                 m_currentSetup.StepSize = getValidString(txtStepSize)
             Else
-                'm_currentSetup.Objective = cboObjective.Text
-                'm_currentSetup.Mag = cboMag.Text
-                'm_currentSetup.Iris = cboIris.Text
-                'm_currentSetup.StepSize = getCurrentIris()
+                m_currentSetup.Objective = GetSelectedRadioValue(grpObjective)
+                m_currentSetup.Mag = GetSelectedRadioValue(grpMag)
+                m_currentSetup.Iris = GetSelectedRadioValue(grpIris)
             End If
+            m_currentSetup.SliceOverlap = nudOverlap.Value
             m_currentSetup.Dwell = getValidString(txtDwell)
+        End Sub
+
+        Private Function GetSelectedRadioValue(ByVal group As GroupBox) As String
+            For Each btn As RadioButton In group.Controls
+                If btn.Checked Then Return btn.Text
+            Next
+            Return ""
+        End Function
+
+        Private Sub CheckCorrectRadio(ByVal group As GroupBox, ByVal text As String)
+            For Each btn As RadioButton In group.Controls
+                If btn.Text = text Then
+                    btn.Checked = True
+                    Exit For
+                End If
+            Next
         End Sub
 
         Private Sub validateRun()

@@ -852,6 +852,16 @@ Namespace Settings
             Return isValidStepSize(nullableIris.Value)
         End Function
 
+        Private m_sliceOverlap As Integer 'percent out of 100
+        Public Property SliceOverlap() As Integer
+            Get
+                Return m_sliceOverlap
+            End Get
+            Set(ByVal value As Integer)
+                m_sliceOverlap = value
+            End Set
+        End Property
+
         Public Const DefaultDwell = "2000"
         Public Const MaxDwell = 5000
         Public Const MinDwell = 0
