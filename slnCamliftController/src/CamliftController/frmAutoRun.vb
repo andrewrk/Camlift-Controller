@@ -328,8 +328,8 @@ Namespace SmartSteps
             Dim stepSize As Integer = If(Not m_currentSetup.CalculateStepSize, m_currentSetup.StepSize, m_currentSetup.GetStepSize(m_objecitveList))
             Dim count As Integer
             If m_currentRun.UseStopPosition Then
-                count = Math.Ceiling((m_currentRun.AutorunStop - m_currentRun.AutorunStart) / stepSize) ' number of moves after the first position
-                count += 1 ' plus the first location = number of slices
+                ' number of moves after the first position plus the first location = number of slices
+                count = Math.Ceiling((m_currentRun.AutorunStop - m_currentRun.AutorunStart) / stepSize) + 1
             Else
                 count = m_currentRun.Slices
             End If
