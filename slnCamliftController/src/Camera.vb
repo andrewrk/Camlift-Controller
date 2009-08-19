@@ -631,7 +631,7 @@ Public Class Camera
     End Sub
 
     Public sub TakeFastPicture(outfile As String)
-        takesinglepicture()
+        TakeSinglePicture(outfile)
     end sub
 
     Public Sub StartLiveView(ByVal pbox As PictureBox)
