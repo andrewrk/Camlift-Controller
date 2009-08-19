@@ -187,6 +187,7 @@
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "frmAdvanced"
+            Me.ShowIcon = False
             Me.ShowInTaskbar = False
             Me.Text = "Advanced Settings"
             Me.grpAdvancedSettings.ResumeLayout(False)

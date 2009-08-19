@@ -22,7 +22,6 @@ Partial Class frmAutoRunSetups
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel
         Me.btnDelete = New System.Windows.Forms.Button
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel
         Me.btnOk = New System.Windows.Forms.Button
@@ -34,27 +33,13 @@ Partial Class frmAutoRunSetups
         Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.TableLayoutPanel2.AutoSize = True
-        Me.TableLayoutPanel2.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.TableLayoutPanel2.ColumnCount = 1
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(12, 223)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 1
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(0, 0)
-        Me.TableLayoutPanel2.TabIndex = 2
-        '
         'btnDelete
         '
         Me.btnDelete.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.btnDelete.Location = New System.Drawing.Point(12, 167)
         Me.btnDelete.Name = "btnDelete"
         Me.btnDelete.Size = New System.Drawing.Size(59, 23)
-        Me.btnDelete.TabIndex = 0
+        Me.btnDelete.TabIndex = 1
         Me.btnDelete.Text = "&Delete"
         Me.btnDelete.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.btnDelete.UseVisualStyleBackColor = True
@@ -72,7 +57,7 @@ Partial Class frmAutoRunSetups
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(146, 29)
-        Me.TableLayoutPanel1.TabIndex = 3
+        Me.TableLayoutPanel1.TabIndex = 4
         '
         'btnOk
         '
@@ -99,7 +84,7 @@ Partial Class frmAutoRunSetups
         Me.lblAs.Location = New System.Drawing.Point(109, 170)
         Me.lblAs.Name = "lblAs"
         Me.lblAs.Size = New System.Drawing.Size(82, 16)
-        Me.lblAs.TabIndex = 0
+        Me.lblAs.TabIndex = 2
         Me.lblAs.Text = "&Save as:"
         Me.lblAs.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
@@ -109,7 +94,7 @@ Partial Class frmAutoRunSetups
         Me.txtName.Location = New System.Drawing.Point(197, 169)
         Me.txtName.Name = "txtName"
         Me.txtName.Size = New System.Drawing.Size(140, 20)
-        Me.txtName.TabIndex = 1
+        Me.txtName.TabIndex = 3
         '
         'lvwSetups
         '
@@ -125,7 +110,7 @@ Partial Class frmAutoRunSetups
         Me.lvwSetups.Name = "lvwSetups"
         Me.lvwSetups.Size = New System.Drawing.Size(328, 151)
         Me.lvwSetups.Sorting = System.Windows.Forms.SortOrder.Ascending
-        Me.lvwSetups.TabIndex = 4
+        Me.lvwSetups.TabIndex = 0
         Me.lvwSetups.UseCompatibleStateImageBehavior = False
         Me.lvwSetups.View = System.Windows.Forms.View.Details
         '
@@ -145,17 +130,19 @@ Partial Class frmAutoRunSetups
         Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.lblAs)
-        Me.Controls.Add(Me.TableLayoutPanel2)
         Me.Controls.Add(Me.TableLayoutPanel1)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(314, 228)
         Me.Name = "frmAutoRunSetups"
+        Me.ShowIcon = False
+        Me.ShowInTaskbar = False
         Me.Text = "Auto Run Setup"
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents TableLayoutPanel2 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents btnOk As System.Windows.Forms.Button
     Friend WithEvents btnCancel As System.Windows.Forms.Button

@@ -588,6 +588,7 @@
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "frmPreferences"
+            Me.ShowIcon = False
             Me.ShowInTaskbar = False
             Me.Text = "Step Settings"
             Me.grpStepSizes.ResumeLayout(False)
