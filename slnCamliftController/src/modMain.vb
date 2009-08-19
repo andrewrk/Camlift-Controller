@@ -26,9 +26,11 @@ Public Module modMain
     Public Const MsgBoxShutDownMessage As String = "After parking the carriage slide the lower limit switch to the upper most position and secure it." & vbCrLf & vbCrLf & _
                                                    "Are you sure you want shut down?"
     Public Const MsgBoxConfirmDeleteMessage As String = "Are you sure you want to delete this position?"
+    Public Const VisionaryDigitalUrl As String = "visionarydigital.com"
     Public ReadOnly MsgBoxAboutMessage As String = "P-51 Camlift Controller" & vbCrLf & _
-                                                   "Copyright " & ChrW(169) & "  2008 Visionary Digital" & vbCrLf & _
-                                                   "Version " & Application.ProductVersion & " Beta"
+                                                   "Version " & Application.ProductVersion & " Beta" & vbCrLf & _
+                                                   "Copyright " & ChrW(169) & "  2008, 2009" & vbCrLf & _
+                                                   "Visionary Digital (" & VisionaryDigitalUrl & ")"
 
     Public Const RolloverHelpVelocity As String = "Increasing this value will speed up the lift; decreasing the value will slow it down."
     Public Const RolloverHelpAcceleration As String = "A lower value will cause the motor to slow or ramp down before stopping. It will also cause the motor to ramp up prior to full speed."
