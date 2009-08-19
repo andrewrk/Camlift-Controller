@@ -522,6 +522,7 @@ Namespace CamliftController
         Private Sub SavePicturesFolderMenuItem_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles SavePicturesFolderMenuItem.Click
             ' pop up a folder location dialog
             Dim dialog As New FolderBrowserDialog
+            dialog.SelectedPath = m_allSettings.SettingsIndex.SavePicturesFolder
             Dim result As DialogResult = dialog.ShowDialog()
 
             If result = DialogResult.Cancel Then Exit Sub
