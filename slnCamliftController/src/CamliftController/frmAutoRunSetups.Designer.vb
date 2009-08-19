@@ -29,7 +29,8 @@ Partial Class frmAutoRunSetups
         Me.btnCancel = New System.Windows.Forms.Button
         Me.lblAs = New System.Windows.Forms.Label
         Me.txtName = New System.Windows.Forms.TextBox
-        Me.lstSetups = New System.Windows.Forms.ListBox
+        Me.lvwSetups = New System.Windows.Forms.ListView
+        Me.ColumnHeader1 = New System.Windows.Forms.ColumnHeader
         Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -110,18 +111,28 @@ Partial Class frmAutoRunSetups
         Me.txtName.Size = New System.Drawing.Size(140, 20)
         Me.txtName.TabIndex = 1
         '
-        'lstSetups
+        'lvwSetups
         '
-        Me.lstSetups.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.lvwSetups.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                     Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lstSetups.FormattingEnabled = True
-        Me.lstSetups.IntegralHeight = False
-        Me.lstSetups.Location = New System.Drawing.Point(12, 12)
-        Me.lstSetups.Name = "lstSetups"
-        Me.lstSetups.Size = New System.Drawing.Size(328, 149)
-        Me.lstSetups.Sorted = True
-        Me.lstSetups.TabIndex = 0
+        Me.lvwSetups.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.ColumnHeader1})
+        Me.lvwSetups.FullRowSelect = True
+        Me.lvwSetups.HideSelection = False
+        Me.lvwSetups.LabelEdit = True
+        Me.lvwSetups.Location = New System.Drawing.Point(12, 12)
+        Me.lvwSetups.MultiSelect = False
+        Me.lvwSetups.Name = "lvwSetups"
+        Me.lvwSetups.Size = New System.Drawing.Size(328, 151)
+        Me.lvwSetups.Sorting = System.Windows.Forms.SortOrder.Ascending
+        Me.lvwSetups.TabIndex = 4
+        Me.lvwSetups.UseCompatibleStateImageBehavior = False
+        Me.lvwSetups.View = System.Windows.Forms.View.Details
+        '
+        'ColumnHeader1
+        '
+        Me.ColumnHeader1.Text = "Name"
+        Me.ColumnHeader1.Width = 255
         '
         'frmAutoRunSetups
         '
@@ -130,10 +141,10 @@ Partial Class frmAutoRunSetups
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.btnCancel
         Me.ClientSize = New System.Drawing.Size(352, 235)
+        Me.Controls.Add(Me.lvwSetups)
         Me.Controls.Add(Me.btnDelete)
         Me.Controls.Add(Me.txtName)
         Me.Controls.Add(Me.lblAs)
-        Me.Controls.Add(Me.lstSetups)
         Me.Controls.Add(Me.TableLayoutPanel2)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.MinimumSize = New System.Drawing.Size(314, 228)
@@ -150,6 +161,7 @@ Partial Class frmAutoRunSetups
     Friend WithEvents btnCancel As System.Windows.Forms.Button
     Friend WithEvents lblAs As System.Windows.Forms.Label
     Friend WithEvents txtName As System.Windows.Forms.TextBox
-    Friend WithEvents lstSetups As System.Windows.Forms.ListBox
     Friend WithEvents btnDelete As System.Windows.Forms.Button
+    Friend WithEvents lvwSetups As System.Windows.Forms.ListView
+    Friend WithEvents ColumnHeader1 As System.Windows.Forms.ColumnHeader
 End Class

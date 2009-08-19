@@ -17,36 +17,27 @@ Public Class frmAutoRunSetups
         m_mode = mode
     End Sub
 
-    Private Sub lstSetups_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles lstSetups.DoubleClick
-        btnOk_Click(sender, e)
-    End Sub
-
-    Private Sub lstSetups_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstSetups.SelectedIndexChanged
-        configureControls()
-    End Sub
+    Private Function GetSelectedIndex() As Integer
+        If lvwSetups.SelectedItems.Count = 0 Then Return -1
+        For i As Integer = 0 To m_setups.Count - 1
+            If m_setups(i).Key = lvwSetups.SelectedItems(0).Text Then Return i
+        Next
+        Return -1
+    End Function
 
     Private Sub btnDelete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnDelete.Click
-        If lstSetups.SelectedIndex = -1 Then Exit Sub
-        m_setups.RemoveAt(lstSetups.SelectedIndex)
+        Dim index = GetSelectedIndex()
+        If index = -1 Then Exit Sub
+        m_setups.RemoveAt(index)
         RefreshList()
-    End Sub
 
-    Private Sub txtName_GotFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtName.GotFocus
-        lstSetups.Sorted = False
-    End Sub
-
-    Private Sub txtName_LostFocus(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtName.LostFocus
-        lstSetups.Sorted = True
     End Sub
 
     Private Sub RefreshList()
-        Dim duplicateName = False 'TODO: add duplicate name detection
-        lstSetups.Enabled = Not duplicateName
-        btnOk.Enabled = Not duplicateName
-        If duplicateName Then Return
-
-        lstSetups.Items.Clear()
-        lstSetups.Items.AddRange(getNames())
+        lvwSetups.Items.Clear()
+        For i As Integer = 0 To m_setups.Count - 1
+            lvwSetups.Items.Add(m_setups(i).Key)
+        Next
 
         configureControls()
     End Sub
@@ -61,21 +52,21 @@ Public Class frmAutoRunSetups
     End Function
 
     Private Sub configureControls()
-        If lstSetups.SelectedItems.Count = 0 Then
+        If lvwSetups.SelectedItems.Count = 0 Then
             btnDelete.Enabled = False
             txtName.Text = ""
             txtName.Enabled = False
             btnOk.Enabled = False
         Else
             btnDelete.Enabled = True
-            txtName.Text = lstSetups.SelectedItem
+            txtName.Text = lvwSetups.SelectedItems(0).Text
             txtName.Enabled = True
             btnOk.Enabled = True
         End If
     End Sub
 
     Private Sub btnOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOk.Click
-        If lstSetups.SelectedIndex = -1 Then Exit Sub
+        If GetSelectedIndex() = -1 Then Exit Sub
 
         m_smartStepsManager.AutorunSetups.AutorunSetups = m_setups
         SelectedName = txtName.Text
@@ -93,7 +84,7 @@ Public Class frmAutoRunSetups
             lblAs.Visible = False
             txtName.Visible = False
 
-            lstSetups.Focus()
+            lvwSetups.Focus()
         Else
             Me.Text = "Save Autorun Setup"
             btnOk.Text = "Save"
@@ -107,5 +98,24 @@ Public Class frmAutoRunSetups
 
         RefreshList()
 
+    End Sub
+
+    Private Sub lvwSetups_AfterLabelEdit(ByVal sender As Object, ByVal e As System.Windows.Forms.LabelEditEventArgs) Handles lvwSetups.AfterLabelEdit
+        Dim index = GetSelectedIndex()
+
+        If index = -1 Then Exit Sub
+        Dim kvitem = m_setups(index)
+
+        m_setups(index) = New KeyValuePair(Of String, AutorunSetupSettings)(e.Label, kvitem.Value)
+
+        txtName.Text = e.Label
+    End Sub
+
+    Private Sub lvwSetups_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvwSetups.DoubleClick
+        btnOk_Click(sender, e)
+    End Sub
+
+    Private Sub lvwSetups_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvwSetups.SelectedIndexChanged
+        configureControls()
     End Sub
 End Class
