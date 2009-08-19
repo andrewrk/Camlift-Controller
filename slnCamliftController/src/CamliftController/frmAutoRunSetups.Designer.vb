@@ -37,7 +37,7 @@ Partial Class frmAutoRunSetups
         'btnDelete
         '
         Me.btnDelete.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnDelete.Location = New System.Drawing.Point(12, 167)
+        Me.btnDelete.Location = New System.Drawing.Point(12, 177)
         Me.btnDelete.Name = "btnDelete"
         Me.btnDelete.Size = New System.Drawing.Size(59, 23)
         Me.btnDelete.TabIndex = 1
@@ -53,7 +53,7 @@ Partial Class frmAutoRunSetups
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.btnOk, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.btnCancel, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(194, 194)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(206, 204)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -82,7 +82,7 @@ Partial Class frmAutoRunSetups
         'lblAs
         '
         Me.lblAs.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblAs.Location = New System.Drawing.Point(109, 170)
+        Me.lblAs.Location = New System.Drawing.Point(121, 180)
         Me.lblAs.Name = "lblAs"
         Me.lblAs.Size = New System.Drawing.Size(82, 16)
         Me.lblAs.TabIndex = 2
@@ -92,7 +92,7 @@ Partial Class frmAutoRunSetups
         'txtName
         '
         Me.txtName.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtName.Location = New System.Drawing.Point(197, 169)
+        Me.txtName.Location = New System.Drawing.Point(209, 179)
         Me.txtName.Name = "txtName"
         Me.txtName.Size = New System.Drawing.Size(140, 20)
         Me.txtName.TabIndex = 3
@@ -110,7 +110,7 @@ Partial Class frmAutoRunSetups
         Me.lvwSetups.Location = New System.Drawing.Point(12, 12)
         Me.lvwSetups.MultiSelect = False
         Me.lvwSetups.Name = "lvwSetups"
-        Me.lvwSetups.Size = New System.Drawing.Size(328, 151)
+        Me.lvwSetups.Size = New System.Drawing.Size(340, 161)
         Me.lvwSetups.Sorting = System.Windows.Forms.SortOrder.Ascending
         Me.lvwSetups.TabIndex = 0
         Me.lvwSetups.UseCompatibleStateImageBehavior = False
@@ -124,7 +124,7 @@ Partial Class frmAutoRunSetups
         'btnRename
         '
         Me.btnRename.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnRename.Location = New System.Drawing.Point(77, 167)
+        Me.btnRename.Location = New System.Drawing.Point(77, 177)
         Me.btnRename.Name = "btnRename"
         Me.btnRename.Size = New System.Drawing.Size(59, 23)
         Me.btnRename.TabIndex = 1
@@ -138,7 +138,7 @@ Partial Class frmAutoRunSetups
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.btnCancel
-        Me.ClientSize = New System.Drawing.Size(352, 235)
+        Me.ClientSize = New System.Drawing.Size(364, 245)
         Me.Controls.Add(Me.lvwSetups)
         Me.Controls.Add(Me.btnRename)
         Me.Controls.Add(Me.btnDelete)
@@ -147,7 +147,7 @@ Partial Class frmAutoRunSetups
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(314, 228)
+        Me.MinimumSize = New System.Drawing.Size(380, 281)
         Me.Name = "frmAutoRunSetups"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False

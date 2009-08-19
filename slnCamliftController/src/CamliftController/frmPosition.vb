@@ -21,13 +21,30 @@ Public Class frmPosition
         If m_mode = DialogType.Load Then
             SelectedPosition = m_newPositions(GetSelectedPosItem()).Value
         Else
-            m_newPositions.Add(New KeyValuePair(Of String, Integer)(txtName.Text, m_value))
+            Dim index = FindPositionIndex(txtName.Text)
+            Dim newkvp As New KeyValuePair(Of String, Integer)(txtName.Text, m_value)
+            If index <> -1 Then
+                If MsgBox("Overwrite old position?", MsgBoxStyle.OkCancel + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton1) = MsgBoxResult.Ok Then
+                    m_newPositions(index) = newkvp
+                Else
+                    DialogResult = Windows.Forms.DialogResult.Cancel
+                    Exit Sub
+                End If
+            Else
+                m_newPositions.Add(newkvp)
+            End If
         End If
         m_settings.Positions.Positions = m_newPositions
 
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.Close()
     End Sub
+
+    Private Function FindPositionIndex(ByVal name As String) As Integer
+        For i As Integer = 0 To m_newPositions.Count - 1
+            If m_newPositions(i).Key = name Then Return i
+        Next
+        Return -1
+    End Function
 
     Private Function GetSelectedPosItem() As Integer
         If lvwPositions.SelectedItems.Count = 0 Then Return -1
@@ -41,7 +58,6 @@ Public Class frmPosition
 
     Private Sub Cancel_Button_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Cancel_Button.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.Close()
     End Sub
 
     Public Sub New(ByVal settings As PositionManagerSettings, ByVal mode As DialogType, Optional ByVal value As Integer = 0)
@@ -103,6 +119,8 @@ Public Class frmPosition
         Dim kvitem = m_newPositions(index)
 
         m_newPositions(index) = New KeyValuePair(Of String, Integer)(e.Label, kvitem.Value)
+
+        txtName.Text = e.Label
     End Sub
 
     Private Sub lvwPositions_DoubleClick(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvwPositions.DoubleClick

@@ -59,17 +59,29 @@ Public Class frmAutoRunSetups
         Else
             btnDelete.Enabled = True
             btnRename.Enabled = True
-            txtName.Text = lvwSetups.SelectedItems(0).Text
             txtName.Enabled = True
             btnOk.Enabled = True
         End If
     End Sub
 
     Private Sub btnOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOk.Click
-        If m_mode = DialogType.Load AndAlso GetSelectedIndex() = -1 Then Exit Sub
+        SelectedName = txtName.Text
+
+        If m_mode = DialogType.Load Then
+            If GetSelectedIndex() = -1 Then Exit Sub
+
+        Else
+
+            If findNameInSetups(SelectedName) <> -1 Then
+                If MsgBox("Overwrite the old settings?", MsgBoxStyle.OkCancel + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton1) = MsgBoxResult.Ok Then
+
+                Else
+                    DialogResult = DialogResult.Cancel
+                End If
+            End If
+        End If
 
         m_smartStepsManager.AutorunSetups.AutorunSetups = m_setups
-        SelectedName = txtName.Text
 
         DialogResult = DialogResult.OK 'closes dialog
     End Sub
@@ -115,8 +127,14 @@ Public Class frmAutoRunSetups
         btnOk_Click(sender, e)
     End Sub
 
+    Private Sub lvwSetups_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvwSetups.Resize
+        lvwSetups.Columns(0).Width = lvwSetups.Width - 10
+    End Sub
+
     Private Sub lvwSetups_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvwSetups.SelectedIndexChanged
         configureControls()
+
+        If lvwSetups.SelectedItems.Count > 0 Then txtName.Text = lvwSetups.SelectedItems(0).Text
     End Sub
 
     Private Sub btnRename_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRename.Click
@@ -127,4 +145,5 @@ Public Class frmAutoRunSetups
     Private Sub txtName_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles txtName.TextChanged
         configureControls()
     End Sub
+
 End Class
