@@ -73,10 +73,8 @@ Public Class frmAutoRunSetups
         Else
 
             If findNameInSetups(SelectedName) <> -1 Then
-                If MsgBox("Overwrite the old settings?", MsgBoxStyle.OkCancel + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton1) = MsgBoxResult.Ok Then
-
-                Else
-                    DialogResult = DialogResult.Cancel
+                If MsgBox("Overwrite the old settings?", MsgBoxStyle.OkCancel + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton1) = MsgBoxResult.Cancel Then
+                    Exit Sub
                 End If
             End If
         End If

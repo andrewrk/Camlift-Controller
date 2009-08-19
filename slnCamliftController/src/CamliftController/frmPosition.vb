@@ -27,7 +27,6 @@ Public Class frmPosition
                 If MsgBox("Overwrite old position?", MsgBoxStyle.OkCancel + MsgBoxStyle.Question + MsgBoxStyle.DefaultButton1) = MsgBoxResult.Ok Then
                     m_newPositions(index) = newkvp
                 Else
-                    DialogResult = Windows.Forms.DialogResult.Cancel
                     Exit Sub
                 End If
             Else
