@@ -420,13 +420,12 @@ Public Class Camera
         CheckError(EdsCreateMemoryStreamFromPointer(m_liveViewBufferHandle.AddrOfPinnedObject, LiveViewFrameBufferSize, m_liveViewStreamPtr))
 
         ' pause this thread until live view starts
-        Dim I As Integer
-        For I = 0 To SleepTimeout / SleepAmount
+        For i = 0 To SleepTimeout / SleepAmount
             System.Threading.Thread.Sleep(SleepAmount)
             Application.DoEvents()
 
             If Not m_waitingToStartLiveView Then Exit Sub 'success 
-        Next I
+        Next i
 
         ' we never got a callback. throw an error
         StopLiveView()
