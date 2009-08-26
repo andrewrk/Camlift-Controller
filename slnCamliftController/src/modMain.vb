@@ -16,6 +16,7 @@ Public Module modMain
     Public Const MsgBoxTooManyCamerasMessage = "More than one camera found. Please make sure no other cameras are connected."
     Public Const MsgBoxDeviceIsBusyMessage = "Camera device is busy. You can disconnect the power to force it to reset."
     Public Const MsgBoxCommPortBusy = "It appears another program is using the camera. Please close EOS Utility or any other application that is using it."
+    Public Const MsgBoxLiveViewDisabled = "Live View is disabled in the camera. Please use EOS Utility to enable Live View."
 
     Public Const MsgBoxNoSavedAutorunSetups As String = "There are no saved Autorun Setups. You can save them by pressing Save and then they will be available."
     Public Const ConnectionLostResult = "Connection Lost"
@@ -79,6 +80,9 @@ Public Module modMain
             Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxCameraNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
         ElseIf TypeOf ex Is TooManyCamerasFoundException Then
             Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxTooManyCamerasMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
+        ElseIf TypeOf ex Is LiveViewFailedException Then
+            MsgBox(MsgBoxLiveViewDisabled, MsgBoxStyle.Information, MsgBoxTitle)
+            Return False
         ElseIf TypeOf ex Is SdkException Then
             Select Case CType(ex, SdkException).SdkError
                 Case SdkErrors.DeviceBusy
