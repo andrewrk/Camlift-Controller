@@ -55,7 +55,7 @@ Public Class Camera
 
     Private m_disposed As Boolean
 
-    Private Const SleepTimeout = 20000 ' how many milliseconds to wait before giving up
+    Private Const SleepTimeout = 10000 ' how many milliseconds to wait before giving up
     Private Const SleepAmount = 50 ' how many milliseconds to sleep before doing the event pump
 
     Private m_transferQueue As Queue(Of TransferItem)

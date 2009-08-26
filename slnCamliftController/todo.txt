@@ -1,5 +1,4 @@
 Version 2.0
-* reduce timeout to 10 seconds
 * don't crash when an exception is thrown in non gui thread
 
 Version 3.0
