@@ -1,11 +1,10 @@
-﻿Version 2.0
-* don't crash when live view is open and auto run is activated
-* don't crash when an exception is thrown in non gui thread
+Version 2.0
 * "comm port in use" - "It appears another program is using the camera. Please
   close EOS Utility or any other application that is using the camera."
 * "liveview failed exception" - "Live View is disabled in the camera. Please use
   EOS Utility to enable Live View."
 * reduce timeout to 10 seconds
+* don't crash when an exception is thrown in non gui thread
 
 Version 3.0
 * lazy motor - don't try to initialize until motor is needed

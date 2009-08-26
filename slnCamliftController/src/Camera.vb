@@ -50,6 +50,9 @@ Public Class Camera
 
     Private m_haveSession As Boolean
 
+    Private m_fastPicturesInteruptingLiveView As Boolean
+    Private m_fastPicturesLiveViewBox As PictureBox
+
     Private m_disposed As Boolean
 
     Private Const SleepTimeout = 20000 ' how many milliseconds to wait before giving up
@@ -91,6 +94,9 @@ Public Class Camera
         m_pendingWhiteBalance = False
 
         m_fastPictures = False
+
+        m_fastPicturesInteruptingLiveView = False
+        m_fastPicturesLiveViewBox = Nothing
     End Sub
 
     Private Sub EstablishSession()
@@ -243,11 +249,19 @@ Public Class Camera
         m_fastPictures = False
 
         ReleaseSession()
+
+        If m_fastPicturesInteruptingLiveView Then
+            m_fastPicturesInteruptingLiveView = False
+            StartLiveView(m_fastPicturesLiveViewBox)
+        End If
     End Sub
 
     Public Sub BeginFastPictures()
         CheckBusy()
-        If m_liveViewOn Then Throw New CameraIsBusyException
+
+        m_fastPicturesInteruptingLiveView = m_liveViewOn
+        m_fastPicturesLiveViewBox = m_liveViewPicBox
+        If m_fastPicturesInteruptingLiveView Then StopLiveView()
 
         EstablishSession()
         m_fastPictures = True
