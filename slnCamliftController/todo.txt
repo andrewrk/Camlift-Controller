@@ -1,6 +1,4 @@
 Version 2.0
-* "comm port in use" - "It appears another program is using the camera. Please
-  close EOS Utility or any other application that is using the camera."
 * "liveview failed exception" - "Live View is disabled in the camera. Please use
   EOS Utility to enable Live View."
 * reduce timeout to 10 seconds

@@ -15,6 +15,7 @@ Public Module modMain
     Public Const MsgBoxCameraNotFoundMessage = "No Camera Found. Please check all connections."
     Public Const MsgBoxTooManyCamerasMessage = "More than one camera found. Please make sure no other cameras are connected."
     Public Const MsgBoxDeviceIsBusyMessage = "Camera device is busy. You can disconnect the power to force it to reset."
+    Public Const MsgBoxCommPortBusy = "It appears another program is using the camera. Please close EOS Utility or any other application that is using it."
 
     Public Const MsgBoxNoSavedAutorunSetups As String = "There are no saved Autorun Setups. You can save them by pressing Save and then they will be available."
     Public Const ConnectionLostResult = "Connection Lost"
@@ -72,18 +73,21 @@ Public Module modMain
             form.ShowDialog()
         End Using
     End Sub
-
+    ''' <summary>Returns True iff you should try again.</summary>
     Public Function HandleCameraException(ByVal ex As Exception) As Boolean
         If TypeOf ex Is NoCameraFoundException Then
             Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxCameraNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
         ElseIf TypeOf ex Is TooManyCamerasFoundException Then
             Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxTooManyCamerasMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
         ElseIf TypeOf ex Is SdkException Then
-            If CType(ex, SdkException).SdkError = SdkErrors.DeviceBusy Then
-                Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxDeviceIsBusyMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
-            Else
-                Throw ex
-            End If
+            Select Case CType(ex, SdkException).SdkError
+                Case SdkErrors.DeviceBusy
+                    Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxDeviceIsBusyMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
+                Case SdkErrors.CommPortIsInUse
+                    Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxCommPortBusy, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
+                Case Else
+                    Throw ex
+            End Select
         Else
             Throw ex
         End If
