@@ -1,7 +1,8 @@
-Version 2.0
-* don't crash when an exception is thrown in non gui thread
+Version 2.0.1
+* users want load/save buttons back
+* move the white balance controls to the bottom row to give live view more room
 
-Version 3.0
+Version 3.0.0
 * lazy motor - don't try to initialize until motor is needed
 	- instead of a message box for silverpak, show frmcontrols and disable everything except a button labeled "Initialize Motor"
 * park distance. - Never really go to 0 except for initialization. 
