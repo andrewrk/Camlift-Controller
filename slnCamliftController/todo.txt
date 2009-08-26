@@ -1,4 +1,4 @@
-Version 2.0.1
+Version 2.0.2
 * users want load/save buttons back
 * move the white balance controls to the bottom row to give live view more room
 
