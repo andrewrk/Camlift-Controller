@@ -1,81 +1,32 @@
 
-Bugs:
-
-Main Window:
--> Put Load and Save buttons back in with "Autorun (Start|Stop)".
-   - "Make the start & stop positions, as reported out of autorun copyable—i. e. I want to be able to highlight, copy it, and paste it into GO, because people tend to end up at Stop, then need to go back to Start to adjust exposure on a focused subject."
-   - "users want load/save buttons back"
--> ShutDown button
-   - "put the "shut down" button back on the main GUI"
-
-LiveView:
--> Fix LiveView dragbox limits.
-   - "In LiveView, you can move the mag white bounding box beyond the north south margins of the image, but it stops at the east west edges.  This may be because there is no constraint on how Live View scales.  You don’t want free scaling, because it makes the monitor interpolate pixels.  Keep the image whatever aspect ratio the camera supplies."
--> Rotate LiveView
-   - "some kind of live view rotate tool?"
--> Move whiteBalance box
-   - "move the white balance controls to the bottom row to give live view more room"
-
-AutoRun:
--> Add a 20X Objective to objectives.xml
-   - "You need to add a 20X Objective to the AutoRun window.  It’s there on the Distance panel on the main page…needs to be in Autorun."
--> Investigate Autorun not stepping finer than 12.
-   - "We are unable to make camlift step finer than 12 microsteps...even in manual entry.  Did somebody enforce a lower limit?  The motor lower limit is 2, and that works in the Main Window, just not settable in AutoRun"
--> Show Autorun Window next to Main Window always.
-   - "The default screen placement of autorun is X and the default screen placement of Autorun Save is very nearly also X so that the second begins being behind the first.  Make default placements so that both screens are visible."
-   - "The AutoRun Window position when first clicked is about a foot away on a 20" monitor.  Can you make it so its position is rel. to the main Camlift window, as that size never changes?  I.e., juxtaposed on the left."
-
-Misc:
--> Don't force jpg.
-   - "Any chance that camlift is forcing the body to save as jpgs?  We are setting the body to raw, but it keeps reverting to jpgs. When we close out camlift and just use EOS Utilities, it stays stuck on raw."
-
-New GUI request:
-
-Main Wind:
--> Cosmetics:
-   -  "Move the Distance box to the bottom. It’s the thing the user touches least, and having at the bottom means all the buttons can be juxtaposed. It’s a pain to swoop the mouse up and down to get from up down buttons to start stop."
-   - "The up and down buttons don’t need to be so big, and make the arrows bigger inside their buttons?"
-   - "The usual work flow is up/down w live view or mirror diverter, hence have those buttons close together?"
-   - "The next thing is take a sample shot. This could be renamed Fire! Shoot! or perhaps Shutter or Expose—Take Picture is too long. If you rename Live View to Live or View, you could narrow those buttons too, and move them into one row.I hear ya. I move and shoot and move and shoot so I swaped the position you have for the take picture and live view. Jon you are right if somone can't figure out that Shoot! means "take the picture" they shouldn't be sitting in front of a computer. Live view might work as 'Preview'"
-   - "Then STOP! There is no logical reason to have STOP in the middle of everything, except that the middle is closest to everything, perhaps it should go at the very top or bottom? With Stop in the middle it is in your face, probably a good place to be."
-   - "Then Autorun, w the AutoRun button narrowed to make room for a Slices notice on the right, which would echo whatever the setting in Autorun was, just as start stop echoes settings. This is a great idea."
-   - "You could get rid of the “Here” text in the start stop buttons. I think you give people too much credit Jon. Some shmuck will see the start button just below autorun. he will ckick "Start" and wait for somthing to happen. Possibleoption to "here" start position and stop position"
-   - "Not sure about the occasional use of icons…seems like it should all one way or the other."
-   - "Then Distance. You could squeeze it vertically a bit by having moving the 80 to the right and Distance to where 80 is… This will also make the thing make more sence as we read from left to right as oposed to up and down. like Distance 80"
--> Add Manage Memory Registers button on Main Window
-   - "Then Load/Save…You’ve got 5 functions under load save, two are duplicates, but that might be good. You could add a Mem (manage memorized) button here on the same line?"
-
-Autorun:
--> Make Autorun non-dialog
-   - "Another request…we’d like Shoot! to work when Autorun window is open.  The reason being, one starts adjusting step sizes and whatnot, but then realizes that you forgot to adjust the power setting for the exposure, and in order to save the work in Autorun, you’d have to save it (I know, not THAT big a deal), cancel out of Autorun, and starting shooting.  So, instead, have Shoot! work when Autorun is open…"
-
-LiveView:
--> Shitf + resize = aspect ratio
-   - "Adjusting LiveView window by dragging w Shift depressed doesn’t maintain aspect ratio."
-
-StepSizes Window:
--> Savable StepSizes profiles
-   - "load save function for the step sizes. This way when someone uses something other than the K2 like a Canon 65mm micro lens, They could name and set step sizes for a specific lens and load it on demand. There already is a way to save the setup re objective mag and iris setting as well as overlap and dwell. In the auto run window down at the bottom you can save the setup. I [Roy] was referring to a load and save option as well in the step size window. This would allow you to name lenses and positions as well as define corresponding step sizes and save it to a list.  This would mirror the load and save  in the autorun window."
-
-Misc:
--> Investigate inconsistent coloring
-  - "Visually, you should be consistent regarding static titles of things (black font on beige background) vs. reported variables (black on something else) versus user-changeable variables (black on white)?"
+Version 2.0.2:
+* Put Load and Save buttons back in with "Autorun (Start|Stop)".
+* ShutDown button  - "put the "shut down" button back on the main GUI"
+* Fix LiveView dragbox limits
+* Rotate LiveView
+* Move whiteBalance box
+* Add a 20X Objective to objectives.xml
+* Investigate Autorun not stepping finer than 12.
+* Don't force jpg
 
 
+Version 2.1.0:
 
+Their Ideas:
+* Cosmetics
+* Add Manage Memory Registers button on Main Window
+* Shitf + resize = aspect ratio
+* Show Autorun Window next to Main Window always.
+* Make Autorun non-dialog
+* Savable StepSizes profiles
+* Investigate inconsistent coloring
 
-
-
-Version 2.0.2
-* users want load/save buttons back
-* move the white balance controls to the bottom row to give live view more room
-
-Version 3.0.0
-* lazy motor - don't try to initialize until motor is needed
-	- instead of a message box for silverpak, show frmcontrols and disable everything except a button labeled "Initialize Motor"
-* park distance. - Never really go to 0 except for initialization. 
-	- the perceived "0" is really parkDistance, this prevents switch-sitting hardware bugs.
-	- don't let attempts to step past 0 go through. translate into absolute motion.
-* right click step sizes to bring up edit dialog
-* auto run -> unplug camera during run -> exit -> assertion failed
-* get rid of that warning message about the silverpak dispose thing
+Our Ideas:
+* lazy motor - don't try to initialize until motor is needed 
+    - instead of a message box for silverpak, show frmcontrols and disable everything except a button labeled "Initialize Motor" 
+* park distance. - Never really go to 0 except for initialization.  
+    - the perceived "0" is really parkDistance, this prevents switch-sitting hardware bugs. 
+    - don't let attempts to step past 0 go through. translate into absolute motion. 
+* right click step sizes to bring up edit dialog 
+* auto run -> unplug camera during run -> exit -> assertion failed 
+* get rid of that warning message about the silverpak dispose thing 
