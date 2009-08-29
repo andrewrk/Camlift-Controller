@@ -8,7 +8,7 @@ Andy:
 * Move whiteBalance box
 
 Josh:
-* ShutDown button  - "put the "shut down" button back on the main GUI"
+* ShutDown button
 * Add a 20X Objective to objectives.xml
 * Investigate Autorun not stepping finer than 12.
 
