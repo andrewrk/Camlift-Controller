@@ -39,6 +39,7 @@ Public Class Camera
     Private m_liveViewFrameBuffer As Byte()
     Private m_liveViewBufferHandle As GCHandle
     Private m_liveViewStreamPtr As IntPtr
+    Private m_liveViewImageSize As Size
 
     Private m_zoomPosition As StructurePointer(Of EdsPoint)
     Private m_pendingZoomPosition As Boolean
@@ -84,6 +85,8 @@ Public Class Camera
         ReDim m_liveViewFrameBuffer(0)
         m_liveViewBufferHandle = Nothing
         m_liveViewStreamPtr = IntPtr.Zero
+        m_liveViewImageSize = Nothing
+
         m_transferQueue = New Queue(Of TransferItem)
         m_haveSession = False
 
@@ -507,6 +510,7 @@ Public Class Camera
         m_waitingToStartLiveView = False
         m_liveViewPicBox = Nothing
         m_stoppingLiveView = False
+        m_liveViewImageSize = Nothing
 
         ' tell the camera not to send live data to the computer
         CheckError(EdsGetPropertyData(m_cam, kEdsPropID_Evf_OutputDevice, 0, device.Size, device.Pointer))
@@ -573,6 +577,7 @@ Public Class Camera
 
         ' get it into the picture box image
         Dim canonImg As Image = Image.FromStream(New MemoryStream(m_liveViewFrameBuffer)) 'do not dispose the MemoryStream (Image.FromStream)
+        m_liveViewImageSize = canonImg.Size
         Dim oldImg As Image = m_liveViewPicBox.Image
         m_liveViewPicBox.Image = canonImg
         If oldImg IsNot Nothing Then oldImg.Dispose() 'really is required.
@@ -586,6 +591,18 @@ Public Class Camera
         Dispose()
         MyBase.Finalize()
     End Sub
+
+    ''' <summary>
+    ''' size of the frames coming through live view. only valid once live view has started.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Public ReadOnly Property LiveViewImageSize() As Size
+        Get
+            Return m_liveViewImageSize
+        End Get
+    End Property
 
     Public Property ZoomPosition() As Point
         Get

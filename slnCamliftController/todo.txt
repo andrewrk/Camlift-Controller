@@ -1,6 +1,5 @@
 Version 2.0.2:
 Andy:
-* Fix LiveView dragbox aspect ratio
 * Rotate LiveView
 
 Josh:
@@ -35,3 +34,5 @@ Our Ideas:
 * right click step sizes to bring up edit dialog 
 * auto run -> unplug camera during run -> exit -> assertion failed 
 * get rid of that warning message about the silverpak dispose thing 
+* make zoom rectangle more accurate in live view
+* make scrolling in zoomed in mode smoother

@@ -119,11 +119,10 @@ Namespace CanonCamera
         End Sub
 
         Private Sub picLiveView_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles picLiveView.Paint
+            If picLiveView.Image Is Nothing OrElse m_cam.LiveViewImageSize = Nothing OrElse m_zoomIndex <> 0 Then Return
 
-
-            If picLiveView.Image Is Nothing OrElse m_zoomIndex <> 0 Then Return
             Dim g = e.Graphics
-            Dim imgRect = New Rectangle(New Point(0, 0), picLiveView.Image.Size)
+            Dim imgRect = New Rectangle(New Point(0, 0), m_cam.LiveViewImageSize)
             Dim trans As Transform2D
             Try
                 trans = Transform2D.FromZoomScale(picLiveView.ClientRectangle, imgRect)
@@ -144,7 +143,7 @@ Namespace CanonCamera
 
             Dim MaxZoom As Integer = ZoomRatios(m_zoomIndex + 1)
             ' draw zoom
-            Dim zoomSize = New Size(picLiveView.Width / MaxZoom, picLiveView.Height / MaxZoom)
+            Dim zoomSize = New Size(m_cam.LiveViewImageSize.Width / MaxZoom, m_cam.LiveViewImageSize.Height / MaxZoom)
             Dim zoomLoc As Point = GetZoomLoc()
             Dim zoomRect = New Rectangle(zoomLoc, zoomSize)
             Using shadowPen As Pen = New Pen(Color.Black, 1)
