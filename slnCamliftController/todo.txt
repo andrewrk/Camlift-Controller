@@ -1,7 +1,6 @@
 
 Version 2.0.2:
 Andy:
-* Don't force jpg
 * Fix LiveView dragbox limits
 * Rotate LiveView
 * Move whiteBalance box

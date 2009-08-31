@@ -2,53 +2,12 @@
 Imports VisionaryDigital.Settings
 
 Namespace SmartSteps
-
-    'Public Class Objective
-
-    '    Private m_stepData As Grid_3_3
-
-    '    Private m_defaultStepSize As Double
-
-    '    Public Sub New(ByVal stepData As Grid_3_3)
-    '        Me.New(stepData, stepData.f33)
-    '    End Sub
-    '    Public Sub New(ByVal stepData As Grid_3_3, ByVal defaultStepSize As Double)
-    '        m_stepData = stepData
-    '        m_defaultStepSize = defaultStepSize
-    '    End Sub
-
-    '    Private m_Name As String = ""
-    '    Public Property Name() As String
-    '        Get
-    '            Return m_Name
-    '        End Get
-    '        Set(ByVal value As String)
-    '            m_Name = value
-    '        End Set
-    '    End Property
-
-    '    Public Function getStepSize() As Double
-    '        Return m_defaultStepSize
-    '    End Function
-    '    Public Function getStepSize(ByVal mag As Double, ByVal iris As Double) As Double
-    '        Return m_stepData.BiquadInterp(mag, iris)
-    '    End Function
-    'End Class
-
-    'Public Class Grid_3_3
-    '    Public x1 As Double, x2 As Double, x3 As Double
-    '    Public y1 As Double, y2 As Double, y3 As Double
-    '    Public f11 As Double, f12 As Double, f13 As Double
-    '    Public f21 As Double, f22 As Double, f23 As Double
-    '    Public f31 As Double, f32 As Double, f33 As Double
-    'End Class
-
     Public Class AsyncStepper
 
         Public Const AbortedProgress = -2
         Public Const NotStartedProgress = -1
 
-        'Private ReadOnly m_f_takePicture As Action
+        Private m_allSettings As AllSettings
         Private ReadOnly m_camera As Camera
         Private ReadOnly m_f_goToLocation As Action(Of Integer)
         Private ReadOnly m_f_isMoveFinished As Func(Of Boolean)
@@ -70,13 +29,14 @@ Namespace SmartSteps
         Public Event Aborted As EventHandler(Of AbortedEventArgs)
 
         Public Sub New(ByVal _camera As Camera, ByVal f_goToLocation As Action(Of Integer), ByVal f_isMoveFinished As Func(Of Boolean), _
-                       ByVal locations As IEnumerable(Of Integer), ByVal dwell As Integer, ByVal returnToTop As Boolean)
+                       ByVal locations As IEnumerable(Of Integer), ByVal dwell As Integer, ByVal returnToTop As Boolean, ByVal settings As AllSettings)
             m_camera = _camera
             m_f_goToLocation = f_goToLocation
             m_f_isMoveFinished = f_isMoveFinished
             m_locations = locations
             m_dwell = dwell
             m_returnToTop = returnToTop
+            m_allSettings = settings
         End Sub
 
         Public Sub Start()
@@ -145,7 +105,7 @@ Namespace SmartSteps
 
                 'Take Picture
                 Try
-                    m_camera.TakeFastPicture(GetNextPictureFile())
+                    m_camera.TakeFastPicture(m_allSettings.SettingsIndex.SavePicturesFolder)
                 Catch ex As SdkException
                     AbortRun(ex)
                     Exit Sub
@@ -204,6 +164,7 @@ Namespace SmartSteps
         Private m_f_isMoveFinished As Func(Of Boolean)
 
         Private m_settings As SmartStepsSettings
+        Private m_allSettings As AllSettings
 
         Private m_LastAutorunSetup As AutorunSetupSettings
         Public Property LastAutorunSetup() As AutorunSetupSettings
@@ -246,7 +207,7 @@ Namespace SmartSteps
         End Property
 
         Public Sub New(ByVal settings As SmartStepsSettings, ByVal f_moveTo As Action(Of Integer), _
-                       ByVal _camera As Camera, ByVal f_isMoveFinished As Func(Of Boolean))
+                       ByVal _camera As Camera, ByVal f_isMoveFinished As Func(Of Boolean), ByVal allSettings As AllSettings)
             m_f_moveTo = f_moveTo
             m_camera = _camera
             m_f_isMoveFinished = f_isMoveFinished
@@ -256,6 +217,8 @@ Namespace SmartSteps
             m_LastAutorunSetup = settings.LastAutorunSetup
             m_AutorunSetups = settings.AutorunSetups
             m_ReturnToTop = settings.ReturnToTop
+
+            m_allSettings = allSettings
         End Sub
 
         Public Sub SaveSettings()
@@ -266,7 +229,7 @@ Namespace SmartSteps
         End Sub
 
         Public Function GetAutorunStepper(ByVal locations As IEnumerable(Of Integer), ByVal dwell As Integer)
-            Return New AsyncStepper(m_camera, m_f_moveTo, m_f_isMoveFinished, locations, dwell, m_ReturnToTop)
+            Return New AsyncStepper(m_camera, m_f_moveTo, m_f_isMoveFinished, locations, dwell, m_ReturnToTop, m_allSettings)
         End Function
 
     End Class

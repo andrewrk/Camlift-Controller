@@ -26,7 +26,7 @@ Public Class Camera
     Private Shared s_instance As Camera = Nothing
 
     Private m_waitingOnPic As Boolean
-    Private m_picOutFile As String
+    Private m_picOutFolder As String
 
     ' live view
     Private Const LiveViewDelay = 200
@@ -57,6 +57,8 @@ Public Class Camera
 
     Private Const SleepTimeout = 10000 ' how many milliseconds to wait before giving up
     Private Const SleepAmount = 50 ' how many milliseconds to sleep before doing the event pump
+
+    Private Const ForceJpeg = False
 
     Private m_transferQueue As Queue(Of TransferItem)
 
@@ -139,12 +141,14 @@ Public Class Camera
         'save to computer, not memory card
         CheckError(EdsSetPropertyData(m_cam, kEdsPropID_SaveTo, 0, Marshal.SizeOf(GetType(Integer)), CType(EdsSaveTo.kEdsSaveTo_Host, Integer)))
 
-        ' enforce JPEG format
-        Dim qs As New StructurePointer(Of UInt32)
-        CheckError(EdsGetPropertyData(m_cam, kEdsPropID_ImageQuality, 0, qs.Size, qs.Pointer))
-        ' clear the old image type setting and set the new one
-        qs.Value = qs.Value And &HFF0FFFFFL Or (EdsImageType.kEdsImageType_Jpeg << 20)
-        CheckError(EdsSetPropertyData(m_cam, kEdsPropID_ImageQuality, 0, qs.Size, qs.Value))
+        If ForceJpeg Then
+            ' enforce JPEG format
+            Dim qs As New StructurePointer(Of UInt32)
+            CheckError(EdsGetPropertyData(m_cam, kEdsPropID_ImageQuality, 0, qs.Size, qs.Pointer))
+            ' clear the old image type setting and set the new one
+            qs.Value = qs.Value And &HFF0FFFFFL Or (EdsImageType.kEdsImageType_Jpeg << 20)
+            CheckError(EdsSetPropertyData(m_cam, kEdsPropID_ImageQuality, 0, qs.Size, qs.Value))
+        End If
 
         m_haveSession = True
     End Sub
@@ -211,10 +215,10 @@ Public Class Camera
                     ' queue up the transfer request
                     Dim transfer As New TransferItem
                     transfer.sdkRef = inRef
-                    transfer.outFile = m_picOutFile
+                    transfer.outFile = m_picOutFolder
                     m_transferQueue.Enqueue(transfer)
                 Else
-                    TransferOneItem(inRef, m_picOutFile)
+                    TransferOneItem(inRef, m_picOutFolder)
                 End If
 
                 m_waitingOnPic = False ' allow other thread to continue
@@ -223,12 +227,33 @@ Public Class Camera
         End Select
     End Sub
 
-    Private Sub TransferOneItem(ByVal inRef As IntPtr, ByVal outfile As String)
+    Private Function EnsureDoesNotExist(ByVal outfile As String) As String
+        If File.Exists(outfile) Then
+            Dim title As String = Path.GetFileNameWithoutExtension(outfile)
+            Dim folder As String = Path.GetDirectoryName(outfile)
+            Dim ext As String = Path.GetExtension(outfile)
+            Dim append As Integer = 1
+            While File.Exists(Path.Combine(folder, title & "_" & append & ext))
+                append += 1
+            End While
+            Return Path.Combine(folder, title & "_" & append & ext)
+        Else
+            Return outfile
+        End If
+    End Function
+
+    Private Sub TransferOneItem(ByVal inRef As IntPtr, ByVal outFolder As String)
         ' transfer the image in memory to disk
         Dim dirItemInfo As EdsDirectoryItemInfo = Nothing
         Dim outStream As IntPtr
 
         CheckError(EdsGetDirectoryItemInfo(inRef, dirItemInfo))
+
+
+        Dim outfile As String = Path.Combine(outFolder, dirItemInfo.szFileName)
+
+        ' make sure we don't overwrite files
+        outfile = EnsureDoesNotExist(outfile)
 
         ' This creates the outStream that is used by EdsDownload to actually grab and write out the file.
         CheckError(EdsCreateFileStream(outfile, EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways, EdsAccess.kEdsAccess_Write, outStream))
@@ -296,20 +321,26 @@ Public Class Camera
         End If
     End Sub
 
-
-    Public Sub TakeFastPicture(ByVal outfile As String)
+    ''' <summary>
+    ''' Take a fast picture. Needs to be preceeded by a call to BeginFastPictures() and closed with a call
+    ''' to EndFastPictures(). Drops the picture in outFolder.
+    ''' </summary>
+    ''' <param name="outFolder">folder to save the picture</param>
+    ''' <remarks></remarks>
+    Public Sub TakeFastPicture(ByVal outFolder As String)
         If Not m_fastPictures Then Throw New CameraIsBusyException
 
+        CheckDirectory(outFolder)
 
         ' set flag indicating we are waiting on a callback call
         m_waitingOnPic = True
-        m_picOutFile = outfile
+        m_picOutFolder = outFolder
 
         Dim TryAgain As Boolean = True
         While TryAgain
             TryAgain = False
             Try
-                TakePicture(outfile)
+                TakePicture(outFolder)
             Catch ex As SdkException When ex.SdkError = SdkErrors.DeviceBusy
                 Thread.Sleep(SleepAmount)
                 TryAgain = True
@@ -317,12 +348,19 @@ Public Class Camera
         End While
     End Sub
 
+    Private Sub CheckDirectory(ByVal Path As String)
+        If Not Directory.Exists(Path) Then Throw New DirectoryDoesNotExistException
+    End Sub
 
-    Public Sub TakeSinglePicture(ByVal OutFile As String)
+    '''<summary>snap a photo with the camera and drop in OutFolder</summary> 
+    ''' <param name="OutFolder">the folder to save the picture in</param>
+    Public Sub TakeSinglePicture(ByVal OutFolder As String)
         Dim interuptingLiveView As Boolean = m_liveViewOn
         Dim lvBox As PictureBox = m_liveViewPicBox
 
         Dim haveSession As Boolean = m_haveSession
+
+        checkDirectory(OutFolder)
 
         EstablishSession()
         CheckBusy()
@@ -332,9 +370,9 @@ Public Class Camera
 
         ' set flag indicating we are waiting on a callback call
         m_waitingOnPic = True
-        m_picOutFile = OutFile
+        m_picOutFolder = OutFolder
 
-        If TakePicture(OutFile) Then
+        If TakePicture(OutFolder) Then
             If interuptingLiveView Then StartLiveView(lvBox)
         Else
             ' we never got a callback. throw an error
@@ -350,9 +388,7 @@ Public Class Camera
         End If
     End Sub
 
-
-    '''<summary>snap a photo with the camera and write it to outfile</summary> 
-    ''' <param name="OutFile">the file to save the picture to</param>
+    ' internal takepicture function
     Private Function TakePicture(ByVal OutFile As String) As Boolean
 
 
@@ -1042,11 +1078,9 @@ End Class
     Public Class TooManyCamerasFoundException
         Inherits GetOnlyCameraException
     End Class
-
     Public Class OnlyOneInstanceAllowedException
         Inherits Exception
     End Class
-
     Public Class TakePictureFailedException
         Inherits Exception
     End Class
@@ -1055,7 +1089,10 @@ End Class
     End Class
     Public Class LiveViewFailedException
         Inherits Exception
-    End Class
+End Class
     Public Class CameraDisconnectedException
         Inherits Exception
-    End Class
+End Class
+Public Class DirectoryDoesNotExistException
+    Inherits Exception
+End Class

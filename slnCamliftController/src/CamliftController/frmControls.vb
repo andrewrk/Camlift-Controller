@@ -63,7 +63,7 @@ Namespace CamliftController
 
             'managers
             m_silverpakManager = silverpakManager
-            m_smartStepsManager = New SmartStepsManager(settings.SmartSteps, AddressOf moveToPosition_safe, camera, AddressOf isMoveFinished_safe)
+            m_smartStepsManager = New SmartStepsManager(settings.SmartSteps, AddressOf moveToPosition_safe, camera, AddressOf isMoveFinished_safe, m_allSettings)
             m_positionManager = New PositionManager(settings.PositionManager, m_smartStepsManager)
 
             'resources
@@ -188,15 +188,13 @@ Namespace CamliftController
         End Sub
 
         Private Sub btnTakePic_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnTakePic.Click
-            Dim outfile As String = GetNextPictureFile()
-
             Dim TryAgain As Boolean = True
 
             While TryAgain
                 TryAgain = False
 
                 Try
-                    m_cam.TakeSinglePicture(outfile)
+                    m_cam.TakeSinglePicture(m_allSettings.SettingsIndex.SavePicturesFolder)
                 Catch ex As SdkException When ex.Message = SdkErrors.TakePictureAfNg
                     MsgBox("Autofocus failed!" & vbCrLf & vbCrLf & "NOTE: This software is intended to be used with the camera in manual focus mode", MsgBoxStyle.Exclamation)
                 Catch ex As CameraIsBusyException

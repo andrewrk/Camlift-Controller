@@ -97,22 +97,6 @@ Public Module modMain
         End If
     End Function
 
-    Public Function GetNextPictureFile() As String
-        Dim folder As String = m_settings.SettingsIndex.SavePicturesFolder
-        If Not folder.EndsWith("\") Then folder &= "\"
-
-        Dim prefix As String = My.Application.Info.Title
-
-        Dim outfile As String
-
-        Do
-            m_numPicsTaken += 1
-            outfile = folder & prefix & "_" & Format(m_numPicsTaken, "000") & ".jpg"
-        Loop While IO.File.Exists(outfile)
-
-        Return outfile
-    End Function
-
     Public Function MicrostepsToMilimeters(ByVal microsteps As Integer) As String
         Return Format(microsteps / MicrostepsPerMm, "0.00")
     End Function
