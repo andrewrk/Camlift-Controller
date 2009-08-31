@@ -550,14 +550,16 @@ Namespace CamliftController
             SetAutorunStop()
         End Sub
 
-        Private Sub cmsPosition_Opening(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles cmsPosition.Opening
-            tsmLoad.DropDownItems.Clear()
+        Private Sub BuildLoadMenu(ByVal menu As ToolStripItemCollection)
+            menu.Clear()
             Dim loadItems = m_positionManager.MakeLoadMenu(AddressOf loadPosition_safe).Items
             While loadItems.Count > 0
-                tsmLoad.DropDownItems.Add(loadItems(0))
+                menu.Add(loadItems(0))
             End While
+        End Sub
 
-            tsmStore.DropDownItems.Clear()
+        Private Sub BuildStoreMenu(ByVal menu As ToolStripItemCollection)
+            menu.Clear()
             Dim position As Integer
             Try
                 position = Val(txtPos.Text)
@@ -566,9 +568,13 @@ Namespace CamliftController
             End Try
             Dim storeItems As ToolStripItemCollection = m_positionManager.MakeStoreMenu(position).Items
             While storeItems.Count > 0
-                tsmStore.DropDownItems.Add(storeItems(0))
+                menu.Add(storeItems(0))
             End While
+        End Sub
 
+        Private Sub cmsPosition_Opening(ByVal sender As Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles cmsPosition.Opening
+            BuildLoadMenu(tsmLoad.DropDownItems)
+            BuildStoreMenu(tsmStore.DropDownItems)
         End Sub
 
         Private Function initValueMenuItem_safe(ByVal baseTitle As String, ByVal value As Object, ByVal clickHandler As EventHandler) As ToolStripMenuItem
@@ -593,6 +599,18 @@ Namespace CamliftController
             Dim inst As New frmManageMemoryRegisters(m_positionManager)
 
             inst.ShowDialog()
+        End Sub
+
+        Private Sub btnSavePos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSavePos.Click
+            Dim menu As New ContextMenuStrip
+            BuildStoreMenu(menu.Items)
+            menu.Show(btnSavePos, New Point(0, btnSavePos.Height))
+        End Sub
+
+        Private Sub btnLoadPos_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnLoadPos.Click
+            Dim menu As New ContextMenuStrip
+            BuildLoadMenu(menu.Items)
+            menu.Show(btnLoadPos, New Point(0, btnLoadPos.Height))
         End Sub
     End Class
 
