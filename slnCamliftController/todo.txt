@@ -1,9 +1,7 @@
-
 Version 2.0.2:
 Andy:
-* Fix LiveView dragbox limits
+* Fix LiveView dragbox aspect ratio
 * Rotate LiveView
-* Move whiteBalance box
 
 Josh:
 * ShutDown button

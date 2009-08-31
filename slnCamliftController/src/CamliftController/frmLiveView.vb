@@ -145,7 +145,7 @@ Namespace CanonCamera
             Dim MaxZoom As Integer = ZoomRatios(m_zoomIndex + 1)
             ' draw zoom
             Dim zoomSize = New Size(picLiveView.Width / MaxZoom, picLiveView.Height / MaxZoom)
-            Dim zoomLoc As Point = getzoomloc()
+            Dim zoomLoc As Point = GetZoomLoc()
             Dim zoomRect = New Rectangle(zoomLoc, zoomSize)
             Using shadowPen As Pen = New Pen(Color.Black, 1)
                 Dim shadowRect As Rectangle = zoomRect
