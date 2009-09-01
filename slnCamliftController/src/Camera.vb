@@ -40,6 +40,7 @@ Public Class Camera
     Private m_liveViewBufferHandle As GCHandle
     Private m_liveViewStreamPtr As IntPtr
     Private m_liveViewImageSize As Size
+    Private m_liveViewRotation As Drawing.RotateFlipType
 
     Private m_zoomPosition As StructurePointer(Of EdsPoint)
     Private m_pendingZoomPosition As Boolean
@@ -102,6 +103,7 @@ Public Class Camera
 
         m_fastPicturesInteruptingLiveView = False
         m_fastPicturesLiveViewBox = Nothing
+        m_liveViewRotation = RotateFlipType.RotateNoneFlipNone
     End Sub
 
     Private Sub EstablishSession()
@@ -439,6 +441,10 @@ Public Class Camera
         CheckError(err2)
     End Sub
 
+    Public Sub SetLiveViewRotation(ByVal rotation As Drawing.RotateFlipType)
+        m_liveViewRotation = rotation
+    End Sub
+
     '''<summary>start streaming live video to pbox</summary>
     '''<param name="pbox">the picture box to send live video to</param>
     ''' <remarks>you can only have one live view going at a time.</remarks>
@@ -577,6 +583,7 @@ Public Class Camera
 
         ' get it into the picture box image
         Dim canonImg As Image = Image.FromStream(New MemoryStream(m_liveViewFrameBuffer)) 'do not dispose the MemoryStream (Image.FromStream)
+        canonImg.RotateFlip(m_liveViewRotation)
         m_liveViewImageSize = canonImg.Size
         Dim oldImg As Image = m_liveViewPicBox.Image
         m_liveViewPicBox.Image = canonImg

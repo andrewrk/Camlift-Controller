@@ -1,7 +1,4 @@
 Version 2.0.2:
-Andy:
-* Rotate LiveView
-
 Josh:
 * ShutDown button
 * Add a 20X Objective to objectives.xml

@@ -21,6 +21,8 @@ Namespace CanonCamera
         Private m_mouseDown As Boolean
         Private m_zoomPosition As Point
 
+        Private m_rotation As Drawing.RotateFlipType
+
         Private Sub SetWhiteBalanceCombo(ByVal value As Integer)
             For i = 0 To WhiteBalanceValues.Length - 1
                 If WhiteBalanceValues(i) = value Then
@@ -58,12 +60,7 @@ Namespace CanonCamera
 
             SetWhiteBalanceCombo(m_cam.WhiteBalance)
             m_cam.ZoomRatio = ZoomRatios(m_zoomIndex)
-        End Sub
-
-
-        Private Sub btnGrid_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGrid.Click
-            m_ShowGrid = Not m_ShowGrid
-            picLiveView.Refresh()
+            m_rotation = RotateFlipType.RotateNoneFlipNone
         End Sub
 
         Private Sub btnClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnClose.Click
@@ -99,7 +96,24 @@ Namespace CanonCamera
                 newpt.Offset(e.X - m_mouseDownPt.X, e.Y - m_mouseDownPt.Y)
             Else
                 'move the zoom position
-                newpt.Offset(m_mouseDownPt.X - e.X, m_mouseDownPt.Y - e.Y)
+                Dim offX As Integer = m_mouseDownPt.X - e.X
+                Dim offY As Integer = m_mouseDownPt.Y - e.Y
+                Dim newX As Integer, newY As Integer
+                Select Case m_rotation
+                    Case RotateFlipType.RotateNoneFlipNone
+                        newX = offX
+                        newY = offY
+                    Case RotateFlipType.Rotate90FlipNone
+                        newX = offY
+                        newY = -offX
+                    Case RotateFlipType.Rotate180FlipNone
+                        newX = -offX
+                        newY = -offY
+                    Case RotateFlipType.Rotate270FlipNone
+                        newX = -offY
+                        newY = offX
+                End Select
+                newpt.Offset(newX, newY)
             End If
 
             newpt.X = (newpt.X / picLiveView.Width) * MaxZoomWidth
@@ -237,6 +251,42 @@ Namespace CanonCamera
         Private Sub btnZoomOut_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btnZoomOut.Click
             m_zoomIndex -= 1
             UpdateZoom()
+        End Sub
+
+        Private Sub chkGrid_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkGrid.CheckedChanged
+            m_ShowGrid = chkGrid.Checked
+            picLiveView.Refresh()
+        End Sub
+
+        Private Sub btnRotateCW_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRotateCW.Click
+            Select Case m_rotation
+                Case RotateFlipType.RotateNoneFlipNone
+                    m_rotation = RotateFlipType.Rotate90FlipNone
+                Case RotateFlipType.Rotate90FlipNone
+                    m_rotation = RotateFlipType.Rotate180FlipNone
+                Case RotateFlipType.Rotate180FlipNone
+                    m_rotation = RotateFlipType.Rotate270FlipNone
+                Case RotateFlipType.Rotate270FlipNone
+                    m_rotation = RotateFlipType.RotateNoneFlipNone
+            End Select
+
+            m_cam.SetLiveViewRotation(m_rotation)
+        End Sub
+
+
+        Private Sub btnRotateCCW_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRotateCCW.Click
+            Select Case m_rotation
+                Case RotateFlipType.RotateNoneFlipNone
+                    m_rotation = RotateFlipType.Rotate270FlipNone
+                Case RotateFlipType.Rotate90FlipNone
+                    m_rotation = RotateFlipType.RotateNoneFlipNone
+                Case RotateFlipType.Rotate180FlipNone
+                    m_rotation = RotateFlipType.Rotate90FlipNone
+                Case RotateFlipType.Rotate270FlipNone
+                    m_rotation = RotateFlipType.Rotate180FlipNone
+            End Select
+
+            m_cam.SetLiveViewRotation(m_rotation)
         End Sub
     End Class
 End Namespace
