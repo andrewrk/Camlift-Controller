@@ -270,7 +270,7 @@ Namespace CanonCamera
                     m_rotation = RotateFlipType.RotateNoneFlipNone
             End Select
 
-            m_cam.SetLiveViewRotation(m_rotation)
+            m_cam.Rotation = m_rotation
         End Sub
 
 
@@ -286,7 +286,7 @@ Namespace CanonCamera
                     m_rotation = RotateFlipType.Rotate180FlipNone
             End Select
 
-            m_cam.SetLiveViewRotation(m_rotation)
+            m_cam.Rotation = m_rotation
         End Sub
     End Class
 End Namespace

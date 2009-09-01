@@ -18,6 +18,9 @@ $100
 $300
 * Savable StepSizes profiles
 
+$300
+* When the picture is rotated in live view, save the takepicture as rotated
+
 Feasible?
 * Shitf + resize = aspect ratio
 

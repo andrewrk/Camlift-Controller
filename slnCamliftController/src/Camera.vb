@@ -40,7 +40,7 @@ Public Class Camera
     Private m_liveViewBufferHandle As GCHandle
     Private m_liveViewStreamPtr As IntPtr
     Private m_liveViewImageSize As Size
-    Private m_liveViewRotation As Drawing.RotateFlipType
+    Private m_rotation As Drawing.RotateFlipType
 
     Private m_zoomPosition As StructurePointer(Of EdsPoint)
     Private m_pendingZoomPosition As Boolean
@@ -103,7 +103,7 @@ Public Class Camera
 
         m_fastPicturesInteruptingLiveView = False
         m_fastPicturesLiveViewBox = Nothing
-        m_liveViewRotation = RotateFlipType.RotateNoneFlipNone
+        m_rotation = RotateFlipType.RotateNoneFlipNone
     End Sub
 
     Private Sub EstablishSession()
@@ -265,8 +265,19 @@ Public Class Camera
 
         ' do the transfer
         CheckError(EdsDownload(inRef, dirItemInfo.size, outStream))
+
+        ''manipulate the image - Saved for 2.1.0
+        'Dim imgRef As IntPtr
+        'CheckError(EdsCreateImageRef(outStream, imgRef))
+        'Dim rot As Integer = m_rotation
+        'CheckError(EdsSetPropertyData(imgRef, kEdsPropID_Orientation, 0, Marshal.SizeOf(rot), rot))
+        'EdsSaveImage imgRef, EdsTargetImageType.kEdsTargetImageType_Unknown , 
+        'CheckError(EdsRelease(imgRef))
+
+
         CheckError(EdsDownloadComplete(inRef))
         CheckError(EdsRelease(outStream))
+
     End Sub
 
     Public Sub EndFastPictures()
@@ -441,9 +452,14 @@ Public Class Camera
         CheckError(err2)
     End Sub
 
-    Public Sub SetLiveViewRotation(ByVal rotation As Drawing.RotateFlipType)
-        m_liveViewRotation = rotation
-    End Sub
+    Public Property Rotation() As Drawing.RotateFlipType
+        Get
+            Return m_rotation
+        End Get
+        Set(ByVal value As Drawing.RotateFlipType)
+            m_rotation = value
+        End Set
+    End Property
 
     '''<summary>start streaming live video to pbox</summary>
     '''<param name="pbox">the picture box to send live video to</param>
@@ -583,7 +599,7 @@ Public Class Camera
 
         ' get it into the picture box image
         Dim canonImg As Image = Image.FromStream(New MemoryStream(m_liveViewFrameBuffer)) 'do not dispose the MemoryStream (Image.FromStream)
-        canonImg.RotateFlip(m_liveViewRotation)
+        canonImg.RotateFlip(m_rotation)
         m_liveViewImageSize = canonImg.Size
         Dim oldImg As Image = m_liveViewPicBox.Image
         m_liveViewPicBox.Image = canonImg
