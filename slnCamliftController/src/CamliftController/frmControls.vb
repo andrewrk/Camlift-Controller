@@ -13,6 +13,7 @@ Namespace CamliftController
         Private m_movementMode As enuMovementMode = enuMovementMode.Initializing
         Private m_autorunMode As enuAutorunMode = enuAutorunMode.Off
         Private m_isLiveViewActive As Boolean = False
+        Private m_isShuttingDown As Boolean = False
 
         'parallel forms
         Private WithEvents m_frmLiveView As frmLiveView = Nothing
@@ -70,7 +71,6 @@ Namespace CamliftController
             m_cam = camera
         End Sub
 
-
         'Gui-thread event handlers
         Private Sub frmControls_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
             tkbPos.Maximum = m_silverpakManager.MaxPosition
@@ -80,6 +80,14 @@ Namespace CamliftController
             updateControlsEnabled_gui()
             updateSteps_gui()
             checkForInitialized_gui()
+        End Sub
+
+        Private Sub frmControls_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+            If e.CloseReason = CloseReason.UserClosing And Not m_isShuttingDown Then
+                e.Cancel = True
+                m_isShuttingDown = True
+                moveShutDown_gui()
+            End If
         End Sub
 
         Private Sub frmControls_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
@@ -251,6 +259,7 @@ Namespace CamliftController
         Private Sub m_silverpakManager_StoppedMoving_gui(ByVal reason As StoppedMovingReason)
             Select Case reason
                 Case StoppedMovingReason.Normal, StoppedMovingReason.Initialized
+                    If m_movementMode = enuMovementMode.ShutDown Then Close()
                     If m_autorunMode = enuAutorunMode.Off Then updateStatusStrip_gui("Stopped")
                     m_movementMode = enuMovementMode.Stopped
                     updateControlsEnabled_gui()
@@ -415,6 +424,11 @@ Namespace CamliftController
             m_movementMode = enuMovementMode.Absolute
             moveToPosition_safe(position)
         End Sub
+        Private Sub moveShutDown_gui()
+            updateStatusStrip_gui("Shutting Down...")
+            m_movementMode = enuMovementMode.ShutDown
+            moveToPosition_safe(0)
+        End Sub
         Private Sub movementAborted_gui()
             If m_autorunMode = enuAutorunMode.Running Then
                 m_autorunStepper.Abort()
@@ -458,7 +472,7 @@ Namespace CamliftController
                 Case enuMovementMode.Initializing
                     movementEnabled = False
                     otherEnabled = False
-                Case enuMovementMode.Absolute, enuMovementMode.Infinite
+                Case enuMovementMode.Absolute, enuMovementMode.Infinite, enuMovementMode.ShutDown
                     otherEnabled = False
                 Case enuMovementMode.Stopped
                     ' both true
@@ -509,6 +523,7 @@ Namespace CamliftController
             Stopped
             Infinite
             Absolute
+            ShutDown
         End Enum
         Private Enum enuAutorunMode
             Off

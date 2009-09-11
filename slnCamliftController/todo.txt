@@ -1,6 +1,5 @@
 Version 2.0.2:
 Josh:
-* ShutDown button
 * Add a 20X Objective to objectives.xml
 * Investigate Autorun not stepping finer than 12.
 
