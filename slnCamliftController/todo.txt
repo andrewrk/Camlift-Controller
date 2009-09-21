@@ -1,4 +1,4 @@
-Version 2.0.2:
+Version 2.0.4:
 Josh:
 * Add a 20X Objective to objectives.xml
 * Investigate Autorun not stepping finer than 12.
