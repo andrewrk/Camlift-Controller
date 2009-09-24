@@ -5,8 +5,7 @@ Version 2.0.4:
 	- fit -> 100 -> 200
 * autorun - start/stop need save buttons
 * move right after fire (download during dwell)
-* changing the last step setting doesn't work
-* instead of memX, posX
+* 20x stepsize label doesn't work
 * do you want to move the motor back to zero? yes no cancel
 Josh:
 * Add a 20X Objective to objectives.xml
@@ -44,3 +43,5 @@ Our Ideas:
 * get rid of that warning message about the silverpak dispose thing 
 * make zoom rectangle more accurate in live view
 * make scrolling in zoomed in mode smoother
+* virtual limit switch?
+* savable step size settings
