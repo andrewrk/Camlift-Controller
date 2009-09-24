@@ -1,5 +1,4 @@
 Version 2.0.4:
-* autorun - start/stop need save buttons
 Josh:
 * Investigate Autorun not stepping finer than 12.
 * 20x stepsize label doesn't work

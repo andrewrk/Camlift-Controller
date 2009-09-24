@@ -384,5 +384,28 @@ Namespace SmartSteps
             End If
         End Sub
 
+        Private Sub btnStopSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStopSave.Click
+            Dim value As Integer
+            Try
+                value = Val(txtStopPosition.Text)
+            Catch ex As Exception
+                Exit Sub
+            End Try
+
+            Dim cms = m_positionManager.MakeStoreMenu(value)
+            cms.Show(btnStopSave, btnStopSave.Width, 0)
+        End Sub
+
+        Private Sub btnStartSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStartSave.Click
+            Dim value As Integer
+            Try
+                value = Val(txtStart.Text)
+            Catch ex As Exception
+                Exit Sub
+            End Try
+
+            Dim cms = m_positionManager.MakeStoreMenu(value)
+            cms.Show(btnStartSave, btnStartSave.Width, 0)
+        End Sub
     End Class
 End Namespace

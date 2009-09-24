@@ -50,7 +50,7 @@ Namespace CamliftController
                 'Mem1
                 Dim i = 1
                 For Each mem In nest.m_memReg
-                    Me.Items.Add(initValueMenuItem_safe("Pos " & i, mem, MemHandler))
+                    Me.Items.Add(initValueMenuItem_safe("Pos" & i, mem, MemHandler))
                     i += 1
                 Next
             End Sub
