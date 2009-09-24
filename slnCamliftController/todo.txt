@@ -1,4 +1,13 @@
 Version 2.0.4:
+* live view same size as eos
+* zoom
+	- match eos
+	- fit -> 100 -> 200
+* autorun - start/stop need save buttons
+* move right after fire (download during dwell)
+* changing the last step setting doesn't work
+* instead of memX, posX
+* do you want to move the motor back to zero? yes no cancel
 Josh:
 * Add a 20X Objective to objectives.xml
 * Investigate Autorun not stepping finer than 12.

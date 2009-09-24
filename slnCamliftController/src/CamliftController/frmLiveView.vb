@@ -49,9 +49,10 @@ Namespace CanonCamera
                 EdsWhiteBalance.kEdsWhiteBalance_PCSet2, _
                 EdsWhiteBalance.kEdsWhiteBalance_PCSet3}
 
-            ZoomRatios = New Integer() {1, 5, 10}
+            ZoomRatios = New Integer() {1, 5}
             m_zoomIndex = 0
             btnZoomOut.Enabled = False
+            Me.lblZoom.Text = "100%"
 
             m_ShowGrid = False
             m_cam = cam
