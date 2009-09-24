@@ -1,13 +1,9 @@
 Version 2.0.4:
-* rearrange buttons	- up, down, take, live, auto, stop, stepsize
 * autorun - start/stop need save buttons
-* zoom
-	- match eos
-	- fit -> 100 -> 200
 Josh:
 * Investigate Autorun not stepping finer than 12.
 * 20x stepsize label doesn't work
-* live view same size as eos
+* live view zoom same as eos
 
 Version 2.1.0:
 

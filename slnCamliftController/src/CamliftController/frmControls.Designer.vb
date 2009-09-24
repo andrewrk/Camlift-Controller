@@ -69,7 +69,6 @@
             Me.btnAutorun = New System.Windows.Forms.Button
             Me.btnAutoStart = New System.Windows.Forms.Button
             Me.btnAutoStop = New System.Windows.Forms.Button
-            Me.GroupBox1 = New System.Windows.Forms.GroupBox
             Me.btnSavePos = New System.Windows.Forms.Button
             Me.btnLoadPos = New System.Windows.Forms.Button
             Me.btnDown = New System.Windows.Forms.Button
@@ -79,6 +78,7 @@
             Me.lblAutoStart = New System.Windows.Forms.Label
             Me.btnLiveView = New System.Windows.Forms.Button
             Me.btnTakePic = New System.Windows.Forms.Button
+            Me.GroupBox1 = New System.Windows.Forms.GroupBox
             Me.stsStatusStrip.SuspendLayout()
             CType(Me.tkbPos, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.cmsPosition.SuspendLayout()
@@ -87,14 +87,14 @@
             CType(Me.tkbDist, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.MenuStrip1.SuspendLayout()
             Me.FlowLayoutPanel1.SuspendLayout()
-            Me.GroupBox1.SuspendLayout()
             Me.GroupBox2.SuspendLayout()
+            Me.GroupBox1.SuspendLayout()
             Me.SuspendLayout()
             '
             'stsStatusStrip
             '
             Me.stsStatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tslStatus})
-            Me.stsStatusStrip.Location = New System.Drawing.Point(0, 626)
+            Me.stsStatusStrip.Location = New System.Drawing.Point(0, 627)
             Me.stsStatusStrip.Name = "stsStatusStrip"
             Me.stsStatusStrip.Size = New System.Drawing.Size(166, 22)
             Me.stsStatusStrip.SizingGrip = False
@@ -116,7 +116,7 @@
             Me.tkbPos.Maximum = 1000000
             Me.tkbPos.Name = "tkbPos"
             Me.tkbPos.Orientation = System.Windows.Forms.Orientation.Vertical
-            Me.tkbPos.Size = New System.Drawing.Size(45, 602)
+            Me.tkbPos.Size = New System.Drawing.Size(45, 603)
             Me.tkbPos.SmallChange = 10000
             Me.tkbPos.TabIndex = 1
             Me.tkbPos.TabStop = False
@@ -194,9 +194,9 @@
             Me.grpDist.Controls.Add(Me.lblCurrentDist)
             Me.grpDist.Controls.Add(Me.pnlDist)
             Me.grpDist.Controls.Add(Me.tkbDist)
-            Me.grpDist.Location = New System.Drawing.Point(11, 192)
+            Me.grpDist.Location = New System.Drawing.Point(36, 412)
             Me.grpDist.Name = "grpDist"
-            Me.grpDist.Size = New System.Drawing.Size(108, 204)
+            Me.grpDist.Size = New System.Drawing.Size(124, 204)
             Me.grpDist.TabIndex = 4
             Me.grpDist.TabStop = False
             Me.grpDist.Text = "Distance"
@@ -225,7 +225,7 @@
             Me.pnlDist.Controls.Add(Me.lblDist5)
             Me.pnlDist.Location = New System.Drawing.Point(46, 35)
             Me.pnlDist.Name = "pnlDist"
-            Me.pnlDist.Size = New System.Drawing.Size(56, 163)
+            Me.pnlDist.Size = New System.Drawing.Size(62, 163)
             Me.pnlDist.TabIndex = 2
             '
             'lblDist1
@@ -346,7 +346,7 @@
             '
             Me.btnStop.BackColor = System.Drawing.Color.Red
             Me.btnStop.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-            Me.btnStop.Location = New System.Drawing.Point(11, 151)
+            Me.btnStop.Location = New System.Drawing.Point(50, 371)
             Me.btnStop.Name = "btnStop"
             Me.btnStop.Size = New System.Drawing.Size(97, 35)
             Me.btnStop.TabIndex = 3
@@ -434,7 +434,7 @@
             Me.FlowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.FlowLayoutPanel1.Controls.Add(Me.txtPos)
             Me.FlowLayoutPanel1.Controls.Add(Me.btnGo)
-            Me.FlowLayoutPanel1.Location = New System.Drawing.Point(11, 16)
+            Me.FlowLayoutPanel1.Location = New System.Drawing.Point(14, 16)
             Me.FlowLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
             Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
             Me.FlowLayoutPanel1.Size = New System.Drawing.Size(94, 29)
@@ -467,25 +467,9 @@
             Me.btnAutoStop.Text = "Sto&p Here"
             Me.btnAutoStop.UseVisualStyleBackColor = True
             '
-            'GroupBox1
-            '
-            Me.GroupBox1.Controls.Add(Me.btnSavePos)
-            Me.GroupBox1.Controls.Add(Me.btnLoadPos)
-            Me.GroupBox1.Controls.Add(Me.FlowLayoutPanel1)
-            Me.GroupBox1.Controls.Add(Me.grpDist)
-            Me.GroupBox1.Controls.Add(Me.btnStop)
-            Me.GroupBox1.Controls.Add(Me.btnDown)
-            Me.GroupBox1.Controls.Add(Me.btnUp)
-            Me.GroupBox1.Location = New System.Drawing.Point(38, 27)
-            Me.GroupBox1.Name = "GroupBox1"
-            Me.GroupBox1.Size = New System.Drawing.Size(124, 402)
-            Me.GroupBox1.TabIndex = 0
-            Me.GroupBox1.TabStop = False
-            Me.GroupBox1.Text = "Motor"
-            '
             'btnSavePos
             '
-            Me.btnSavePos.Location = New System.Drawing.Point(60, 48)
+            Me.btnSavePos.Location = New System.Drawing.Point(63, 48)
             Me.btnSavePos.Name = "btnSavePos"
             Me.btnSavePos.Size = New System.Drawing.Size(48, 20)
             Me.btnSavePos.TabIndex = 4
@@ -494,7 +478,7 @@
             '
             'btnLoadPos
             '
-            Me.btnLoadPos.Location = New System.Drawing.Point(11, 48)
+            Me.btnLoadPos.Location = New System.Drawing.Point(14, 48)
             Me.btnLoadPos.Name = "btnLoadPos"
             Me.btnLoadPos.Size = New System.Drawing.Size(48, 20)
             Me.btnLoadPos.TabIndex = 4
@@ -505,7 +489,7 @@
             '
             Me.btnDown.Enabled = False
             Me.btnDown.Image = Global.VisionaryDigital.My.Resources.Resources.Down
-            Me.btnDown.Location = New System.Drawing.Point(11, 112)
+            Me.btnDown.Location = New System.Drawing.Point(14, 112)
             Me.btnDown.Name = "btnDown"
             Me.btnDown.Size = New System.Drawing.Size(97, 32)
             Me.btnDown.TabIndex = 2
@@ -515,7 +499,7 @@
             '
             Me.btnUp.Enabled = False
             Me.btnUp.Image = Global.VisionaryDigital.My.Resources.Resources.Up
-            Me.btnUp.Location = New System.Drawing.Point(11, 74)
+            Me.btnUp.Location = New System.Drawing.Point(14, 74)
             Me.btnUp.Name = "btnUp"
             Me.btnUp.Size = New System.Drawing.Size(97, 32)
             Me.btnUp.TabIndex = 1
@@ -528,7 +512,7 @@
             Me.GroupBox2.Controls.Add(Me.btnAutorun)
             Me.GroupBox2.Controls.Add(Me.btnAutoStart)
             Me.GroupBox2.Controls.Add(Me.btnAutoStop)
-            Me.GroupBox2.Location = New System.Drawing.Point(38, 435)
+            Me.GroupBox2.Location = New System.Drawing.Point(36, 256)
             Me.GroupBox2.Name = "GroupBox2"
             Me.GroupBox2.Size = New System.Drawing.Size(124, 109)
             Me.GroupBox2.TabIndex = 1
@@ -554,7 +538,7 @@
             'btnLiveView
             '
             Me.btnLiveView.Image = Global.VisionaryDigital.My.Resources.Resources.icon_reel
-            Me.btnLiveView.Location = New System.Drawing.Point(52, 550)
+            Me.btnLiveView.Location = New System.Drawing.Point(14, 184)
             Me.btnLiveView.Name = "btnLiveView"
             Me.btnLiveView.Size = New System.Drawing.Size(97, 28)
             Me.btnLiveView.TabIndex = 0
@@ -565,7 +549,7 @@
             'btnTakePic
             '
             Me.btnTakePic.Image = Global.VisionaryDigital.My.Resources.Resources.InsertPictureHS
-            Me.btnTakePic.Location = New System.Drawing.Point(52, 584)
+            Me.btnTakePic.Location = New System.Drawing.Point(14, 150)
             Me.btnTakePic.Name = "btnTakePic"
             Me.btnTakePic.Size = New System.Drawing.Size(97, 28)
             Me.btnTakePic.TabIndex = 1
@@ -573,17 +557,33 @@
             Me.btnTakePic.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
             Me.btnTakePic.UseVisualStyleBackColor = True
             '
+            'GroupBox1
+            '
+            Me.GroupBox1.Controls.Add(Me.FlowLayoutPanel1)
+            Me.GroupBox1.Controls.Add(Me.btnUp)
+            Me.GroupBox1.Controls.Add(Me.btnSavePos)
+            Me.GroupBox1.Controls.Add(Me.btnDown)
+            Me.GroupBox1.Controls.Add(Me.btnLiveView)
+            Me.GroupBox1.Controls.Add(Me.btnTakePic)
+            Me.GroupBox1.Controls.Add(Me.btnLoadPos)
+            Me.GroupBox1.Location = New System.Drawing.Point(36, 27)
+            Me.GroupBox1.Name = "GroupBox1"
+            Me.GroupBox1.Size = New System.Drawing.Size(124, 223)
+            Me.GroupBox1.TabIndex = 5
+            Me.GroupBox1.TabStop = False
+            Me.GroupBox1.Text = "Main"
+            '
             'frmControls
             '
             Me.AcceptButton = Me.btnGo
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.AutoSize = True
-            Me.ClientSize = New System.Drawing.Size(166, 648)
-            Me.Controls.Add(Me.btnTakePic)
-            Me.Controls.Add(Me.btnLiveView)
-            Me.Controls.Add(Me.GroupBox2)
+            Me.ClientSize = New System.Drawing.Size(166, 649)
             Me.Controls.Add(Me.GroupBox1)
+            Me.Controls.Add(Me.grpDist)
+            Me.Controls.Add(Me.btnStop)
+            Me.Controls.Add(Me.GroupBox2)
             Me.Controls.Add(Me.tkbPos)
             Me.Controls.Add(Me.stsStatusStrip)
             Me.Controls.Add(Me.MenuStrip1)
@@ -609,10 +609,10 @@
             Me.MenuStrip1.PerformLayout()
             Me.FlowLayoutPanel1.ResumeLayout(False)
             Me.FlowLayoutPanel1.PerformLayout()
-            Me.GroupBox1.ResumeLayout(False)
-            Me.GroupBox1.PerformLayout()
             Me.GroupBox2.ResumeLayout(False)
             Me.GroupBox2.PerformLayout()
+            Me.GroupBox1.ResumeLayout(False)
+            Me.GroupBox1.PerformLayout()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -658,7 +658,6 @@
         Friend WithEvents cmsPosition As System.Windows.Forms.ContextMenuStrip
         Friend WithEvents tsmLoad As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents tsmStore As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
         Friend WithEvents GroupBox2 As System.Windows.Forms.GroupBox
         Friend WithEvents ToolStripMenuItem1 As System.Windows.Forms.ToolStripSeparator
         Friend WithEvents ManageMemoryRegistersToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
@@ -670,6 +669,7 @@
         Friend WithEvents Label1 As System.Windows.Forms.Label
         Friend WithEvents btnSavePos As System.Windows.Forms.Button
         Friend WithEvents btnLoadPos As System.Windows.Forms.Button
+        Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     End Class
 
 End Namespace
