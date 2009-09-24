@@ -44,7 +44,7 @@
             Me.lblZoom.Name = "lblZoom"
             Me.lblZoom.Size = New System.Drawing.Size(39, 29)
             Me.lblZoom.TabIndex = 9
-            Me.lblZoom.Text = "1000%"
+            Me.lblZoom.Text = "100%"
             Me.lblZoom.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
             'cboWhiteBalance

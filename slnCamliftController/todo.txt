@@ -1,15 +1,14 @@
 Version 2.0.4:
-* live view same size as eos
+* move right after fire (download during dwell)
+* rearrange buttons	- up, down, take, live, auto, stop, stepsize
+* autorun - start/stop need save buttons
 * zoom
 	- match eos
 	- fit -> 100 -> 200
-* autorun - start/stop need save buttons
-* move right after fire (download during dwell)
-* 20x stepsize label doesn't work
-* do you want to move the motor back to zero? yes no cancel
 Josh:
-* Add a 20X Objective to objectives.xml
 * Investigate Autorun not stepping finer than 12.
+* 20x stepsize label doesn't work
+* live view same size as eos
 
 Version 2.1.0:
 

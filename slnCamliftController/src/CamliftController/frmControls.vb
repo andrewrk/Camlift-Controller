@@ -84,9 +84,16 @@ Namespace CamliftController
 
         Private Sub frmControls_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
             If e.CloseReason = CloseReason.UserClosing And Not m_isShuttingDown Then
-                e.Cancel = True
-                m_isShuttingDown = True
-                moveShutDown_gui()
+                Select Case MsgBox("Do you want to move the motor back to zero?", MsgBoxStyle.YesNoCancel + MsgBoxStyle.Question, MsgBoxTitle)
+                    Case MsgBoxResult.Yes
+                        e.Cancel = True
+                        m_isShuttingDown = True
+                        moveShutDown_gui()
+                    Case MsgBoxResult.No
+
+                    Case MsgBoxResult.Cancel
+                        e.Cancel = True
+                End Select
             End If
         End Sub
 

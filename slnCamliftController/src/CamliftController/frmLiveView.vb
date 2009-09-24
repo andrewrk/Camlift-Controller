@@ -52,7 +52,6 @@ Namespace CanonCamera
             ZoomRatios = New Integer() {1, 5}
             m_zoomIndex = 0
             btnZoomOut.Enabled = False
-            Me.lblZoom.Text = "100%"
 
             m_ShowGrid = False
             m_cam = cam
