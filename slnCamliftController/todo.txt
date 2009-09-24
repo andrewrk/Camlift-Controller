@@ -1,5 +1,4 @@
 Version 2.0.4:
-* move right after fire (download during dwell)
 * rearrange buttons	- up, down, take, live, auto, stop, stepsize
 * autorun - start/stop need save buttons
 * zoom

@@ -90,12 +90,17 @@ Namespace SmartSteps
                 End If
 
                 ' sleep for dwell amount
-                Thread.Sleep(m_dwell)
+                Dim startTime = Now
+                m_camera.EndFastPictures()
+                Dim span = (Now - startTime).Milliseconds
+                Thread.Sleep(Math.Max(0, m_dwell - span))
 
 
                 'Take Picture
+                m_camera.BeginFastPictures()
+
                 Try
-                    m_camera.TakeSinglePicture(m_allSettings.SettingsIndex.SavePicturesFolder)
+                    m_camera.TakeFastPicture(m_allSettings.SettingsIndex.SavePicturesFolder)
                 Catch ex As SdkException
                     AbortRun(ex)
                     Exit Sub
