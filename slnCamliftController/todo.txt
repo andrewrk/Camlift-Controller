@@ -1,8 +1,25 @@
 Version 2.0.4:
+Andy:
+* if directory does not exist when take picture, set to default and pop dialog telling the user
+* step settings size label is overlapping the text box
+* change "distance" to "step sizes". add the "step sizes" 
+* change auto size to true in auto run settings radio buttons
+* add "presets" from main controls to auto run step sizes
+  - make sure slice overlap works for this option
+* change order in auto run to 1. calculate 2. presets 3. manual
+* handle if live view is open and they click auto run
+* if you take a picture with live view open and zoomed in, live view doesn't restore zoom
+* the dialog for closing the form should say "Move camera back to top?" instead of "motor."
+* default live view size to 1048x746
+* in auto run window, add a "here" button to start and stop position
 Josh:
-* Investigate Autorun not stepping finer than 12.
+* when they pop a window, make it start next to frmControls
 * 20x stepsize label doesn't work
-* live view zoom same as eos
+* savable step size profiles
+Unassigned:
+* fix motor bump bug - supercedes limit switch (critical)
+* always take landscape (critical)
+* get 5D working (critical)
 
 Version 2.1.0:
 
@@ -11,19 +28,6 @@ Further Discussion Needed:
 * Cosmetics
 * Add Manage Memory Registers button on Main Window
 * Investigate inconsistent coloring
-
-$100
-* Show Autorun Window non-dialog and next to Main Window always.
-
-$300
-* Savable StepSizes profiles
-
-$300
-* When the picture is rotated in live view, save the takepicture as rotated
-
-Feasible?
-* Shitf + resize = aspect ratio
-
 
 Our Ideas:
 * lazy motor - don't try to initialize until motor is needed
