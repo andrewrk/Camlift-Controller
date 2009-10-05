@@ -1,6 +1,6 @@
 Version 2.0.4:
 Andy:
-* when they pop a window, make it start next to frmControls
+* need menu shortcut to manage memory registers
 Josh:
 * add "presets" from main controls to auto run step sizes
   - change order in auto run to 1. calculate 2. presets 3. manual

@@ -156,7 +156,7 @@ Partial Class frmPosition
         Me.Name = "frmPosition"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Position Manager"
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)

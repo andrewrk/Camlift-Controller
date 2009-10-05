@@ -31,6 +31,8 @@
             Me.rdoStopPosition = New System.Windows.Forms.RadioButton
             Me.txtStepSize = New System.Windows.Forms.TextBox
             Me.grpRun = New System.Windows.Forms.GroupBox
+            Me.btnStopHere = New System.Windows.Forms.Button
+            Me.btnStartHere = New System.Windows.Forms.Button
             Me.btnStopSave = New System.Windows.Forms.Button
             Me.btnStartSave = New System.Windows.Forms.Button
             Me.txtSlices = New System.Windows.Forms.TextBox
@@ -68,8 +70,6 @@
             Me.chkReturnToTop = New System.Windows.Forms.CheckBox
             Me.btnCancel = New System.Windows.Forms.Button
             Me.btnStart = New System.Windows.Forms.Button
-            Me.btnStartHere = New System.Windows.Forms.Button
-            Me.btnStopHere = New System.Windows.Forms.Button
             Me.grpRun.SuspendLayout()
             Me.grpSetup.SuspendLayout()
             Me.grpIris.SuspendLayout()
@@ -156,6 +156,24 @@
             Me.grpRun.TabIndex = 0
             Me.grpRun.TabStop = False
             Me.grpRun.Text = "Run"
+            '
+            'btnStopHere
+            '
+            Me.btnStopHere.Location = New System.Drawing.Point(313, 45)
+            Me.btnStopHere.Name = "btnStopHere"
+            Me.btnStopHere.Size = New System.Drawing.Size(40, 23)
+            Me.btnStopHere.TabIndex = 9
+            Me.btnStopHere.Text = "Here"
+            Me.btnStopHere.UseVisualStyleBackColor = True
+            '
+            'btnStartHere
+            '
+            Me.btnStartHere.Location = New System.Drawing.Point(313, 17)
+            Me.btnStartHere.Name = "btnStartHere"
+            Me.btnStartHere.Size = New System.Drawing.Size(40, 23)
+            Me.btnStartHere.TabIndex = 9
+            Me.btnStartHere.Text = "Here"
+            Me.btnStartHere.UseVisualStyleBackColor = True
             '
             'btnStopSave
             '
@@ -560,24 +578,6 @@
             Me.btnStart.Text = "Star&t"
             Me.btnStart.UseVisualStyleBackColor = True
             '
-            'btnStartHere
-            '
-            Me.btnStartHere.Location = New System.Drawing.Point(313, 17)
-            Me.btnStartHere.Name = "btnStartHere"
-            Me.btnStartHere.Size = New System.Drawing.Size(40, 23)
-            Me.btnStartHere.TabIndex = 9
-            Me.btnStartHere.Text = "Here"
-            Me.btnStartHere.UseVisualStyleBackColor = True
-            '
-            'btnStopHere
-            '
-            Me.btnStopHere.Location = New System.Drawing.Point(313, 45)
-            Me.btnStopHere.Name = "btnStopHere"
-            Me.btnStopHere.Size = New System.Drawing.Size(40, 23)
-            Me.btnStopHere.TabIndex = 9
-            Me.btnStopHere.Text = "Here"
-            Me.btnStopHere.UseVisualStyleBackColor = True
-            '
             'frmAutoRun
             '
             Me.AcceptButton = Me.btnStart
@@ -599,6 +599,7 @@
             Me.Padding = New System.Windows.Forms.Padding(10)
             Me.ShowIcon = False
             Me.ShowInTaskbar = False
+            Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
             Me.Text = "Auto Run"
             Me.grpRun.ResumeLayout(False)
             Me.grpRun.PerformLayout()

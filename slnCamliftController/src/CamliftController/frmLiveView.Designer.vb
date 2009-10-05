@@ -166,6 +166,7 @@
             Me.MinimumSize = New System.Drawing.Size(607, 470)
             Me.Name = "frmLiveView"
             Me.ShowIcon = False
+            Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
             Me.Text = "Live View"
             CType(Me.picLiveView, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)

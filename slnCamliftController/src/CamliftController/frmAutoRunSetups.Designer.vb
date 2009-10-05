@@ -151,6 +151,7 @@ Partial Class frmAutoRunSetups
         Me.Name = "frmAutoRunSetups"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
         Me.Text = "Auto Run Setup"
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)

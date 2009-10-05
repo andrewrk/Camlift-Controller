@@ -175,7 +175,7 @@
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.CancelButton = Me.btnCancel
-            Me.ClientSize = New System.Drawing.Size(261, 235)
+            Me.ClientSize = New System.Drawing.Size(253, 227)
             Me.ControlBox = False
             Me.Controls.Add(Me.lblRolloverHelp)
             Me.Controls.Add(Me.grpAdvancedSettings)
@@ -185,10 +185,13 @@
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
             Me.KeyPreview = True
             Me.MaximizeBox = False
+            Me.MaximumSize = New System.Drawing.Size(259, 255)
             Me.MinimizeBox = False
+            Me.MinimumSize = New System.Drawing.Size(259, 255)
             Me.Name = "frmAdvanced"
             Me.ShowIcon = False
             Me.ShowInTaskbar = False
+            Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
             Me.Text = "Advanced Settings"
             Me.grpAdvancedSettings.ResumeLayout(False)
             Me.grpAdvancedSettings.PerformLayout()

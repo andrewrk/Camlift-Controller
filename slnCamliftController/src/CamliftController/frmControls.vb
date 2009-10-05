@@ -109,7 +109,8 @@ Namespace CamliftController
             resync(New Action(AddressOf saveSettings_gui))
         End Sub
         Private Sub AdvancedToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AdvancedToolStripMenuItem.Click
-            Using f As New frmAdvanced(m_silverpakManager, Me)
+            Using f As New frmAdvanced(m_silverpakManager)
+                MoveNextToMe(f)
                 f.ShowDialog(Me)
                 If f.Tag = ConnectionLostResult Then returnForm_gui(ConnectionLostResult)
             End Using
@@ -195,6 +196,7 @@ Namespace CamliftController
         Private Sub btnAutorun_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAutorun.Click
             If m_frmLiveView IsNot Nothing Then m_frmLiveView.Close()
             Using frm As New frmAutoRun(m_smartStepsManager, m_positionManager, m_allSettings.Objectives, Me)
+                MoveNextToMe(frm)
                 If frm.ShowDialog(Me) = DialogResult.OK Then
                     m_autorunStepper = frm.Tag
                     m_autorunMode = enuAutorunMode.Running
@@ -237,6 +239,7 @@ Namespace CamliftController
                     Try
                         m_frmLiveView = New frmLiveView(m_cam)
                         m_frmLiveView.Show()
+                        MoveNextToMe(m_frmLiveView)
                         m_isLiveViewActive = True
                     Catch ex As SdkException When ex.SdkError = SdkErrors.CommPortIsInUse
                         MsgBox("Camera is in use!", MsgBoxStyle.Critical, MsgBoxTitle)
@@ -622,7 +625,7 @@ Namespace CamliftController
 
         Private Sub ManageMemoryRegistersToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ManageMemoryRegistersToolStripMenuItem.Click
             Dim inst As New frmManageMemoryRegisters(m_positionManager)
-
+            MoveNextToMe(inst)
             inst.ShowDialog()
         End Sub
 
@@ -636,6 +639,11 @@ Namespace CamliftController
             Dim menu As New ContextMenuStrip
             BuildLoadMenu(menu.Items)
             menu.Show(btnLoadPos, New Point(0, btnLoadPos.Height))
+        End Sub
+
+        Private Sub MoveNextToMe(ByVal frm As Form)
+            frm.Location = New Point(Me.Left + Me.Width, Me.Top)
+            frm.Size = frm.Size
         End Sub
     End Class
 

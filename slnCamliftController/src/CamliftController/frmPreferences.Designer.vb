@@ -578,7 +578,7 @@
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.CancelButton = Me.btnCancel
-            Me.ClientSize = New System.Drawing.Size(257, 344)
+            Me.ClientSize = New System.Drawing.Size(249, 338)
             Me.ControlBox = False
             Me.Controls.Add(Me.btnOk)
             Me.Controls.Add(Me.btnApply)
@@ -586,10 +586,13 @@
             Me.Controls.Add(Me.btnCancel)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
             Me.MaximizeBox = False
+            Me.MaximumSize = New System.Drawing.Size(255, 366)
             Me.MinimizeBox = False
+            Me.MinimumSize = New System.Drawing.Size(255, 366)
             Me.Name = "frmPreferences"
             Me.ShowIcon = False
             Me.ShowInTaskbar = False
+            Me.StartPosition = System.Windows.Forms.FormStartPosition.Manual
             Me.Text = "Step Settings"
             Me.grpStepSizes.ResumeLayout(False)
             Me.grpStepSizes.PerformLayout()

@@ -6,13 +6,11 @@ Namespace CamliftController
     Public Class frmAdvanced
 
         Private WithEvents m_spmMain As SilverpakManager
-        Private m_parentForm As frmControls
 
-        Public Sub New(ByVal spm As SilverpakManager, ByVal parentForm As frmControls)
+        Public Sub New(ByVal spm As SilverpakManager)
             InitializeComponent() ' This call is required by the Windows Form Designer.
 
             m_spmMain = spm
-            m_parentForm = parentForm
         End Sub
         Private Sub frmAdvanced_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
             txtVelocity.Text = m_spmMain.Velocity
