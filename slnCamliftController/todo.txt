@@ -1,6 +1,5 @@
 Version 2.0.4:
 Andy:
-* 20x stepsize label doesn't work
 * fix folder does not exist in auto run 
 Josh:
 * add "presets" from main controls to auto run step sizes

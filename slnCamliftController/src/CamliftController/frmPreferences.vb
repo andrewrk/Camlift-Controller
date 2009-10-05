@@ -91,7 +91,7 @@
         End Sub
 
         Private Function ApplyChanges() As Boolean
-            For i As Integer = 1 To StepsCount - 1
+            For i As Integer = 0 To StepsCount - 1
                 Dim name As String = Nothing
                 If i < LabeledStepsCount Then
                     Dim txtLabel As TextBox = grpStepSizes.Controls("txtLabel" & i + 1)
