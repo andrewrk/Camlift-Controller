@@ -427,6 +427,34 @@ Namespace CanonCamera.Sdk
             ByVal inStatusCommand As Integer, _
             ByVal inParam As Integer) As Integer
 
+        '/*-----------------------------------------------------------------------------
+        '//
+        '//  Function:   EdsSetCapacity
+        '//
+        '//  Description:
+        '//      Sets the remaining HDD capacity on the host computer
+        '//          (excluding the portion from image transfer),
+        '//          as calculated by subtracting the portion from the previous time. 
+        '//      Set a reset flag initially and designate the cluster length 
+        '//          and number of free clusters.
+        '//      Some type 2 protocol standard cameras can display the number of shots 
+        '//          left on the camera based on the available disk capacity 
+        '//          of the host computer. 
+        '//      For these cameras, after the storage destination is set to the computer, 
+        '//          use this API to notify the camera of the available disk capacity 
+        '//          of the host computer.
+        '//
+        '//  Parameters:
+        '//       In:    inCameraRef - The reference of the camera which will receive the 
+        '//                      command.
+        '//              inCapacity -  The remaining capacity of a transmission place.
+        '//      Out:    None
+        '//
+        '//  Returns:    Any of the sdk errors.
+        '-----------------------------------------------------------------------------*/
+        Public Declare Function EdsSetCapacity Lib "EDSDK" ( _
+            ByVal inCameraRef As IntPtr, _
+            ByRef inCapacity As EdsCapacity) As Integer
 
         '/******************************************************************************
         '*******************************************************************************

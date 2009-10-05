@@ -6,7 +6,6 @@ Imports System.IO
 
 #Const USE_FAKE_CAMERA = False
 
-
 Public Enum CameraState
     Ready
     TooManyCameras
@@ -63,6 +62,10 @@ Public Class Camera
     Private Const ForceJpeg = False
 
     Private m_transferQueue As Queue(Of TransferItem)
+
+    Private Declare Function CoInitializeEx Lib "OLE32" (ByVal pvReserved As IntPtr, ByVal dwCoInit As UInteger) As Integer
+
+
 
     Public Sub New()
         If s_instance Is Nothing Then
@@ -154,6 +157,8 @@ Public Class Camera
             qs.Value = qs.Value And &HFF0FFFFFL Or (EdsImageType.kEdsImageType_Jpeg << 20)
             CheckError(EdsSetPropertyData(m_cam, kEdsPropID_ImageQuality, 0, qs.Size, qs.Value))
         End If
+
+        LieToTheCameraAboutHowMuchSpaceWeHaveOnTheComputer()
 
         m_haveSession = True
     End Sub
@@ -404,9 +409,20 @@ Public Class Camera
         End If
     End Sub
 
+    Private Sub LieToTheCameraAboutHowMuchSpaceWeHaveOnTheComputer()
+        ' tell the camera how much disk space we have left
+        Dim caps As EdsCapacity
+
+        caps.reset = True
+        caps.bytesPerSector = 512
+        caps.numberOfFreeClusters = Marshal.SizeOf(GetType(Integer)) ' arbitrary large number
+        CheckError(EdsSetCapacity(m_cam, caps))
+
+    End Sub
+
     ' internal takepicture function
     Private Function TakePicture(ByVal OutFile As String) As Boolean
-
+        LieToTheCameraAboutHowMuchSpaceWeHaveOnTheComputer()
 
         ' take a picture with the camera and save it to outfile
         Dim err As Integer = EdsSendCommand(m_cam, EdsCameraCommand.kEdsCameraCommand_TakePicture, 0)
@@ -549,6 +565,7 @@ Public Class Camera
     Private Sub UpdateLiveView()
         Dim nowPlusInterval As Long
 
+        CoInitializeEx(0, 2)
         While Not m_stoppingLiveView
             nowPlusInterval = Now.Ticks + LiveViewDelay
             ShowLiveViewFrame()

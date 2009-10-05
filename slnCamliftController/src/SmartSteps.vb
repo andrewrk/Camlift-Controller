@@ -46,7 +46,6 @@ Namespace SmartSteps
         End Sub
 
         Public Sub Abort()
-            m_camera.EndFastPictures()
             If m_runnerThread Is Nothing Then Throw New InvalidOperationException
             m_break = True
         End Sub
@@ -91,16 +90,14 @@ Namespace SmartSteps
 
                 ' sleep for dwell amount
                 Dim startTime = Now
-                m_camera.EndFastPictures()
                 Dim span = (Now - startTime).Milliseconds
                 Thread.Sleep(Math.Max(0, m_dwell - span))
 
 
                 'Take Picture
-                m_camera.BeginFastPictures()
 
                 Try
-                    m_camera.TakeFastPicture(m_allSettings.SettingsIndex.SavePicturesFolder)
+                    m_camera.TakeSinglePicture(m_allSettings.SettingsIndex.SavePicturesFolder)
                 Catch ex As SdkException
                     AbortRun(ex)
                     Exit Sub
