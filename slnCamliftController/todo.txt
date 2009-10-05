@@ -1,6 +1,5 @@
 Version 2.0.4:
 Andy:
-* if you take a picture with live view open and zoomed in, live view doesn't restore zoom
 * handle if live view is open and they click auto run
 * when they pop a window, make it start next to frmControls
 Josh:

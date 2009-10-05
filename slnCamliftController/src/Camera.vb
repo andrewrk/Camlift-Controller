@@ -515,7 +515,12 @@ Public Class Camera
             System.Threading.Thread.Sleep(SleepAmount)
             Application.DoEvents()
 
-            If Not m_waitingToStartLiveView Then Exit Sub 'success 
+            If Not m_waitingToStartLiveView Then
+                'success, restore zoom settings
+                ZoomPosition = New Point(m_zoomPosition.Value.x, m_zoomPosition.Value.y)
+                ZoomRatio = m_zoomRatio.Value
+                Exit Sub
+            End If
         Next i
 
         ' we never got a callback. throw an error
