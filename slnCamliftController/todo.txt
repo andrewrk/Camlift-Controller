@@ -1,6 +1,5 @@
 Version 2.0.4:
 Andy:
-* change auto size to true in auto run settings radio buttons
 * in auto run window, add a "here" button to start and stop position
 * if you take a picture with live view open and zoomed in, live view doesn't restore zoom
 * handle if live view is open and they click auto run

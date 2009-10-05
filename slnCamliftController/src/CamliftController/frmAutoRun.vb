@@ -198,6 +198,7 @@ Namespace SmartSteps
                 rdo.Location = loc
                 loc.Y += vertDelta
                 rdo.Text = name
+                rdo.AutoSize = True
                 AddHandler rdo.CheckedChanged, eventHandler
                 grp.Controls.Add(rdo)
             Next
