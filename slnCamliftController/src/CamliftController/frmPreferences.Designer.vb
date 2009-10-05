@@ -268,7 +268,7 @@
             'lblDefaultSizeLabel
             '
             Me.lblDefaultSizeLabel.AutoSize = True
-            Me.lblDefaultSizeLabel.Location = New System.Drawing.Point(189, 16)
+            Me.lblDefaultSizeLabel.Location = New System.Drawing.Point(189, 15)
             Me.lblDefaultSizeLabel.Name = "lblDefaultSizeLabel"
             Me.lblDefaultSizeLabel.Size = New System.Drawing.Size(41, 13)
             Me.lblDefaultSizeLabel.TabIndex = 3
@@ -277,7 +277,7 @@
             'lblLabelLabel
             '
             Me.lblLabelLabel.AutoSize = True
-            Me.lblLabelLabel.Location = New System.Drawing.Point(25, 16)
+            Me.lblLabelLabel.Location = New System.Drawing.Point(25, 15)
             Me.lblLabelLabel.Name = "lblLabelLabel"
             Me.lblLabelLabel.Size = New System.Drawing.Size(33, 13)
             Me.lblLabelLabel.TabIndex = 0
@@ -384,7 +384,7 @@
             'lblDefaultLabel
             '
             Me.lblDefaultLabel.AutoSize = True
-            Me.lblDefaultLabel.Location = New System.Drawing.Point(78, 16)
+            Me.lblDefaultLabel.Location = New System.Drawing.Point(78, 15)
             Me.lblDefaultLabel.Name = "lblDefaultLabel"
             Me.lblDefaultLabel.Size = New System.Drawing.Size(41, 13)
             Me.lblDefaultLabel.TabIndex = 1
@@ -393,7 +393,7 @@
             'lslSizeLabel
             '
             Me.lslSizeLabel.AutoSize = True
-            Me.lslSizeLabel.Location = New System.Drawing.Point(125, 16)
+            Me.lslSizeLabel.Location = New System.Drawing.Point(125, 15)
             Me.lslSizeLabel.Name = "lslSizeLabel"
             Me.lslSizeLabel.Size = New System.Drawing.Size(27, 13)
             Me.lslSizeLabel.TabIndex = 2
@@ -578,7 +578,7 @@
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.CancelButton = Me.btnCancel
-            Me.ClientSize = New System.Drawing.Size(261, 348)
+            Me.ClientSize = New System.Drawing.Size(257, 344)
             Me.ControlBox = False
             Me.Controls.Add(Me.btnOk)
             Me.Controls.Add(Me.btnApply)
