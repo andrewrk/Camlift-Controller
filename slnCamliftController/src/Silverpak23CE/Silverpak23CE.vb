@@ -379,10 +379,11 @@ Namespace Silverpak23CE
         End Sub
         Private Sub moveToZero()
             'move to zero in preparation for home calibration
-            Dim setPosition = GenerateMessage(m_driverAddress, GenerateCommand(Commands.SetPosition, CInt(m_maxPosition * (m_encoderRatio / 1000))))
-            m_connectionManager_motor.Write(setPosition, 1.0!)
-            Dim zeroPosition = GenerateMessage(m_driverAddress, GenerateCommand(Commands.GoAbsolute, 0))
-            m_connectionManager_motor.Write(zeroPosition, 1.0!)
+            Dim cmd As String = GenerateCommand(Commands.SetPosition, CInt(m_maxPosition * (m_encoderRatio / 1000)))
+            cmd &= GenerateCommand(Commands.SetEncoderRatio, m_encoderRatio)
+            cmd &= GenerateCommand(Commands.GoAbsolute, 0)
+            Dim message = GenerateMessage(m_driverAddress, cmd)
+            m_connectionManager_motor.Write(message, 2.0!)
 
             'Update state
             m_motorState_motor = MotorStates.InitializingCoordinates_moveToZero
