@@ -1,6 +1,5 @@
 Version 2.0.4:
 Andy:
-* handle if live view is open and they click auto run
 * when they pop a window, make it start next to frmControls
 Josh:
 * fix motor bump bug - supercedes limit switch (critical)
