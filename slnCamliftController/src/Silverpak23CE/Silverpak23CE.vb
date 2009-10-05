@@ -611,7 +611,6 @@ Namespace Silverpak23CE
                     callbackAction = New Action(AddressOf stopPositionUpdater) 'shut down updater thread
                     GoTo ExitAndCallback
                 End Try
-                Debug.Print(response)
                 'Serial Port is still active
                 If response IsNot Nothing AndAlso IsNumeric(response) Then
                     'Got a valid response
@@ -625,7 +624,6 @@ Namespace Silverpak23CE
                         Case MotorStates.InitializingCoordinates_moveToZero
                             'wait! sometimes the motor will stop at 5000000 and lie about being at the top (stupid old firmware)
                             If Math.Abs(m_position - 5000000) < 100 Then
-                                Debug.Print("RONG")
                                 moveToZero()
                             Else
                                 m_motorState_motor = MotorStates.InitializingCoordinates_calibrateHome
@@ -953,7 +951,6 @@ ExitAndCallback:
         ''' <param name="delayFactor">How long the the Silverpak23CE is expected to take to process the message, 
         ''' expressed as a multiple of PortDelatUnit, typically in the range 1.0 to 3.0.</param>
         Public Sub Write(ByVal completeMessage As String, ByVal delayFactor As Single)
-            Debug.Print(completeMessage)
             SyncLock m_srlPort_lock
                 'Validate state
                 If Not m_serialPortInterface_srlPort.IsOpen Then Throw New InvalidSilverpakOperationException()
