@@ -1,6 +1,5 @@
 Version 2.0.4:
 Andy:
-* default live view size to 1048x746
 * step settings size label is overlapping the text box
 * change auto size to true in auto run settings radio buttons
 * in auto run window, add a "here" button to start and stop position

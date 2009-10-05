@@ -40,7 +40,7 @@
             'lblZoom
             '
             Me.lblZoom.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-            Me.lblZoom.Location = New System.Drawing.Point(96, 398)
+            Me.lblZoom.Location = New System.Drawing.Point(96, 672)
             Me.lblZoom.Name = "lblZoom"
             Me.lblZoom.Size = New System.Drawing.Size(39, 29)
             Me.lblZoom.TabIndex = 9
@@ -53,7 +53,7 @@
             Me.cboWhiteBalance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cboWhiteBalance.FormattingEnabled = True
             Me.cboWhiteBalance.Items.AddRange(New Object() {"<Coordinate Based>", "Auto", "Daylight", "Cloudy", "Tungsten", "Fluorescent", "Flash", "Shade", "Color Temperature", "Custom White Balance: PC-1", "Custom White Balance: PC-2", "Custom White Balance: PC-3"})
-            Me.cboWhiteBalance.Location = New System.Drawing.Point(268, 403)
+            Me.cboWhiteBalance.Location = New System.Drawing.Point(268, 677)
             Me.cboWhiteBalance.Name = "cboWhiteBalance"
             Me.cboWhiteBalance.Size = New System.Drawing.Size(121, 21)
             Me.cboWhiteBalance.TabIndex = 4
@@ -62,7 +62,7 @@
             '
             Me.btnClose.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.btnClose.Location = New System.Drawing.Point(508, 402)
+            Me.btnClose.Location = New System.Drawing.Point(949, 676)
             Me.btnClose.Name = "btnClose"
             Me.btnClose.Size = New System.Drawing.Size(75, 23)
             Me.btnClose.TabIndex = 5
@@ -73,7 +73,7 @@
             '
             Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.Label1.AutoSize = True
-            Me.Label1.Location = New System.Drawing.Point(182, 407)
+            Me.Label1.Location = New System.Drawing.Point(182, 681)
             Me.Label1.Name = "Label1"
             Me.Label1.Size = New System.Drawing.Size(80, 13)
             Me.Label1.TabIndex = 11
@@ -83,7 +83,7 @@
             '
             Me.chkGrid.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.chkGrid.AutoSize = True
-            Me.chkGrid.Location = New System.Drawing.Point(3, 405)
+            Me.chkGrid.Location = New System.Drawing.Point(3, 679)
             Me.chkGrid.Name = "chkGrid"
             Me.chkGrid.Size = New System.Drawing.Size(45, 17)
             Me.chkGrid.TabIndex = 12
@@ -94,7 +94,7 @@
             '
             Me.btnRotateCW.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.btnRotateCW.Image = Global.VisionaryDigital.My.Resources.Resources.rotate_cw
-            Me.btnRotateCW.Location = New System.Drawing.Point(420, 402)
+            Me.btnRotateCW.Location = New System.Drawing.Point(420, 676)
             Me.btnRotateCW.Name = "btnRotateCW"
             Me.btnRotateCW.Size = New System.Drawing.Size(27, 23)
             Me.btnRotateCW.TabIndex = 14
@@ -105,7 +105,7 @@
             '
             Me.btnRotateCCW.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.btnRotateCCW.Image = Global.VisionaryDigital.My.Resources.Resources.rotate_ccw
-            Me.btnRotateCCW.Location = New System.Drawing.Point(453, 402)
+            Me.btnRotateCCW.Location = New System.Drawing.Point(453, 676)
             Me.btnRotateCCW.Name = "btnRotateCCW"
             Me.btnRotateCCW.Size = New System.Drawing.Size(27, 23)
             Me.btnRotateCCW.TabIndex = 14
@@ -116,7 +116,7 @@
             '
             Me.btnZoomIn.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.btnZoomIn.Image = Global.VisionaryDigital.My.Resources.Resources.ZoomInHS
-            Me.btnZoomIn.Location = New System.Drawing.Point(66, 402)
+            Me.btnZoomIn.Location = New System.Drawing.Point(66, 676)
             Me.btnZoomIn.Name = "btnZoomIn"
             Me.btnZoomIn.Size = New System.Drawing.Size(29, 23)
             Me.btnZoomIn.TabIndex = 10
@@ -127,7 +127,7 @@
             '
             Me.btnZoomOut.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
             Me.btnZoomOut.Image = Global.VisionaryDigital.My.Resources.Resources.ZoomOutHS
-            Me.btnZoomOut.Location = New System.Drawing.Point(132, 401)
+            Me.btnZoomOut.Location = New System.Drawing.Point(132, 675)
             Me.btnZoomOut.Name = "btnZoomOut"
             Me.btnZoomOut.Size = New System.Drawing.Size(27, 23)
             Me.btnZoomOut.TabIndex = 7
@@ -142,7 +142,7 @@
             Me.picLiveView.Cursor = System.Windows.Forms.Cursors.SizeAll
             Me.picLiveView.Location = New System.Drawing.Point(3, 3)
             Me.picLiveView.Name = "picLiveView"
-            Me.picLiveView.Size = New System.Drawing.Size(580, 393)
+            Me.picLiveView.Size = New System.Drawing.Size(1021, 667)
             Me.picLiveView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
             Me.picLiveView.TabIndex = 8
             Me.picLiveView.TabStop = False
@@ -151,7 +151,7 @@
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(591, 434)
+            Me.ClientSize = New System.Drawing.Size(1032, 708)
             Me.Controls.Add(Me.btnZoomOut)
             Me.Controls.Add(Me.btnRotateCW)
             Me.Controls.Add(Me.btnRotateCCW)
