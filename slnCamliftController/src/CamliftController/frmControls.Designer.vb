@@ -199,7 +199,7 @@
             Me.grpDist.Size = New System.Drawing.Size(124, 204)
             Me.grpDist.TabIndex = 4
             Me.grpDist.TabStop = False
-            Me.grpDist.Text = "Distance"
+            Me.grpDist.Text = "Step size:"
             '
             'lblCurrentDist
             '

@@ -1,6 +1,5 @@
 Version 2.0.4:
 Andy:
-* change "distance" to "step sizes". add the "step sizes"
 * add "presets" from main controls to auto run step sizes
   - make sure slice overlap works for this option
 * handle if live view is open and they click auto run
