@@ -95,16 +95,23 @@ Namespace SmartSteps
 
 
                 'Take Picture
-
-                Try
-                    m_camera.TakeSinglePicture(m_allSettings.SettingsIndex.SavePicturesFolder)
-                Catch ex As SdkException
-                    AbortRun(ex)
-                    Exit Sub
-                Catch ex As Exception
-                    AbortRun(Nothing)
-                    Exit Sub
-                End Try
+                Dim TryAgain As Boolean = True
+                While TryAgain
+                    TryAgain = False
+                    Try
+                        m_camera.TakeSinglePicture(m_allSettings.SettingsIndex.SavePicturesFolder)
+                    Catch ex As DirectoryDoesNotExistException
+                        m_allSettings.SettingsIndex.SavePicturesFolder = My.Computer.FileSystem.SpecialDirectories.MyPictures
+                        MsgBox("Note: Your Save Pictures To folder is missing. Defaulting to " & m_allSettings.SettingsIndex.SavePicturesFolder & ". You can change this in Settings.", MsgBoxStyle.Information, MsgBoxTitle)
+                        TryAgain = True
+                    Catch ex As SdkException
+                        AbortRun(ex)
+                        Exit Sub
+                    Catch ex As Exception
+                        AbortRun(Nothing)
+                        Exit Sub
+                    End Try
+                End While
 
                 ' check for abort
                 Application.DoEvents()
