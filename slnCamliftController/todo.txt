@@ -1,20 +1,19 @@
 Version 2.0.4:
 Andy:
-* add "presets" from main controls to auto run step sizes
-  - make sure slice overlap works for this option
-* handle if live view is open and they click auto run
-* if you take a picture with live view open and zoomed in, live view doesn't restore zoom
-* the dialog for closing the form should say "Move camera back to top?" instead of "motor."
 * default live view size to 1048x746
-Josh:
-* fix motor bump bug - supercedes limit switch (critical)
-* when they pop a window, make it start next to frmControls
-* 20x stepsize label doesn't work
-* savable step size profiles
 * step settings size label is overlapping the text box
 * change auto size to true in auto run settings radio buttons
-* change order in auto run to 1. calculate 2. presets 3. manual
 * in auto run window, add a "here" button to start and stop position
+* if you take a picture with live view open and zoomed in, live view doesn't restore zoom
+* handle if live view is open and they click auto run
+* when they pop a window, make it start next to frmControls
+Josh:
+* fix motor bump bug - supercedes limit switch (critical)
+* add "presets" from main controls to auto run step sizes
+  - change order in auto run to 1. calculate 2. presets 3. manual
+  - make sure slice overlap works for presets
+* 20x stepsize label doesn't work
+* savable step size profiles
 
 Version 2.1.0:
 
