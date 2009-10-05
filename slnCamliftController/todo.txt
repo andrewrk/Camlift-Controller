@@ -1,11 +1,11 @@
 Version 2.0.4:
 Andy:
-* need menu shortcut to manage memory registers
+* 20x stepsize label doesn't work
+* fix folder does not exist in auto run 
 Josh:
 * add "presets" from main controls to auto run step sizes
   - change order in auto run to 1. calculate 2. presets 3. manual
   - make sure slice overlap works for presets
-* 20x stepsize label doesn't work
 * savable step size profiles
 
 Version 2.1.0:
