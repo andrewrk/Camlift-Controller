@@ -19,9 +19,12 @@ Namespace SmartSteps
         Private m_selectedMag As KeyValuePair(Of String, MagSettings) = Nothing
         Private m_selectedIris As KeyValuePair(Of String, Integer) = Nothing
 
-        Public Sub New(ByVal smartStepsManager As SmartStepsManager, ByVal positionManager As PositionManager, ByVal objectiveList As ObjectiveListSettings)
+        Private m_controlForm As frmControls
+
+        Public Sub New(ByVal smartStepsManager As SmartStepsManager, ByVal positionManager As PositionManager, ByVal objectiveList As ObjectiveListSettings, ByVal controlForm As frmControls)
             InitializeComponent() ' This call is required by the Windows Form Designer.
 
+            m_controlForm = controlForm
             m_smartStepsManager = smartStepsManager
             m_positionManager = positionManager
 
@@ -407,6 +410,14 @@ Namespace SmartSteps
 
             Dim cms = m_positionManager.MakeStoreMenu(value)
             cms.Show(btnStartSave, btnStartSave.Width, 0)
+        End Sub
+
+        Private Sub btnStartHere_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStartHere.Click
+            txtStart.Text = m_controlForm.txtPos.Text
+        End Sub
+
+        Private Sub btnStopHere_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStopHere.Click
+            txtStopPosition.Text = m_controlForm.txtPos.Text
         End Sub
     End Class
 End Namespace

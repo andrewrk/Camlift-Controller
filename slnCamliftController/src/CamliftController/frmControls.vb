@@ -193,7 +193,7 @@ Namespace CamliftController
         End Sub
 
         Private Sub btnAutorun_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAutorun.Click
-            Using frm As New frmAutoRun(m_smartStepsManager, m_positionManager, m_allSettings.Objectives)
+            Using frm As New frmAutoRun(m_smartStepsManager, m_positionManager, m_allSettings.Objectives, Me)
                 If frm.ShowDialog(Me) = DialogResult.OK Then
                     m_autorunStepper = frm.Tag
                     m_autorunMode = enuAutorunMode.Running

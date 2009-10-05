@@ -31,6 +31,8 @@
             Me.rdoStopPosition = New System.Windows.Forms.RadioButton
             Me.txtStepSize = New System.Windows.Forms.TextBox
             Me.grpRun = New System.Windows.Forms.GroupBox
+            Me.btnStopSave = New System.Windows.Forms.Button
+            Me.btnStartSave = New System.Windows.Forms.Button
             Me.txtSlices = New System.Windows.Forms.TextBox
             Me.txtStopPosition = New System.Windows.Forms.TextBox
             Me.btnStopPositionLoad = New System.Windows.Forms.Button
@@ -66,8 +68,8 @@
             Me.chkReturnToTop = New System.Windows.Forms.CheckBox
             Me.btnCancel = New System.Windows.Forms.Button
             Me.btnStart = New System.Windows.Forms.Button
-            Me.btnStartSave = New System.Windows.Forms.Button
-            Me.btnStopSave = New System.Windows.Forms.Button
+            Me.btnStartHere = New System.Windows.Forms.Button
+            Me.btnStopHere = New System.Windows.Forms.Button
             Me.grpRun.SuspendLayout()
             Me.grpSetup.SuspendLayout()
             Me.grpIris.SuspendLayout()
@@ -136,6 +138,8 @@
             'grpRun
             '
             Me.grpRun.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.grpRun.Controls.Add(Me.btnStopHere)
+            Me.grpRun.Controls.Add(Me.btnStartHere)
             Me.grpRun.Controls.Add(Me.btnStopSave)
             Me.grpRun.Controls.Add(Me.btnStartSave)
             Me.grpRun.Controls.Add(Me.rdoSlices)
@@ -148,10 +152,28 @@
             Me.grpRun.Controls.Add(Me.lblStart)
             Me.grpRun.Location = New System.Drawing.Point(13, 13)
             Me.grpRun.Name = "grpRun"
-            Me.grpRun.Size = New System.Drawing.Size(313, 103)
+            Me.grpRun.Size = New System.Drawing.Size(370, 103)
             Me.grpRun.TabIndex = 0
             Me.grpRun.TabStop = False
             Me.grpRun.Text = "Run"
+            '
+            'btnStopSave
+            '
+            Me.btnStopSave.Location = New System.Drawing.Point(264, 45)
+            Me.btnStopSave.Name = "btnStopSave"
+            Me.btnStopSave.Size = New System.Drawing.Size(43, 23)
+            Me.btnStopSave.TabIndex = 8
+            Me.btnStopSave.Text = "Save"
+            Me.btnStopSave.UseVisualStyleBackColor = True
+            '
+            'btnStartSave
+            '
+            Me.btnStartSave.Location = New System.Drawing.Point(264, 17)
+            Me.btnStartSave.Name = "btnStartSave"
+            Me.btnStartSave.Size = New System.Drawing.Size(43, 23)
+            Me.btnStartSave.TabIndex = 8
+            Me.btnStartSave.Text = "Save"
+            Me.btnStartSave.UseVisualStyleBackColor = True
             '
             'txtSlices
             '
@@ -212,7 +234,7 @@
             Me.grpSetup.Controls.Add(Me.txtStepSize)
             Me.grpSetup.Location = New System.Drawing.Point(13, 122)
             Me.grpSetup.Name = "grpSetup"
-            Me.grpSetup.Size = New System.Drawing.Size(313, 351)
+            Me.grpSetup.Size = New System.Drawing.Size(370, 351)
             Me.grpSetup.TabIndex = 1
             Me.grpSetup.TabStop = False
             Me.grpSetup.Text = "Setup"
@@ -224,9 +246,9 @@
             Me.grpIris.Controls.Add(Me.RadioButton13)
             Me.grpIris.Controls.Add(Me.RadioButton14)
             Me.grpIris.Controls.Add(Me.RadioButton15)
-            Me.grpIris.Location = New System.Drawing.Point(212, 66)
+            Me.grpIris.Location = New System.Drawing.Point(246, 66)
             Me.grpIris.Name = "grpIris"
-            Me.grpIris.Size = New System.Drawing.Size(95, 179)
+            Me.grpIris.Size = New System.Drawing.Size(107, 179)
             Me.grpIris.TabIndex = 5
             Me.grpIris.TabStop = False
             Me.grpIris.Text = "&Iris"
@@ -293,9 +315,9 @@
             Me.grpMag.Controls.Add(Me.RadioButton8)
             Me.grpMag.Controls.Add(Me.RadioButton9)
             Me.grpMag.Controls.Add(Me.RadioButton10)
-            Me.grpMag.Location = New System.Drawing.Point(114, 66)
+            Me.grpMag.Location = New System.Drawing.Point(131, 66)
             Me.grpMag.Name = "grpMag"
-            Me.grpMag.Size = New System.Drawing.Size(91, 179)
+            Me.grpMag.Size = New System.Drawing.Size(109, 179)
             Me.grpMag.TabIndex = 4
             Me.grpMag.TabStop = False
             Me.grpMag.Text = "Ma&g:"
@@ -366,7 +388,7 @@
             Me.grpObjective.Controls.Add(Me.RadioButton1)
             Me.grpObjective.Location = New System.Drawing.Point(6, 66)
             Me.grpObjective.Name = "grpObjective"
-            Me.grpObjective.Size = New System.Drawing.Size(102, 179)
+            Me.grpObjective.Size = New System.Drawing.Size(119, 179)
             Me.grpObjective.TabIndex = 3
             Me.grpObjective.TabStop = False
             Me.grpObjective.Text = "O&bjective:"
@@ -519,8 +541,9 @@
             '
             'btnCancel
             '
+            Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.btnCancel.Location = New System.Drawing.Point(265, 502)
+            Me.btnCancel.Location = New System.Drawing.Point(329, 502)
             Me.btnCancel.Name = "btnCancel"
             Me.btnCancel.Size = New System.Drawing.Size(75, 23)
             Me.btnCancel.TabIndex = 4
@@ -529,30 +552,31 @@
             '
             'btnStart
             '
-            Me.btnStart.Location = New System.Drawing.Point(184, 502)
+            Me.btnStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.btnStart.Location = New System.Drawing.Point(248, 502)
             Me.btnStart.Name = "btnStart"
             Me.btnStart.Size = New System.Drawing.Size(75, 23)
             Me.btnStart.TabIndex = 3
             Me.btnStart.Text = "Star&t"
             Me.btnStart.UseVisualStyleBackColor = True
             '
-            'btnStartSave
+            'btnStartHere
             '
-            Me.btnStartSave.Location = New System.Drawing.Point(264, 17)
-            Me.btnStartSave.Name = "btnStartSave"
-            Me.btnStartSave.Size = New System.Drawing.Size(43, 23)
-            Me.btnStartSave.TabIndex = 8
-            Me.btnStartSave.Text = "Save"
-            Me.btnStartSave.UseVisualStyleBackColor = True
+            Me.btnStartHere.Location = New System.Drawing.Point(313, 17)
+            Me.btnStartHere.Name = "btnStartHere"
+            Me.btnStartHere.Size = New System.Drawing.Size(40, 23)
+            Me.btnStartHere.TabIndex = 9
+            Me.btnStartHere.Text = "Here"
+            Me.btnStartHere.UseVisualStyleBackColor = True
             '
-            'btnStopSave
+            'btnStopHere
             '
-            Me.btnStopSave.Location = New System.Drawing.Point(264, 45)
-            Me.btnStopSave.Name = "btnStopSave"
-            Me.btnStopSave.Size = New System.Drawing.Size(43, 23)
-            Me.btnStopSave.TabIndex = 8
-            Me.btnStopSave.Text = "Save"
-            Me.btnStopSave.UseVisualStyleBackColor = True
+            Me.btnStopHere.Location = New System.Drawing.Point(313, 45)
+            Me.btnStopHere.Name = "btnStopHere"
+            Me.btnStopHere.Size = New System.Drawing.Size(40, 23)
+            Me.btnStopHere.TabIndex = 9
+            Me.btnStopHere.Text = "Here"
+            Me.btnStopHere.UseVisualStyleBackColor = True
             '
             'frmAutoRun
             '
@@ -562,7 +586,7 @@
             Me.AutoSize = True
             Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.CancelButton = Me.btnCancel
-            Me.ClientSize = New System.Drawing.Size(353, 538)
+            Me.ClientSize = New System.Drawing.Size(417, 538)
             Me.Controls.Add(Me.btnStart)
             Me.Controls.Add(Me.chkReturnToTop)
             Me.Controls.Add(Me.btnCancel)
@@ -635,6 +659,8 @@
         Friend WithEvents RadioButton17 As System.Windows.Forms.RadioButton
         Friend WithEvents btnStopSave As System.Windows.Forms.Button
         Friend WithEvents btnStartSave As System.Windows.Forms.Button
+        Friend WithEvents btnStopHere As System.Windows.Forms.Button
+        Friend WithEvents btnStartHere As System.Windows.Forms.Button
     End Class
 
 End Namespace
