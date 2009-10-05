@@ -333,7 +333,8 @@ Namespace Silverpak23CE
             SyncLock m_motor_lock
                 'Validate state
                 If m_motorState_motor = MotorStates.Disconnected Then Throw New InvalidSilverpakOperationException("Connection is not active.")
-                If m_motorState_motor = MotorStates.InitializingCoordinates Or _
+                If m_motorState_motor = MotorStates.InitializingCoordinates_moveToZero Or _
+                   m_motorState_motor = MotorStates.InitializingCoordinates_calibrateHome Or _
                    m_motorState_motor = MotorStates.Moving Then Throw New InvalidSilverpakOperationException("Cannot resend motor settings while the motor is moving.")
 
                 'Send settings command
@@ -371,14 +372,20 @@ Namespace Silverpak23CE
                 'Validate state
                 If m_motorState_motor <> MotorStates.InitializedSmoothMotion Then Throw New InvalidSilverpakOperationException("Initialization methods must be called in the proper order.")
 
-                'Send the homing message
-                Dim initCoordMessage As String = GenerateMessage(m_driverAddress, GenerateCommand(Commands.GoHome, CInt(m_maxPosition * (m_encoderRatio / 1000))))
-                m_connectionManager_motor.Write(initCoordMessage, 1.0!)
-                'Update state
-                m_motorState_motor = MotorStates.InitializingCoordinates
+                moveToZero()
             End SyncLock
             'Now that the motor is moving, begin listening for position changes
             startPositionUpdater()
+        End Sub
+        Private Sub moveToZero()
+            'move to zero in preparation for home calibration
+            Dim setPosition = GenerateMessage(m_driverAddress, GenerateCommand(Commands.SetPosition, CInt(m_maxPosition * (m_encoderRatio / 1000))))
+            m_connectionManager_motor.Write(setPosition, 1.0!)
+            Dim zeroPosition = GenerateMessage(m_driverAddress, GenerateCommand(Commands.GoAbsolute, 0))
+            m_connectionManager_motor.Write(zeroPosition, 1.0!)
+
+            'Update state
+            m_motorState_motor = MotorStates.InitializingCoordinates_moveToZero
         End Sub
 
         '''<summary>Sends the motor either to position 0 or to the position specified by the MaxPosition property.
@@ -398,7 +405,10 @@ Namespace Silverpak23CE
                 Static s_stopMessage As String = GenerateMessage(m_driverAddress, GenerateCommand(Commands.TerminateCommand))
                 m_connectionManager_motor.Write(s_stopMessage, 1.0!)
                 'Update state if applicable
-                If m_motorState_motor = MotorStates.InitializingCoordinates Then m_motorState_motor = MotorStates.AbortingCoordinateInitialization
+                If m_motorState_motor = MotorStates.InitializingCoordinates_moveToZero Or _
+                   m_motorState_motor = MotorStates.InitializingCoordinates_calibrateHome Then
+                    m_motorState_motor = MotorStates.AbortingCoordinateInitialization
+                End If
             End SyncLock
         End Sub
 
@@ -407,8 +417,9 @@ Namespace Silverpak23CE
         Public Overridable Sub GoToPosition(ByVal position As Integer)
             SyncLock m_motor_lock
                 'Validate state
-                If Not (m_motorState_motor = MotorStates.Ready Or m_motorState_motor = MotorStates.Moving) Then _
-                        Throw New InvalidSilverpakOperationException("Motor is not fully initialized")
+                If Not (m_motorState_motor = MotorStates.Ready Or m_motorState_motor = MotorStates.Moving) Then
+                    Throw New InvalidSilverpakOperationException("Motor is not fully initialized")
+                End If
 
                 'Send absolute motion command
                 m_connectionManager_motor.Write(GenerateMessage(m_driverAddress, GenerateCommand(Commands.GoAbsolute, position)), 1.0!)
@@ -423,8 +434,11 @@ Namespace Silverpak23CE
             SyncLock m_motor_lock
                 'Validate state
                 If m_motorState_motor = MotorStates.Disconnected Then Throw New InvalidSilverpakOperationException("Connection is not active.")
-                If m_motorState_motor = MotorStates.InitializingCoordinates Or _
-                   m_motorState_motor = MotorStates.Moving Then Throw New InvalidSilverpakOperationException("Disconnecting while the motor is moving is not allowed.")
+                If m_motorState_motor = MotorStates.InitializingCoordinates_moveToZero Or _
+                   m_motorState_motor = MotorStates.InitializingCoordinates_calibrateHome Or _
+                   m_motorState_motor = MotorStates.Moving Then
+                    Throw New InvalidSilverpakOperationException("Disconnecting while the motor is moving is not allowed.")
+                End If
 
                 'Disconnect
                 m_connectionManager_motor.Disconnect()
@@ -583,18 +597,20 @@ Namespace Silverpak23CE
         End Sub
         ''' <summary>Updates the Position property by querying the position of the motor.</summary>
         Private Sub updatePosition()
-            Static s_getPositionCmd As String = GenerateCommand(Commands.QueryMotorPosition)
-            Dim getPositionMessage As String = GenerateMessage(m_driverAddress, s_getPositionCmd)
-            Dim newPosition As Integer = Integer.MinValue 'make sure we know whether it's been set by starting it at an unlikely value
             Dim callbackAction As Action = Nothing 'store a function to call after the SyncLock has been released
             SyncLock m_motor_lock
+                Static s_getPositionCmd As String = GenerateCommand(Commands.QueryMotorPosition)
+                Dim getPositionMessage As String = GenerateMessage(m_driverAddress, s_getPositionCmd)
+                Dim newPosition As Integer = Integer.MinValue 'make sure we know whether it's been set by starting it at an unlikely value
                 Dim response As String
+                Static s_homeCalibrationSteps As Integer
                 Try
                     response = m_connectionManager_motor.WriteAndGetResponse(getPositionMessage, 1.0!)
                 Catch ex As InvalidSilverpakOperationException 'the SilverpakManager's been disconnected
                     callbackAction = New Action(AddressOf stopPositionUpdater) 'shut down updater thread
                     GoTo ExitAndCallback
                 End Try
+                Debug.Print(response)
                 'Serial Port is still active
                 If response IsNot Nothing AndAlso IsNumeric(response) Then
                     'Got a valid response
@@ -605,7 +621,19 @@ Namespace Silverpak23CE
                     'motor stopped moving
                     s_failCount = 0
                     Select Case m_motorState_motor
-                        Case MotorStates.InitializingCoordinates
+                        Case MotorStates.InitializingCoordinates_moveToZero
+                            'wait! sometimes the motor will stop at 5000000 and lie about being at the top (stupid old firmware)
+                            If Math.Abs(m_position - 5000000) < 100 Then
+                                Debug.Print("RONG")
+                                moveToZero()
+                            Else
+                                m_motorState_motor = MotorStates.InitializingCoordinates_calibrateHome
+                                'Send the homing message
+                                Dim initCoordMessage As String = GenerateMessage(m_driverAddress, GenerateCommand(Commands.GoHome, CInt(m_maxPosition * (m_encoderRatio / 1000))))
+                                m_connectionManager_motor.Write(initCoordMessage, 1.0!)
+                                s_homeCalibrationSteps = 0
+                            End If
+                        Case MotorStates.InitializingCoordinates_calibrateHome
                             m_motorState_motor = MotorStates.Ready
                             callbackAction = New Action(AddressOf OnCoordinatesInitialized)
                         Case MotorStates.AbortingCoordinateInitialization
@@ -620,19 +648,33 @@ Namespace Silverpak23CE
                     s_failCount = 0
                     m_position = newPosition
                     callbackAction = New Action(AddressOf OnPositionChanged)
-                Else
-                    'failed to get a valid position
-                    s_failCount += 1
-                    If s_failCount >= 5 Then
-                        'failed 5 times in a row. Silverpak23CE must no longer be available.
-                        s_failCount = 0
-                        'disconnect
-                        m_motorState_motor = MotorStates.Disconnected
-                        m_connectionManager_motor.Disconnect()
-                        'raise LostConnection event
-                        callbackAction = New Action(AddressOf OnConnectionLost)
+                    'make sure the home calibration isn't sneaking away
+                    If m_motorState_motor = MotorStates.InitializingCoordinates_calibrateHome Then
+                        s_homeCalibrationSteps += 1
+                        If s_homeCalibrationSteps > 5 Then
+                            'Calling shenanigans on initialization
+                            'stop the motor damnit
+                            For i = 0 To 3 - 1
+                                Static s_stopMessage As String = GenerateMessage(m_driverAddress, GenerateCommand(Commands.TerminateCommand))
+                                m_connectionManager_motor.Write(s_stopMessage, 1.0!)
+                            Next
+                            MsgBox("Motor shenanigans detected! This is a quirk resulting from using outdated motor firmware." & vbCrLf & "Please restart the program.", MsgBoxStyle.Critical, MsgBoxTitle)
+                            End ' crash program
+                        End If
                     End If
-                End If
+                    Else
+                        'failed to get a valid position
+                        s_failCount += 1
+                        If s_failCount >= 5 Then
+                            'failed 5 times in a row. Silverpak23CE must no longer be available.
+                            s_failCount = 0
+                            'disconnect
+                            m_motorState_motor = MotorStates.Disconnected
+                            m_connectionManager_motor.Disconnect()
+                            'raise LostConnection event
+                            callbackAction = New Action(AddressOf OnConnectionLost)
+                        End If
+                    End If
             End SyncLock
 ExitAndCallback:
             'invoke callback sub if any
@@ -910,6 +952,7 @@ ExitAndCallback:
         ''' <param name="delayFactor">How long the the Silverpak23CE is expected to take to process the message, 
         ''' expressed as a multiple of PortDelatUnit, typically in the range 1.0 to 3.0.</param>
         Public Sub Write(ByVal completeMessage As String, ByVal delayFactor As Single)
+            Debug.Print(completeMessage)
             SyncLock m_srlPort_lock
                 'Validate state
                 If Not m_serialPortInterface_srlPort.IsOpen Then Throw New InvalidSilverpakOperationException()
@@ -1423,21 +1466,23 @@ ExitAndCallback:
     '''<summary>States for the motor</summary>
     Friend Enum MotorStates
         ''' <summary>Serial Port is closed.</summary>
-        Disconnected = 0
+        Disconnected
         ''' <summary>Serial Port is just open.</summary>
-        Connected = 10
+        Connected
         ''' <summary>Motor settings have been written to the Silverpak23CE.</summary>
-        InitializedSettings = 20
+        InitializedSettings
         ''' <summary>Small movements have been issued to the Silverpak23CE to clear initialization quirks.</summary>
-        InitializedSmoothMotion = 30
-        ''' <summary>In the process of moving to the home position.</summary>
-        InitializingCoordinates = 35
+        InitializedSmoothMotion
+        ''' <summary>In the process of moving to the zero position.</summary>
+        InitializingCoordinates_moveToZero
+        ''' <summary>The "official" homing command. should complete very quickly.</summary>
+        InitializingCoordinates_calibrateHome
         ''' <summary>In the process of aborting coordinate initialization.</summary>
-        AbortingCoordinateInitialization = 37
+        AbortingCoordinateInitialization
         ''' <summary>Fully initialized and stopped.</summary>
-        Ready = 100
+        Ready
         ''' <summary>In the process of moving.</summary>
-        Moving = 105
+        Moving
     End Enum
 
 End Namespace
