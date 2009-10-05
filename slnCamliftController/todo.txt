@@ -1,25 +1,24 @@
 Version 2.0.4:
 Andy:
+* get 5D working (critical)
+* always take landscape (critical)
 * if directory does not exist when take picture, set to default and pop dialog telling the user
-* step settings size label is overlapping the text box
-* change "distance" to "step sizes". add the "step sizes" 
-* change auto size to true in auto run settings radio buttons
+* change "distance" to "step sizes". add the "step sizes"
 * add "presets" from main controls to auto run step sizes
   - make sure slice overlap works for this option
-* change order in auto run to 1. calculate 2. presets 3. manual
 * handle if live view is open and they click auto run
 * if you take a picture with live view open and zoomed in, live view doesn't restore zoom
 * the dialog for closing the form should say "Move camera back to top?" instead of "motor."
 * default live view size to 1048x746
-* in auto run window, add a "here" button to start and stop position
 Josh:
+* fix motor bump bug - supercedes limit switch (critical)
 * when they pop a window, make it start next to frmControls
 * 20x stepsize label doesn't work
 * savable step size profiles
-Unassigned:
-* fix motor bump bug - supercedes limit switch (critical)
-* always take landscape (critical)
-* get 5D working (critical)
+* step settings size label is overlapping the text box
+* change auto size to true in auto run settings radio buttons
+* change order in auto run to 1. calculate 2. presets 3. manual
+* in auto run window, add a "here" button to start and stop position
 
 Version 2.1.0:
 
