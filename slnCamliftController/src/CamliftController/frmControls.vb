@@ -214,6 +214,10 @@ Namespace CamliftController
                     MsgBox("Autofocus failed!" & vbCrLf & vbCrLf & "NOTE: This software is intended to be used with the camera in manual focus mode", MsgBoxStyle.Exclamation)
                 Catch ex As CameraIsBusyException
                     ' do nothing
+                Catch ex As DirectoryDoesNotExistException
+                    m_allSettings.SettingsIndex.SavePicturesFolder = My.Computer.FileSystem.SpecialDirectories.MyPictures
+                    MsgBox("Note: Your Save Pictures To folder is missing. Defaulting to " & m_allSettings.SettingsIndex.SavePicturesFolder & ". You can change this in Settings.", MsgBoxStyle.Information, MsgBoxTitle)
+                    TryAgain = True
                 Catch ex As Exception
                     TryAgain = HandleCameraException(ex)
                 End Try
