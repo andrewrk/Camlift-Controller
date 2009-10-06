@@ -196,7 +196,7 @@ Namespace CamliftController
 
         Private Sub btnAutorun_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnAutorun.Click
             If m_frmLiveView IsNot Nothing Then m_frmLiveView.Close()
-            Using frm As New frmAutoRun(m_smartStepsManager, m_positionManager, m_allSettings.Objectives, Me)
+            Using frm As New frmAutoRun(m_smartStepsManager, m_positionManager, m_allSettings.Objectives, Me, m_allSettings)
                 MoveNextToMe(frm)
                 If frm.ShowDialog(Me) = DialogResult.OK Then
                     m_autorunStepper = frm.Tag

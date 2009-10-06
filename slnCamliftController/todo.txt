@@ -1,9 +1,6 @@
 Version 2.0.4:
 Andy:
 Josh:
-* add "presets" from main controls to auto run step sizes
-  - change order in auto run to 1. calculate 2. presets 3. manual
-  - make sure slice overlap works for presets
 * savable step size profiles
 
 Version 2.1.0:

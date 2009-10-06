@@ -41,6 +41,8 @@
             Me.txtDwell = New System.Windows.Forms.TextBox
             Me.lblDwell = New System.Windows.Forms.Label
             Me.grpSetup = New System.Windows.Forms.GroupBox
+            Me.cboPreset = New System.Windows.Forms.ComboBox
+            Me.rdoStepSizePreset = New System.Windows.Forms.RadioButton
             Me.grpIris = New System.Windows.Forms.GroupBox
             Me.RadioButton11 = New System.Windows.Forms.RadioButton
             Me.RadioButton12 = New System.Windows.Forms.RadioButton
@@ -130,7 +132,7 @@
             '
             'txtStepSize
             '
-            Me.txtStepSize.Location = New System.Drawing.Point(131, 19)
+            Me.txtStepSize.Location = New System.Drawing.Point(134, 277)
             Me.txtStepSize.Name = "txtStepSize"
             Me.txtStepSize.Size = New System.Drawing.Size(79, 20)
             Me.txtStepSize.TabIndex = 1
@@ -220,7 +222,7 @@
             '
             'txtDwell
             '
-            Me.txtDwell.Location = New System.Drawing.Point(131, 296)
+            Me.txtDwell.Location = New System.Drawing.Point(134, 339)
             Me.txtDwell.Name = "txtDwell"
             Me.txtDwell.Size = New System.Drawing.Size(79, 20)
             Me.txtDwell.TabIndex = 9
@@ -228,7 +230,7 @@
             'lblDwell
             '
             Me.lblDwell.AutoSize = True
-            Me.lblDwell.Location = New System.Drawing.Point(6, 299)
+            Me.lblDwell.Location = New System.Drawing.Point(9, 342)
             Me.lblDwell.Name = "lblDwell"
             Me.lblDwell.Size = New System.Drawing.Size(58, 13)
             Me.lblDwell.TabIndex = 8
@@ -238,6 +240,8 @@
             'grpSetup
             '
             Me.grpSetup.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.grpSetup.Controls.Add(Me.cboPreset)
+            Me.grpSetup.Controls.Add(Me.rdoStepSizePreset)
             Me.grpSetup.Controls.Add(Me.grpIris)
             Me.grpSetup.Controls.Add(Me.grpMag)
             Me.grpSetup.Controls.Add(Me.grpObjective)
@@ -252,10 +256,30 @@
             Me.grpSetup.Controls.Add(Me.txtStepSize)
             Me.grpSetup.Location = New System.Drawing.Point(13, 122)
             Me.grpSetup.Name = "grpSetup"
-            Me.grpSetup.Size = New System.Drawing.Size(370, 351)
+            Me.grpSetup.Size = New System.Drawing.Size(370, 401)
             Me.grpSetup.TabIndex = 1
             Me.grpSetup.TabStop = False
             Me.grpSetup.Text = "Setup"
+            '
+            'cboPreset
+            '
+            Me.cboPreset.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+            Me.cboPreset.FormattingEnabled = True
+            Me.cboPreset.Location = New System.Drawing.Point(73, 236)
+            Me.cboPreset.Name = "cboPreset"
+            Me.cboPreset.Size = New System.Drawing.Size(121, 21)
+            Me.cboPreset.TabIndex = 13
+            '
+            'rdoStepSizePreset
+            '
+            Me.rdoStepSizePreset.AutoSize = True
+            Me.rdoStepSizePreset.Location = New System.Drawing.Point(9, 237)
+            Me.rdoStepSizePreset.Name = "rdoStepSizePreset"
+            Me.rdoStepSizePreset.Size = New System.Drawing.Size(58, 17)
+            Me.rdoStepSizePreset.TabIndex = 12
+            Me.rdoStepSizePreset.TabStop = True
+            Me.rdoStepSizePreset.Text = "P&reset:"
+            Me.rdoStepSizePreset.UseVisualStyleBackColor = True
             '
             'grpIris
             '
@@ -264,7 +288,7 @@
             Me.grpIris.Controls.Add(Me.RadioButton13)
             Me.grpIris.Controls.Add(Me.RadioButton14)
             Me.grpIris.Controls.Add(Me.RadioButton15)
-            Me.grpIris.Location = New System.Drawing.Point(246, 66)
+            Me.grpIris.Location = New System.Drawing.Point(246, 42)
             Me.grpIris.Name = "grpIris"
             Me.grpIris.Size = New System.Drawing.Size(107, 179)
             Me.grpIris.TabIndex = 5
@@ -333,7 +357,7 @@
             Me.grpMag.Controls.Add(Me.RadioButton8)
             Me.grpMag.Controls.Add(Me.RadioButton9)
             Me.grpMag.Controls.Add(Me.RadioButton10)
-            Me.grpMag.Location = New System.Drawing.Point(131, 66)
+            Me.grpMag.Location = New System.Drawing.Point(131, 42)
             Me.grpMag.Name = "grpMag"
             Me.grpMag.Size = New System.Drawing.Size(109, 179)
             Me.grpMag.TabIndex = 4
@@ -404,7 +428,7 @@
             Me.grpObjective.Controls.Add(Me.RadioButton3)
             Me.grpObjective.Controls.Add(Me.RadioButton2)
             Me.grpObjective.Controls.Add(Me.RadioButton1)
-            Me.grpObjective.Location = New System.Drawing.Point(6, 66)
+            Me.grpObjective.Location = New System.Drawing.Point(6, 42)
             Me.grpObjective.Name = "grpObjective"
             Me.grpObjective.Size = New System.Drawing.Size(119, 179)
             Me.grpObjective.TabIndex = 3
@@ -491,7 +515,7 @@
             'lblOverlap
             '
             Me.lblOverlap.AutoSize = True
-            Me.lblOverlap.Location = New System.Drawing.Point(6, 272)
+            Me.lblOverlap.Location = New System.Drawing.Point(9, 315)
             Me.lblOverlap.Name = "lblOverlap"
             Me.lblOverlap.Size = New System.Drawing.Size(90, 13)
             Me.lblOverlap.TabIndex = 6
@@ -499,7 +523,7 @@
             '
             'nudOverlap
             '
-            Me.nudOverlap.Location = New System.Drawing.Point(131, 270)
+            Me.nudOverlap.Location = New System.Drawing.Point(134, 313)
             Me.nudOverlap.Maximum = New Decimal(New Integer() {70, 0, 0, 0})
             Me.nudOverlap.Minimum = New Decimal(New Integer() {10, 0, 0, -2147483648})
             Me.nudOverlap.Name = "nudOverlap"
@@ -509,7 +533,7 @@
             '
             'btnLoad
             '
-            Me.btnLoad.Location = New System.Drawing.Point(182, 322)
+            Me.btnLoad.Location = New System.Drawing.Point(185, 365)
             Me.btnLoad.Name = "btnLoad"
             Me.btnLoad.Size = New System.Drawing.Size(75, 23)
             Me.btnLoad.TabIndex = 11
@@ -518,7 +542,7 @@
             '
             'btnSave
             '
-            Me.btnSave.Location = New System.Drawing.Point(101, 322)
+            Me.btnSave.Location = New System.Drawing.Point(104, 365)
             Me.btnSave.Name = "btnSave"
             Me.btnSave.Size = New System.Drawing.Size(75, 23)
             Me.btnSave.TabIndex = 10
@@ -528,7 +552,7 @@
             'rdoStepSizeCalculated
             '
             Me.rdoStepSizeCalculated.AutoSize = True
-            Me.rdoStepSizeCalculated.Location = New System.Drawing.Point(6, 43)
+            Me.rdoStepSizeCalculated.Location = New System.Drawing.Point(9, 19)
             Me.rdoStepSizeCalculated.Name = "rdoStepSizeCalculated"
             Me.rdoStepSizeCalculated.Size = New System.Drawing.Size(75, 17)
             Me.rdoStepSizeCalculated.TabIndex = 2
@@ -539,7 +563,7 @@
             'rdoStepSizeManual
             '
             Me.rdoStepSizeManual.AutoSize = True
-            Me.rdoStepSizeManual.Location = New System.Drawing.Point(6, 20)
+            Me.rdoStepSizeManual.Location = New System.Drawing.Point(9, 278)
             Me.rdoStepSizeManual.Name = "rdoStepSizeManual"
             Me.rdoStepSizeManual.Size = New System.Drawing.Size(60, 17)
             Me.rdoStepSizeManual.TabIndex = 0
@@ -550,7 +574,7 @@
             'chkReturnToTop
             '
             Me.chkReturnToTop.AutoSize = True
-            Me.chkReturnToTop.Location = New System.Drawing.Point(22, 479)
+            Me.chkReturnToTop.Location = New System.Drawing.Point(25, 529)
             Me.chkReturnToTop.Name = "chkReturnToTop"
             Me.chkReturnToTop.Size = New System.Drawing.Size(151, 17)
             Me.chkReturnToTop.TabIndex = 2
@@ -561,7 +585,7 @@
             '
             Me.btnCancel.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.btnCancel.Location = New System.Drawing.Point(329, 502)
+            Me.btnCancel.Location = New System.Drawing.Point(329, 548)
             Me.btnCancel.Name = "btnCancel"
             Me.btnCancel.Size = New System.Drawing.Size(75, 23)
             Me.btnCancel.TabIndex = 4
@@ -571,7 +595,7 @@
             'btnStart
             '
             Me.btnStart.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.btnStart.Location = New System.Drawing.Point(248, 502)
+            Me.btnStart.Location = New System.Drawing.Point(248, 548)
             Me.btnStart.Name = "btnStart"
             Me.btnStart.Size = New System.Drawing.Size(75, 23)
             Me.btnStart.TabIndex = 3
@@ -586,7 +610,7 @@
             Me.AutoSize = True
             Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.CancelButton = Me.btnCancel
-            Me.ClientSize = New System.Drawing.Size(417, 538)
+            Me.ClientSize = New System.Drawing.Size(417, 584)
             Me.Controls.Add(Me.btnStart)
             Me.Controls.Add(Me.chkReturnToTop)
             Me.Controls.Add(Me.btnCancel)
@@ -662,6 +686,8 @@
         Friend WithEvents btnStartSave As System.Windows.Forms.Button
         Friend WithEvents btnStopHere As System.Windows.Forms.Button
         Friend WithEvents btnStartHere As System.Windows.Forms.Button
+        Friend WithEvents rdoStepSizePreset As System.Windows.Forms.RadioButton
+        Friend WithEvents cboPreset As System.Windows.Forms.ComboBox
     End Class
 
 End Namespace

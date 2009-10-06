@@ -9,7 +9,7 @@ Namespace SmartSteps
         Private m_smartStepsManager As SmartStepsManager
         Private m_positionManager As PositionManager
 
-        Private m_objecitveList As ObjectiveListSettings
+        Private m_objectiveList As ObjectiveListSettings
 
         Private m_currentRun As AutorunRunSettings
         Private m_currentSetup As AutorunSetupSettings
@@ -21,18 +21,40 @@ Namespace SmartSteps
 
         Private m_controlForm As frmControls
 
-        Public Sub New(ByVal smartStepsManager As SmartStepsManager, ByVal positionManager As PositionManager, ByVal objectiveList As ObjectiveListSettings, ByVal controlForm As frmControls)
+        Private m_stepSizes As List(Of KeyValuePair(Of String, Integer))
+
+
+        Public Sub New(ByVal smartStepsManager As SmartStepsManager, ByVal positionManager As PositionManager, ByVal objectiveList As ObjectiveListSettings, ByVal controlForm As frmControls, ByVal settings As AllSettings)
             InitializeComponent() ' This call is required by the Windows Form Designer.
 
             m_controlForm = controlForm
             m_smartStepsManager = smartStepsManager
             m_positionManager = positionManager
 
-            m_objecitveList = objectiveList
+            m_objectiveList = objectiveList
 
             m_currentRun = New AutorunRunSettings(m_smartStepsManager.LastAutorunRun.GetContents)
             m_currentSetup = New AutorunSetupSettings(m_smartStepsManager.LastAutorunSetup.GetContents)
             m_currentReturnToTop = m_smartStepsManager.ReturnToTop
+
+            m_stepSizes = Settings.PositionManager.StepSizes.StepSizes
+
+            RefreshPresets()
+        End Sub
+
+        Private Sub RefreshPresets()
+            cboPreset.Items.Clear()
+            For i = 0 To m_stepSizes.Count - 1
+                Dim itemName As String
+                If i < LabeledStepsCount Then
+                    itemName = m_stepSizes(i).Key
+                Else
+                    itemName = MicrostepsToMilimeters(m_stepSizes(i).Value) & "mm"
+                End If
+
+                cboPreset.Items.Add(itemName)
+            Next
+            If cboPreset.Items.Count > 0 Then cboPreset.SelectedIndex = 0
         End Sub
 
         Private Sub frmAutoRun_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -79,7 +101,7 @@ Namespace SmartSteps
             txtStopPosition.Text = value
         End Sub
 
-        Private Sub rdoStepSize_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rdoStepSizeManual.CheckedChanged, rdoStepSizeCalculated.CheckedChanged
+        Private Sub rdoStepSize_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles rdoStepSizeManual.CheckedChanged, rdoStepSizeCalculated.CheckedChanged, rdoStepSizePreset.CheckedChanged
             Dim rdoStepSize As RadioButton = sender
             If Not rdoStepSize.Checked Then Exit Sub 'only update for becoming checked, not leaving being checked
             m_currentSetup.CalculateStepSize = (rdoStepSize Is rdoStepSizeCalculated)
@@ -90,8 +112,10 @@ Namespace SmartSteps
             grpMag.Enabled = m_currentSetup.CalculateStepSize
             grpIris.Enabled = m_currentSetup.CalculateStepSize
 
-            lblOverlap.Enabled = m_currentSetup.CalculateStepSize
-            nudOverlap.Enabled = m_currentSetup.CalculateStepSize
+            lblOverlap.Enabled = True
+            nudOverlap.Enabled = True
+
+            cboPreset.Enabled = rdoStepSizePreset.Checked
 
             loadStepSize(m_currentSetup)
         End Sub
@@ -99,7 +123,7 @@ Namespace SmartSteps
         Private Sub rdoObjective_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
             Dim rdoObjective As RadioButton = sender
             Dim name = rdoObjective.Text
-            m_selectedObjective = (From kvp In m_objecitveList.Objectives Where kvp.Key = name)(0)
+            m_selectedObjective = (From kvp In m_objectiveList.Objectives Where kvp.Key = name)(0)
             loadMags()
         End Sub
         Private Sub rdoMag_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -170,7 +194,7 @@ Namespace SmartSteps
         End Sub
 
         Private Sub loadObjectives()
-            fillGroupWithRadios(grpObjective, (From kvp In m_objecitveList.Objectives Select kvp.Key), AddressOf rdoObjective_CheckedChanged)
+            fillGroupWithRadios(grpObjective, (From kvp In m_objectiveList.Objectives Select kvp.Key), AddressOf rdoObjective_CheckedChanged)
             grpMag.Controls.Clear()
             grpIris.Controls.Clear()
         End Sub
@@ -185,7 +209,7 @@ Namespace SmartSteps
             trySelectRadio(grpIris, lastIrisName)
         End Sub
         Private Sub loadCalculatedStepSize()
-            Dim stepSize As String = m_objecitveList.GetIris(m_selectedObjective.Key, m_selectedMag.Key, m_selectedIris.Key)
+            Dim stepSize As String = m_objectiveList.GetIris(m_selectedObjective.Key, m_selectedMag.Key, m_selectedIris.Key)
             If stepSize <> "" Then
                 stepSize = Int(stepSize * (1 - nudOverlap.Value / 100))
             End If
@@ -268,8 +292,8 @@ Namespace SmartSteps
             If (m_currentRun.IsValid AndAlso _
                 If(Not m_currentSetup.CalculateStepSize, _
                    m_currentSetup.HasValidStepSize, _
-                   m_currentSetup.HasValidStepSize(m_objecitveList))) Then
-                Dim stepSize As Integer = If(Not m_currentSetup.CalculateStepSize, m_currentSetup.StepSize, m_currentSetup.GetStepSize(m_objecitveList))
+                   m_currentSetup.HasValidStepSize(m_objectiveList))) Then
+                Dim stepSize As Integer = If(Not m_currentSetup.CalculateStepSize, m_currentSetup.StepSize, m_currentSetup.GetStepSize(m_objectiveList))
                 If m_currentRun.UseStopPosition Then ' use stop position
                     'show slices
                     txtSlices.Text = Math.Ceiling((m_currentRun.AutorunStop - m_currentRun.AutorunStart) / stepSize) + 1
@@ -329,7 +353,7 @@ Namespace SmartSteps
             Me.Tag = m_smartStepsManager.GetAutorunStepper(locations, m_currentSetup.Dwell)
         End Sub
         Private Function getLocations() As IEnumerable(Of Integer)
-            Dim stepSize As Integer = If(Not m_currentSetup.CalculateStepSize, m_currentSetup.StepSize, m_currentSetup.GetStepSize(m_objecitveList))
+            Dim stepSize As Integer = If(Not m_currentSetup.CalculateStepSize, m_currentSetup.StepSize, m_currentSetup.GetStepSize(m_objectiveList))
             Dim count As Integer
             If m_currentRun.UseStopPosition Then
                 ' number of moves after the first position plus the first location = number of slices
@@ -418,6 +442,14 @@ Namespace SmartSteps
 
         Private Sub btnStopHere_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStopHere.Click
             txtStopPosition.Text = m_controlForm.txtPos.Text
+        End Sub
+
+        Private Sub cboPreset_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboPreset.SelectedIndexChanged
+            If rdoStepSizePreset.Checked Then
+                m_currentSetup.StepSize = m_stepSizes(cboPreset.SelectedIndex).Value
+                txtStepSize.Text = m_currentSetup.StepSize
+            End If
+
         End Sub
     End Class
 End Namespace
