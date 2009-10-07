@@ -188,39 +188,6 @@
         }
         "Folder"
         {
-            "{1525181F-901A-416C-8A58-119130FE478E}:_0A966C671FCA4CA2BA7EE75AC1954268"
-            {
-            "Name" = "8:#1918"
-            "AlwaysCreate" = "11:TRUE"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Property" = "8:PersonalFolder"
-                "Folders"
-                {
-                    "{9EF0B969-E518-4E46-987F-47570745A589}:_5A026FCD89984CCFBBE0D52B396228FE"
-                    {
-                    "Name" = "8:Camlift Controller Settings"
-                    "AlwaysCreate" = "11:TRUE"
-                    "Condition" = "8:"
-                    "Transitive" = "11:FALSE"
-                    "Property" = "8:_299366D071CC42108CA9706E7A9FF893"
-                        "Folders"
-                        {
-                            "{9EF0B969-E518-4E46-987F-47570745A589}:_9BBF03063D1E49C38BAC4D216341852B"
-                            {
-                            "Name" = "8:Saved Presets"
-                            "AlwaysCreate" = "11:TRUE"
-                            "Condition" = "8:"
-                            "Transitive" = "11:FALSE"
-                            "Property" = "8:_F6DE42E0BC524B34BC83C303D1C2E4B3"
-                                "Folders"
-                                {
-                                }
-                            }
-                        }
-                    }
-                }
-            }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_3B45A9E4E2A74A18BA3D5EACB0B2DAE0"
             {
             "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
@@ -845,7 +812,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4693370C54754FC2A874E417137CDEDA"
             {
-            "SourcePath" = "8:..\\slnCamliftController\\obj\\Debug\\Camlift Controller.exe"
+            "SourcePath" = "8:..\\slnCamliftController\\obj\\Release\\Camlift Controller 2.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3B45A9E4E2A74A18BA3D5EACB0B2DAE0"
@@ -865,6 +832,34 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{33D1A02A-02B5-4A63-9F4B-B9BE391C9B4A}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A75A020B45C94882A5E7014505A982B2"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_3B45A9E4E2A74A18BA3D5EACB0B2DAE0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:ContentFiles"
             "OutputProjectGuid" = "8:{33D1A02A-02B5-4A63-9F4B-B9BE391C9B4A}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
