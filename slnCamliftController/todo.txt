@@ -1,7 +1,5 @@
-Version 2.0.5:
+Version 2.1.1:
 * landscape exif tag or whatever
-
-Version 2.1.0:
 
 Other Ideas:
 * Add Manage Memory Registers button on Main Window

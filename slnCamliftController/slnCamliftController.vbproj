@@ -232,25 +232,25 @@
     <None Include="app.ico" />
     <None Include="My Project\app.manifest" />
     <None Include="slnCamliftController_TemporaryKey.pfx" />
-    <Content Include="dll\DPPDLL.dll">
+    <Content Include="DPPDLL.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="dll\DPPLibCom.dll">
+    <Content Include="DPPLibCom.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="dll\DPPRSC.dll">
+    <Content Include="DPPRSC.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="dll\EDSDK.dll">
+    <Content Include="EDSDK.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="dll\EdsImage.dll">
+    <Content Include="EdsImage.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="dll\MLib.dll">
+    <Content Include="MLib.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="dll\Ucs32P.dll">
+    <Content Include="Ucs32P.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="help.html">
