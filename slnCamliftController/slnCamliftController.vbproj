@@ -267,7 +267,7 @@
     <Content Include="settings\objectives.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="todo.txt" />
+    <None Include="todo.txt" />
     <None Include="src\Silverpak23CE\README.txt" />
   </ItemGroup>
   <ItemGroup>
