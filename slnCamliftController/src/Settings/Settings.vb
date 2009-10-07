@@ -515,6 +515,16 @@ Namespace Settings
             End Set
         End Property
 
+        Private m_stepSizeProfiles As New StepSizeListList(Nothing)
+        Public Property StepSizeProfiles() As StepSizeListList
+            Get
+                Return m_stepSizeProfiles
+            End Get
+            Set(ByVal value As StepSizeListList)
+                m_stepSizeProfiles = value
+            End Set
+        End Property
+
         Private m_StepSizes As New StepSizeList(Nothing)
         Public Property StepSizes() As StepSizeList
             Get
@@ -699,6 +709,22 @@ Namespace Settings
                 Return ContentsList
             End Get
             Set(ByVal value As List(Of KeyValuePair(Of String, AutorunSetupSettings)))
+                ContentsList = value
+            End Set
+        End Property
+
+        Public Sub New(ByVal contents As Object)
+            init(contents)
+        End Sub
+    End Class
+    Public Class StepSizeListList
+        Inherits SettingsList(Of StepSizeList)
+
+        Public Property StepSizeSetups() As List(Of KeyValuePair(Of String, StepSizeList))
+            Get
+                Return ContentsList
+            End Get
+            Set(ByVal value As List(Of KeyValuePair(Of String, StepSizeList)))
                 ContentsList = value
             End Set
         End Property

@@ -103,7 +103,7 @@ Namespace CamliftController
         End Sub
 
         Private Sub PreferencesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PreferencesToolStripMenuItem.Click
-            Using f As New frmPreferences(m_stepSizes, AddressOf updateSteps_safe)
+            Using f As New frmPreferences(m_allSettings.PositionManager.StepSizeProfiles, m_stepSizes, AddressOf updateSteps_safe)
                 MoveNextToMe(f)
                 f.ShowDialog(Me)
             End Using

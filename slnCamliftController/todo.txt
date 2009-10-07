@@ -1,7 +1,5 @@
-Version 2.0.4:
-Andy:
-Josh:
-* savable step size profiles
+Version 2.0.5:
+* landscape exif tag or whatever
 
 Version 2.1.0:
 

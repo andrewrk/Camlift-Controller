@@ -75,13 +75,18 @@
             Me.lblSizeLabel9 = New System.Windows.Forms.Label
             Me.btnApply = New System.Windows.Forms.Button
             Me.btnOk = New System.Windows.Forms.Button
+            Me.Label1 = New System.Windows.Forms.Label
+            Me.cboProfiles = New System.Windows.Forms.ComboBox
+            Me.btnLoadProfile = New System.Windows.Forms.Button
+            Me.btnSaveProfile = New System.Windows.Forms.Button
+            Me.btnDeleteProfile = New System.Windows.Forms.Button
             Me.grpStepSizes.SuspendLayout()
             Me.SuspendLayout()
             '
             'btnCancel
             '
             Me.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.btnCancel.Location = New System.Drawing.Point(92, 315)
+            Me.btnCancel.Location = New System.Drawing.Point(92, 378)
             Me.btnCancel.Name = "btnCancel"
             Me.btnCancel.Size = New System.Drawing.Size(75, 23)
             Me.btnCancel.TabIndex = 2
@@ -137,7 +142,7 @@
             Me.grpStepSizes.Controls.Add(Me.txtStep1)
             Me.grpStepSizes.Controls.Add(Me.txtStep9)
             Me.grpStepSizes.Controls.Add(Me.lblSizeLabel9)
-            Me.grpStepSizes.Location = New System.Drawing.Point(12, 12)
+            Me.grpStepSizes.Location = New System.Drawing.Point(12, 62)
             Me.grpStepSizes.Name = "grpStepSizes"
             Me.grpStepSizes.Size = New System.Drawing.Size(236, 297)
             Me.grpStepSizes.TabIndex = 0
@@ -556,7 +561,7 @@
             'btnApply
             '
             Me.btnApply.Enabled = False
-            Me.btnApply.Location = New System.Drawing.Point(173, 315)
+            Me.btnApply.Location = New System.Drawing.Point(173, 378)
             Me.btnApply.Name = "btnApply"
             Me.btnApply.Size = New System.Drawing.Size(75, 23)
             Me.btnApply.TabIndex = 3
@@ -565,12 +570,56 @@
             '
             'btnOk
             '
-            Me.btnOk.Location = New System.Drawing.Point(12, 315)
+            Me.btnOk.Location = New System.Drawing.Point(12, 378)
             Me.btnOk.Name = "btnOk"
             Me.btnOk.Size = New System.Drawing.Size(75, 23)
             Me.btnOk.TabIndex = 1
             Me.btnOk.Text = "&OK"
             Me.btnOk.UseVisualStyleBackColor = True
+            '
+            'Label1
+            '
+            Me.Label1.AutoSize = True
+            Me.Label1.Location = New System.Drawing.Point(18, 9)
+            Me.Label1.Name = "Label1"
+            Me.Label1.Size = New System.Drawing.Size(39, 13)
+            Me.Label1.TabIndex = 4
+            Me.Label1.Text = "Profile:"
+            '
+            'cboProfiles
+            '
+            Me.cboProfiles.FormattingEnabled = True
+            Me.cboProfiles.Location = New System.Drawing.Point(63, 6)
+            Me.cboProfiles.Name = "cboProfiles"
+            Me.cboProfiles.Size = New System.Drawing.Size(184, 21)
+            Me.cboProfiles.TabIndex = 5
+            '
+            'btnLoadProfile
+            '
+            Me.btnLoadProfile.Location = New System.Drawing.Point(63, 33)
+            Me.btnLoadProfile.Name = "btnLoadProfile"
+            Me.btnLoadProfile.Size = New System.Drawing.Size(58, 23)
+            Me.btnLoadProfile.TabIndex = 6
+            Me.btnLoadProfile.Text = "Load"
+            Me.btnLoadProfile.UseVisualStyleBackColor = True
+            '
+            'btnSaveProfile
+            '
+            Me.btnSaveProfile.Location = New System.Drawing.Point(126, 33)
+            Me.btnSaveProfile.Name = "btnSaveProfile"
+            Me.btnSaveProfile.Size = New System.Drawing.Size(58, 23)
+            Me.btnSaveProfile.TabIndex = 6
+            Me.btnSaveProfile.Text = "Save"
+            Me.btnSaveProfile.UseVisualStyleBackColor = True
+            '
+            'btnDeleteProfile
+            '
+            Me.btnDeleteProfile.Location = New System.Drawing.Point(190, 33)
+            Me.btnDeleteProfile.Name = "btnDeleteProfile"
+            Me.btnDeleteProfile.Size = New System.Drawing.Size(58, 22)
+            Me.btnDeleteProfile.TabIndex = 7
+            Me.btnDeleteProfile.Text = "Delete"
+            Me.btnDeleteProfile.UseVisualStyleBackColor = True
             '
             'frmPreferences
             '
@@ -578,17 +627,22 @@
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.CancelButton = Me.btnCancel
-            Me.ClientSize = New System.Drawing.Size(253, 343)
+            Me.ClientSize = New System.Drawing.Size(259, 413)
             Me.ControlBox = False
+            Me.Controls.Add(Me.btnDeleteProfile)
+            Me.Controls.Add(Me.btnCancel)
+            Me.Controls.Add(Me.btnSaveProfile)
+            Me.Controls.Add(Me.btnLoadProfile)
+            Me.Controls.Add(Me.cboProfiles)
+            Me.Controls.Add(Me.Label1)
             Me.Controls.Add(Me.btnOk)
             Me.Controls.Add(Me.btnApply)
             Me.Controls.Add(Me.grpStepSizes)
-            Me.Controls.Add(Me.btnCancel)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
             Me.MaximizeBox = False
-            Me.MaximumSize = New System.Drawing.Size(259, 375)
+            Me.MaximumSize = New System.Drawing.Size(265, 441)
             Me.MinimizeBox = False
-            Me.MinimumSize = New System.Drawing.Size(259, 375)
+            Me.MinimumSize = New System.Drawing.Size(265, 441)
             Me.Name = "frmPreferences"
             Me.ShowIcon = False
             Me.ShowInTaskbar = False
@@ -597,6 +651,7 @@
             Me.grpStepSizes.ResumeLayout(False)
             Me.grpStepSizes.PerformLayout()
             Me.ResumeLayout(False)
+            Me.PerformLayout()
 
         End Sub
         Friend WithEvents btnCancel As System.Windows.Forms.Button
@@ -650,6 +705,11 @@
         Friend WithEvents lblLabel9 As System.Windows.Forms.Label
         Friend WithEvents lblLabel8 As System.Windows.Forms.Label
         Friend WithEvents lblLabel7 As System.Windows.Forms.Label
+        Friend WithEvents Label1 As System.Windows.Forms.Label
+        Friend WithEvents cboProfiles As System.Windows.Forms.ComboBox
+        Friend WithEvents btnLoadProfile As System.Windows.Forms.Button
+        Friend WithEvents btnSaveProfile As System.Windows.Forms.Button
+        Friend WithEvents btnDeleteProfile As System.Windows.Forms.Button
     End Class
 
 End Namespace
