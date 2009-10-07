@@ -5,22 +5,13 @@ Josh:
 
 Version 2.1.0:
 
-Their Ideas:
-Further Discussion Needed:
-* Cosmetics
+Other Ideas:
 * Add Manage Memory Registers button on Main Window
 * Investigate inconsistent coloring
-
-Our Ideas:
-* lazy motor - don't try to initialize until motor is needed
-    - instead of a message box for silverpak, show frmcontrols and disable everything except a button labeled "Initialize Motor" 
-* park distance. - Never really go to 0 except for initialization.  
-    - the perceived "0" is really parkDistance, this prevents switch-sitting hardware bugs. 
-    - don't let attempts to step past 0 go through. translate into absolute motion. 
+* instead of a message box for silverpak, show frmcontrols and disable everything except a button labeled "Initialize Motor" 
+* don't let attempts to step past 0 go through. translate into absolute motion. 
 * right click step sizes to bring up edit dialog 
-* auto run -> unplug camera during run -> exit -> assertion failed 
-* get rid of that warning message about the silverpak dispose thing 
 * make zoom rectangle more accurate in live view
 * make scrolling in zoomed in mode smoother
-* virtual limit switch?
-* savable step size settings
+* auto run -> unplug camera during run -> exit -> assertion failed 
+* get rid of that warning message about the silverpak dispose thing 
