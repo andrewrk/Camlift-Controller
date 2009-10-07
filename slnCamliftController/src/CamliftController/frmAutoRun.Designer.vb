@@ -114,7 +114,7 @@
             Me.rdoSlices.Location = New System.Drawing.Point(6, 78)
             Me.rdoSlices.Name = "rdoSlices"
             Me.rdoSlices.Size = New System.Drawing.Size(108, 17)
-            Me.rdoSlices.TabIndex = 6
+            Me.rdoSlices.TabIndex = 10
             Me.rdoSlices.TabStop = True
             Me.rdoSlices.Text = "Number of S&lices:"
             Me.rdoSlices.UseVisualStyleBackColor = True
@@ -125,7 +125,7 @@
             Me.rdoStopPosition.Location = New System.Drawing.Point(6, 49)
             Me.rdoStopPosition.Name = "rdoStopPosition"
             Me.rdoStopPosition.Size = New System.Drawing.Size(90, 17)
-            Me.rdoStopPosition.TabIndex = 3
+            Me.rdoStopPosition.TabIndex = 5
             Me.rdoStopPosition.TabStop = True
             Me.rdoStopPosition.Text = "Sto&p Position:"
             Me.rdoStopPosition.UseVisualStyleBackColor = True
@@ -135,7 +135,7 @@
             Me.txtStepSize.Location = New System.Drawing.Point(134, 277)
             Me.txtStepSize.Name = "txtStepSize"
             Me.txtStepSize.Size = New System.Drawing.Size(79, 20)
-            Me.txtStepSize.TabIndex = 1
+            Me.txtStepSize.TabIndex = 7
             '
             'grpRun
             '
@@ -173,7 +173,7 @@
             Me.btnStartHere.Location = New System.Drawing.Point(313, 17)
             Me.btnStartHere.Name = "btnStartHere"
             Me.btnStartHere.Size = New System.Drawing.Size(40, 23)
-            Me.btnStartHere.TabIndex = 9
+            Me.btnStartHere.TabIndex = 4
             Me.btnStartHere.Text = "Here"
             Me.btnStartHere.UseVisualStyleBackColor = True
             '
@@ -191,7 +191,7 @@
             Me.btnStartSave.Location = New System.Drawing.Point(264, 17)
             Me.btnStartSave.Name = "btnStartSave"
             Me.btnStartSave.Size = New System.Drawing.Size(43, 23)
-            Me.btnStartSave.TabIndex = 8
+            Me.btnStartSave.TabIndex = 3
             Me.btnStartSave.Text = "Save"
             Me.btnStartSave.UseVisualStyleBackColor = True
             '
@@ -200,14 +200,14 @@
             Me.txtSlices.Location = New System.Drawing.Point(131, 77)
             Me.txtSlices.Name = "txtSlices"
             Me.txtSlices.Size = New System.Drawing.Size(79, 20)
-            Me.txtSlices.TabIndex = 7
+            Me.txtSlices.TabIndex = 11
             '
             'txtStopPosition
             '
             Me.txtStopPosition.Location = New System.Drawing.Point(131, 48)
             Me.txtStopPosition.Name = "txtStopPosition"
             Me.txtStopPosition.Size = New System.Drawing.Size(79, 20)
-            Me.txtStopPosition.TabIndex = 4
+            Me.txtStopPosition.TabIndex = 6
             '
             'btnStopPositionLoad
             '
@@ -216,7 +216,7 @@
             Me.btnStopPositionLoad.Location = New System.Drawing.Point(216, 46)
             Me.btnStopPositionLoad.Name = "btnStopPositionLoad"
             Me.btnStopPositionLoad.Size = New System.Drawing.Size(41, 23)
-            Me.btnStopPositionLoad.TabIndex = 5
+            Me.btnStopPositionLoad.TabIndex = 7
             Me.btnStopPositionLoad.Text = "Load"
             Me.btnStopPositionLoad.UseVisualStyleBackColor = True
             '
@@ -225,7 +225,7 @@
             Me.txtDwell.Location = New System.Drawing.Point(134, 339)
             Me.txtDwell.Name = "txtDwell"
             Me.txtDwell.Size = New System.Drawing.Size(79, 20)
-            Me.txtDwell.TabIndex = 9
+            Me.txtDwell.TabIndex = 11
             '
             'lblDwell
             '
@@ -233,7 +233,7 @@
             Me.lblDwell.Location = New System.Drawing.Point(9, 342)
             Me.lblDwell.Name = "lblDwell"
             Me.lblDwell.Size = New System.Drawing.Size(58, 13)
-            Me.lblDwell.TabIndex = 8
+            Me.lblDwell.TabIndex = 10
             Me.lblDwell.Text = "D&well (ms):"
             Me.lblDwell.TextAlign = System.Drawing.ContentAlignment.MiddleRight
             '
@@ -268,7 +268,7 @@
             Me.cboPreset.Location = New System.Drawing.Point(73, 236)
             Me.cboPreset.Name = "cboPreset"
             Me.cboPreset.Size = New System.Drawing.Size(121, 21)
-            Me.cboPreset.TabIndex = 13
+            Me.cboPreset.TabIndex = 5
             '
             'rdoStepSizePreset
             '
@@ -276,7 +276,7 @@
             Me.rdoStepSizePreset.Location = New System.Drawing.Point(9, 237)
             Me.rdoStepSizePreset.Name = "rdoStepSizePreset"
             Me.rdoStepSizePreset.Size = New System.Drawing.Size(58, 17)
-            Me.rdoStepSizePreset.TabIndex = 12
+            Me.rdoStepSizePreset.TabIndex = 4
             Me.rdoStepSizePreset.TabStop = True
             Me.rdoStepSizePreset.Text = "P&reset:"
             Me.rdoStepSizePreset.UseVisualStyleBackColor = True
@@ -291,7 +291,7 @@
             Me.grpIris.Location = New System.Drawing.Point(246, 42)
             Me.grpIris.Name = "grpIris"
             Me.grpIris.Size = New System.Drawing.Size(107, 179)
-            Me.grpIris.TabIndex = 5
+            Me.grpIris.TabIndex = 3
             Me.grpIris.TabStop = False
             Me.grpIris.Text = "&Iris"
             '
@@ -360,7 +360,7 @@
             Me.grpMag.Location = New System.Drawing.Point(131, 42)
             Me.grpMag.Name = "grpMag"
             Me.grpMag.Size = New System.Drawing.Size(109, 179)
-            Me.grpMag.TabIndex = 4
+            Me.grpMag.TabIndex = 2
             Me.grpMag.TabStop = False
             Me.grpMag.Text = "Ma&g:"
             '
@@ -431,7 +431,7 @@
             Me.grpObjective.Location = New System.Drawing.Point(6, 42)
             Me.grpObjective.Name = "grpObjective"
             Me.grpObjective.Size = New System.Drawing.Size(119, 179)
-            Me.grpObjective.TabIndex = 3
+            Me.grpObjective.TabIndex = 1
             Me.grpObjective.TabStop = False
             Me.grpObjective.Text = "O&bjective:"
             '
@@ -518,7 +518,7 @@
             Me.lblOverlap.Location = New System.Drawing.Point(9, 315)
             Me.lblOverlap.Name = "lblOverlap"
             Me.lblOverlap.Size = New System.Drawing.Size(90, 13)
-            Me.lblOverlap.TabIndex = 6
+            Me.lblOverlap.TabIndex = 8
             Me.lblOverlap.Text = "Slice O&verlap (%):"
             '
             'nudOverlap
@@ -528,7 +528,7 @@
             Me.nudOverlap.Minimum = New Decimal(New Integer() {10, 0, 0, -2147483648})
             Me.nudOverlap.Name = "nudOverlap"
             Me.nudOverlap.Size = New System.Drawing.Size(79, 20)
-            Me.nudOverlap.TabIndex = 7
+            Me.nudOverlap.TabIndex = 9
             Me.nudOverlap.TextAlign = System.Windows.Forms.HorizontalAlignment.Right
             '
             'btnLoad
@@ -536,7 +536,7 @@
             Me.btnLoad.Location = New System.Drawing.Point(185, 365)
             Me.btnLoad.Name = "btnLoad"
             Me.btnLoad.Size = New System.Drawing.Size(75, 23)
-            Me.btnLoad.TabIndex = 11
+            Me.btnLoad.TabIndex = 13
             Me.btnLoad.Text = "L&oad..."
             Me.btnLoad.UseVisualStyleBackColor = True
             '
@@ -545,7 +545,7 @@
             Me.btnSave.Location = New System.Drawing.Point(104, 365)
             Me.btnSave.Name = "btnSave"
             Me.btnSave.Size = New System.Drawing.Size(75, 23)
-            Me.btnSave.TabIndex = 10
+            Me.btnSave.TabIndex = 12
             Me.btnSave.Text = "&Save..."
             Me.btnSave.UseVisualStyleBackColor = True
             '
@@ -555,7 +555,7 @@
             Me.rdoStepSizeCalculated.Location = New System.Drawing.Point(9, 19)
             Me.rdoStepSizeCalculated.Name = "rdoStepSizeCalculated"
             Me.rdoStepSizeCalculated.Size = New System.Drawing.Size(75, 17)
-            Me.rdoStepSizeCalculated.TabIndex = 2
+            Me.rdoStepSizeCalculated.TabIndex = 0
             Me.rdoStepSizeCalculated.TabStop = True
             Me.rdoStepSizeCalculated.Text = "&Calculated"
             Me.rdoStepSizeCalculated.UseVisualStyleBackColor = True
@@ -566,7 +566,7 @@
             Me.rdoStepSizeManual.Location = New System.Drawing.Point(9, 278)
             Me.rdoStepSizeManual.Name = "rdoStepSizeManual"
             Me.rdoStepSizeManual.Size = New System.Drawing.Size(60, 17)
-            Me.rdoStepSizeManual.TabIndex = 0
+            Me.rdoStepSizeManual.TabIndex = 6
             Me.rdoStepSizeManual.TabStop = True
             Me.rdoStepSizeManual.Text = "&Manual"
             Me.rdoStepSizeManual.UseVisualStyleBackColor = True
