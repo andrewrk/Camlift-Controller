@@ -1,6 +1,5 @@
 Version 2.1.1:
 Josh:
-* absolute coordinates so that motor is never inaccurate
 Andy:
 * re-order the presets in auto run
 * presets is not integrated into auto run profiles
