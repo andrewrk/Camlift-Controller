@@ -250,7 +250,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Camlift Controller"
         "ProductCode" = "8:{2DFECD76-38C5-4B30-89B4-C6656BA95E89}"
-        "PackageCode" = "8:{C7E113D0-50F9-4DC6-94D4-01B816ED0B2C}"
+        "PackageCode" = "8:{AD784BFB-A77E-4103-BA50-A6E01BF81071}"
         "UpgradeCode" = "8:{83181A1B-70AD-4792-8752-BFCD870416A9}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
