@@ -468,6 +468,7 @@ Namespace SmartSteps
             If rdoStepSizePreset.Checked Then
                 m_currentSetup.StepSize = m_stepSizes(m_stepSizes.Count - 1 - cboPreset.SelectedIndex).Value
                 txtStepSize.Text = m_currentSetup.StepSize
+                loadCalculatedStepSize()
             End If
 
         End Sub
