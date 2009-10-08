@@ -130,7 +130,6 @@
     <Compile Include="src\Settings\Serializer.vb" />
     <Compile Include="src\Settings\Settings.vb" />
     <Compile Include="src\Silverpak.vb">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\CamliftController\frmAutoRun.Designer.vb">
       <DependentUpon>frmAutoRun.vb</DependentUpon>

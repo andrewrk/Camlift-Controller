@@ -37,6 +37,8 @@ Namespace CamliftController
 
         Private m_stepSizes As List(Of KeyValuePair(Of String, Integer))
 
+        Private m_platonicPosition As Integer = -1
+
         'TODO: implement this
         Public Const DefaultParkDistance As Integer = 500
         Private m_ParkDistance As Integer = DefaultParkDistance
@@ -275,7 +277,12 @@ Namespace CamliftController
         Private Sub m_silverpakManager_StoppedMoving_gui(ByVal reason As StoppedMovingReason)
             Select Case reason
                 Case StoppedMovingReason.Normal, StoppedMovingReason.Initialized
-                    If m_movementMode = enuMovementMode.ShutDown Then Close()
+                    Select Case m_movementMode
+                        Case enuMovementMode.ShutDown
+                            Close()
+                        Case enuMovementMode.Initializing, enuMovementMode.Infinite
+                            m_platonicPosition = m_silverpakManager.Position
+                    End Select
                     If m_autorunMode = enuAutorunMode.Off Then updateStatusStrip_gui("Stopped")
                     m_movementMode = enuMovementMode.Stopped
                     updateControlsEnabled_gui()
@@ -431,14 +438,22 @@ Namespace CamliftController
         End Sub
         Private Sub moveStep_gui(ByVal UpNotDown As Boolean)
             Dim steps As Integer = m_stepSizes(tkbDist.Value - 1).Value
-            updateStatusStrip_gui("Moving " & IIf(UpNotDown, "Up", "Down") & " " & steps & " steps...")
+            updateStatusStrip_gui("Moving " & If(UpNotDown, "Up", "Down") & " " & steps & " steps...")
             m_movementMode = enuMovementMode.Absolute
-            moveToPosition_safe(m_silverpakManager.Position + If(UpNotDown, -steps, steps))
+            m_platonicPosition += If(UpNotDown, -steps, steps)
+            clampPosition(m_platonicPosition)
+            moveToPosition_safe(m_platonicPosition)
         End Sub
         Private Sub moveAbsolute_gui(ByVal position As Integer)
             updateStatusStrip_gui("Moving to " & position & "...")
             m_movementMode = enuMovementMode.Absolute
-            moveToPosition_safe(position)
+            m_platonicPosition = position
+            clampPosition(m_platonicPosition)
+            moveToPosition_safe(m_platonicPosition)
+        End Sub
+        Private Sub clampPosition(ByRef ref_position)
+            ref_position = Math.Max(ref_position, 0)
+            ref_position = Math.Min(ref_position, m_silverpakManager.MaxPosition)
         End Sub
         Private Sub moveShutDown_gui()
             updateStatusStrip_gui("Shutting Down...")
