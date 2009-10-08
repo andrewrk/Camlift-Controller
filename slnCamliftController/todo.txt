@@ -17,4 +17,3 @@ Other Ideas:
 * make zoom rectangle more accurate in live view
 * make scrolling in zoomed in mode smoother
 * auto run -> unplug camera during run -> exit -> assertion failed 
-* get rid of that warning message about the silverpak dispose thing 

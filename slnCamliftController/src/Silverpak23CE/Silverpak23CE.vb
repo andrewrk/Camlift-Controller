@@ -24,7 +24,7 @@ Namespace Silverpak23CE
     '''<summary>Provides an interface to a Lin Engineering Silverpak23CE stepper motor</summary>
     <ToolboxItem(False)> _
     Public Class SilverpakManager
-        Inherits Component
+        Implements IDisposable
 
         'Public Fields
         '''<summary>The default value for the Acceleration property.</summary>
@@ -530,15 +530,11 @@ Namespace Silverpak23CE
 
         'Private methods
         ''' <summary>Disposes this component.</summary>
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            Try
-                If disposing AndAlso m_components IsNot Nothing Then
-                    m_components.Dispose()
-                    stopPositionUpdater()
-                End If
-            Finally
-                MyBase.Dispose(disposing)
-            End Try
+        Public Overridable Sub Dispose() Implements IDisposable.Dispose
+            If m_components IsNot Nothing Then
+                m_components.Dispose()
+                stopPositionUpdater()
+            End If
         End Sub
 
         ''' <summary>Makes sure the position updater thread is running.</summary>
