@@ -1,5 +1,12 @@
 Version 2.1.1:
-* landscape exif tag or whatever
+Josh:
+* absolute coordinates so that motor is never inaccurate
+Andy:
+* re-order the presets in auto run
+* presets is not integrated into auto run profiles
+
+Version 3.0.0:
+* only attach live view to frmcontrols by default; otherwise remember in settings
 
 Other Ideas:
 * Add Manage Memory Registers button on Main Window
