@@ -71,6 +71,8 @@ Namespace SmartSteps
             loadRun(currentRun)
             loadSetup(currentSetup)
             chkReturnToTop.Checked = m_currentReturnToTop
+
+            Me.rdoStepSizeCalculated.Checked = True
         End Sub
 
         Private Sub txt_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
