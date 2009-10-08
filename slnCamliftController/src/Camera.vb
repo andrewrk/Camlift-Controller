@@ -65,8 +65,6 @@ Public Class Camera
 
     Private Declare Function CoInitializeEx Lib "OLE32" (ByVal pvReserved As IntPtr, ByVal dwCoInit As UInteger) As Integer
 
-
-
     Public Sub New()
         If s_instance Is Nothing Then
             s_instance = Me
@@ -170,7 +168,6 @@ Public Class Camera
         m_haveSession = False
     End Sub
 
-
     Public Sub Dispose() Implements System.IDisposable.Dispose
         If m_disposed Then Exit Sub
         m_disposed = True
@@ -216,7 +213,6 @@ Public Class Camera
         s_instance.PropertyEventHandler(inEvent, inPropertyID, inParam, inContext)
         Return 0
     End Function
-
 
     Private Sub ObjectEventHandler(ByVal inEvent As Integer, ByVal inRef As IntPtr, ByVal inContext As IntPtr)
         Select Case inEvent
@@ -265,24 +261,40 @@ Public Class Camera
         ' make sure we don't overwrite files
         outfile = EnsureDoesNotExist(outfile)
 
+        ' get a temp file to write to
+        Dim tmpfile As String = My.Computer.FileSystem.GetTempFileName()
+
         ' This creates the outStream that is used by EdsDownload to actually grab and write out the file.
-        CheckError(EdsCreateFileStream(outfile, EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways, EdsAccess.kEdsAccess_Write, outStream))
+        CheckError(EdsCreateFileStream(tmpfile, EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways, EdsAccess.kEdsAccess_ReadWrite, outStream))
 
         ' do the transfer
         CheckError(EdsDownload(inRef, dirItemInfo.size, outStream))
+        CheckError(EdsDownloadComplete(inRef))
 
-        ''manipulate the image - Saved for 2.1.0
+        '' manipulate the image
         'Dim imgRef As IntPtr
         'CheckError(EdsCreateImageRef(outStream, imgRef))
-        'Dim rot As Integer = m_rotation
-        'CheckError(EdsSetPropertyData(imgRef, kEdsPropID_Orientation, 0, Marshal.SizeOf(rot), rot))
-        'EdsSaveImage imgRef, EdsTargetImageType.kEdsTargetImageType_Unknown , 
+
+        '' always landscape
+        'Dim orientation As UInt32 = 6
+        'CheckError(EdsSetPropertyData(imgRef, kEdsPropID_Orientation, orientation, Marshal.SizeOf(orientation), orientation))
+        'Dim qs As New StructurePointer(Of UInt32)
+        'CheckError(EdsGetPropertyData(imgRef, kEdsPropID_ImageQuality, 0, qs.Size, qs.Pointer))
+        'Dim saveSettings As EdsSaveImageSetting
+        'saveSettings.iccProfileStream = 0
+        'saveSettings.JPEGQuality = qs.Value
+        'saveSettings.reserved = 0
+        'Dim saveOutstream As IntPtr
+        'CheckError(EdsCreateFileStream(outfile, EdsFileCreateDisposition.kEdsFileCreateDisposition_CreateAlways, EdsAccess.kEdsAccess_Write, saveOutstream))
+
+        'CheckError(EdsSaveImage(imgRef, EdsTargetImageType.kEdsTargetImageType_Jpeg, saveSettings, saveOutstream))
         'CheckError(EdsRelease(imgRef))
+        'CheckError(EdsRelease(saveOutstream))
 
 
-        CheckError(EdsDownloadComplete(inRef))
         CheckError(EdsRelease(outStream))
 
+        FileCopy(tmpfile, outfile)
     End Sub
 
     Public Sub EndFastPictures()

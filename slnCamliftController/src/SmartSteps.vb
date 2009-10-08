@@ -100,6 +100,10 @@ Namespace SmartSteps
                     TryAgain = False
                     Try
                         m_camera.TakeSinglePicture(m_allSettings.SettingsIndex.SavePicturesFolder)
+                    Catch ex As SdkException When ex.Message = SdkErrors.TakePictureAfNg
+                        MsgBox("Autofocus failed!" & vbCrLf & vbCrLf & "NOTE: This software is intended to be used with the camera in manual focus mode", MsgBoxStyle.Exclamation)
+                        AbortRun(Nothing)
+                        Exit Sub
                     Catch ex As DirectoryDoesNotExistException
                         m_allSettings.SettingsIndex.SavePicturesFolder = My.Computer.FileSystem.SpecialDirectories.MyPictures
                         MsgBox("Note: Your Save Pictures To folder is missing. Defaulting to " & m_allSettings.SettingsIndex.SavePicturesFolder & ". You can change this in Settings.", MsgBoxStyle.Information, MsgBoxTitle)
@@ -108,8 +112,11 @@ Namespace SmartSteps
                         AbortRun(ex)
                         Exit Sub
                     Catch ex As Exception
-                        AbortRun(Nothing)
-                        Exit Sub
+                        TryAgain = HandleCameraException(ex)
+                        If Not TryAgain Then
+                            AbortRun(Nothing)
+                            Exit Sub
+                        End If
                     End Try
                 End While
 

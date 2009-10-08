@@ -100,6 +100,7 @@ Public Module modMain
     Public Function MicrostepsToMilimeters(ByVal microsteps As Integer) As String
         Return Format(microsteps / MicrostepsPerMm, "0.00")
     End Function
+
     Public Function ValidateNumeric(ByVal textControl As TextBox, ByVal msg As Boolean) As Boolean
         If IsNumeric(textControl.Text) Then Return True
         If msg Then
@@ -111,6 +112,7 @@ Public Module modMain
         End If
         Return False
     End Function
+
     Public Function ValidateRange(ByVal textControl As TextBox, ByVal minVal As Double, ByVal maxVal As Double) As Boolean
         If Not ValidateNumeric(textControl, True) Then Return False
         If textControl.Text >= minVal And textControl.Text <= maxVal Then Return True
@@ -123,6 +125,7 @@ Public Module modMain
     Private Sub applicationExceptionHandler(ByVal sender As Object, ByVal e As Threading.ThreadExceptionEventArgs)
         GlobalCatch(e.Exception)
     End Sub
+
     Private Sub appDomainExceptionHandler(ByVal sender As Object, ByVal e As UnhandledExceptionEventArgs)
         GlobalCatch(e.ExceptionObject)
     End Sub

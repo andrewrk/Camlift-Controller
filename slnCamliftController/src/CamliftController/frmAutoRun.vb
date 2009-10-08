@@ -23,6 +23,8 @@ Namespace SmartSteps
 
         Private m_stepSizes As List(Of KeyValuePair(Of String, Integer))
 
+        Private m_codeGenerated As Boolean
+
 
         Public Sub New(ByVal smartStepsManager As SmartStepsManager, ByVal positionManager As PositionManager, ByVal objectiveList As ObjectiveListSettings, ByVal controlForm As frmControls, ByVal settings As AllSettings)
             InitializeComponent() ' This call is required by the Windows Form Designer.
@@ -44,7 +46,7 @@ Namespace SmartSteps
 
         Private Sub RefreshPresets()
             cboPreset.Items.Clear()
-            For i = 0 To m_stepSizes.Count - 1
+            For i = m_stepSizes.Count - 1 To 0 Step -1
                 Dim itemName As String
                 If i < LabeledStepsCount Then
                     itemName = m_stepSizes(i).Key
@@ -139,7 +141,7 @@ Namespace SmartSteps
             loadCalculatedStepSize()
         End Sub
         Private Sub nudOverlap_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudOverlap.ValueChanged
-            loadCalculatedStepSize()
+            If Not m_codeGenerated Then loadCalculatedStepSize()
         End Sub
 
         Private Sub chkReturnToTop_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkReturnToTop.CheckedChanged
@@ -167,7 +169,9 @@ Namespace SmartSteps
                 txtSlices.Text = run.Slices
             End If
         End Sub
+
         Private Sub loadSetup(ByVal setup As AutorunSetupSettings)
+            m_codeGenerated = True
             If Not setup.CalculateStepSize Then
                 rdoStepSizeManual.Checked = True
             Else
@@ -177,10 +181,13 @@ Namespace SmartSteps
             txtDwell.Text = setup.Dwell
             nudOverlap.Value = setup.SliceOverlap
 
-            checkCorrectRadio(grpObjective, setup.Objective)
-            checkcorrectradio(grpMag, setup.Mag)
-            checkcorrectradio(grpIris, setup.Iris)
+            CheckCorrectRadio(grpObjective, setup.Objective)
+            CheckCorrectRadio(grpMag, setup.Mag)
+            CheckCorrectRadio(grpIris, setup.Iris)
+
+            m_codeGenerated = False
         End Sub
+
         Private Sub loadStepSize(ByVal setup As AutorunSetupSettings)
             If Not setup.CalculateStepSize Then
                 txtStepSize.Text = setup.StepSize
@@ -209,7 +216,15 @@ Namespace SmartSteps
             trySelectRadio(grpIris, lastIrisName)
         End Sub
         Private Sub loadCalculatedStepSize()
-            Dim stepSize As String = m_objectiveList.GetIris(m_selectedObjective.Key, m_selectedMag.Key, m_selectedIris.Key)
+            Dim stepSize As String
+            If m_currentSetup.CalculateStepSize Then
+                stepSize = m_objectiveList.GetIris(m_selectedObjective.Key, m_selectedMag.Key, m_selectedIris.Key)
+            ElseIf rdoStepSizePreset.Checked Then
+                stepSize = m_stepSizes(cboPreset.Items.Count - 1 - cboPreset.SelectedIndex).Value
+            Else
+                Exit Sub
+            End If
+
             If stepSize <> "" Then
                 stepSize = Int(stepSize * (1 - nudOverlap.Value / 100))
             End If
@@ -371,8 +386,11 @@ Namespace SmartSteps
         Private Sub btnSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnSave.Click
             Dim setups As New frmAutoRunSetups(m_smartStepsManager, DialogType.Save)
 
+
             If setups.ShowDialog() = Windows.Forms.DialogResult.OK Then
                 Dim newkvp As New KeyValuePair(Of String, AutorunSetupSettings)(setups.SelectedName, New AutorunSetupSettings(m_currentSetup.GetContents))
+
+                If Me.rdoStepSizePreset.Checked Then newkvp.Value.SliceOverlap = 0 'TODO: actually support presets and delete this
                 Dim found As Boolean = False
                 For i As Integer = 0 To m_smartStepsManager.AutorunSetups.AutorunSetups.Count - 1
                     If m_smartStepsManager.AutorunSetups.AutorunSetups(i).Key = setups.SelectedName Then
@@ -446,7 +464,7 @@ Namespace SmartSteps
 
         Private Sub cboPreset_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboPreset.SelectedIndexChanged
             If rdoStepSizePreset.Checked Then
-                m_currentSetup.StepSize = m_stepSizes(cboPreset.SelectedIndex).Value
+                m_currentSetup.StepSize = m_stepSizes(m_stepSizes.Count - 1 - cboPreset.SelectedIndex).Value
                 txtStepSize.Text = m_currentSetup.StepSize
             End If
 
