@@ -55,8 +55,10 @@ Public Module modMain
         AddHandler Application.ThreadException, AddressOf applicationExceptionHandler
         AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf appDomainExceptionHandler
 #End If
-
         Application.EnableVisualStyles()
+
+        Dim kludgemon As System.Diagnostics.Process = System.Diagnostics.Process.Start("Kludgesaurus.exe")
+        kludgemon.WaitForExit(2000)
 
         m_settings = New AllSettings
         Using cam As New Camera, spm As New Silverpak(m_settings.Silverpak)

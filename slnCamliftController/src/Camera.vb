@@ -156,8 +156,6 @@ Public Class Camera
             CheckError(EdsSetPropertyData(m_cam, kEdsPropID_ImageQuality, 0, qs.Size, qs.Value))
         End If
 
-        LieToTheCameraAboutHowMuchSpaceWeHaveOnTheComputer()
-
         m_haveSession = True
     End Sub
 
@@ -175,8 +173,8 @@ Public Class Camera
         StopLiveView() 'stops it only if it's running
 
         'FlushTransferQueue()
-        ReleaseSession()
-        EdsTerminateSDK()
+        'ReleaseSession()
+        'EdsTerminateSDK()
 
         s_instance = Nothing
     End Sub
