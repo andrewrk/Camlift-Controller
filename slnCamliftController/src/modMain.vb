@@ -57,7 +57,10 @@ Public Module modMain
 #End If
         Application.EnableVisualStyles()
 
-        Dim kludgemon As System.Diagnostics.Process = System.Diagnostics.Process.Start("Kludgesaurus.exe")
+        Dim kludgemon As New System.Diagnostics.Process
+        kludgemon.StartInfo.FileName = "Kludgesaurus.exe"
+        kludgemon.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
+        kludgemon.Start()
         kludgemon.WaitForExit(2000)
 
         m_settings = New AllSettings
