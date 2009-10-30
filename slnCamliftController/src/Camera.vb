@@ -160,10 +160,10 @@ Public Class Camera
     End Sub
 
     Private Sub ReleaseSession()
-        Debug.Assert(m_fastPictures = False)
-        EdsCloseSession(m_cam)
-        EdsRelease(m_cam)
-        m_haveSession = False
+        'Debug.Assert(m_fastPictures = False)
+        'EdsCloseSession(m_cam)
+        'EdsRelease(m_cam)
+        'm_haveSession = False
     End Sub
 
     Public Sub Dispose() Implements System.IDisposable.Dispose
