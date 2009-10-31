@@ -100,6 +100,7 @@
             Me.btnRotateCW.TabIndex = 14
             Me.btnRotateCW.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
             Me.btnRotateCW.UseVisualStyleBackColor = True
+            Me.btnRotateCW.Visible = False
             '
             'btnRotateCCW
             '
@@ -111,6 +112,7 @@
             Me.btnRotateCCW.TabIndex = 14
             Me.btnRotateCCW.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
             Me.btnRotateCCW.UseVisualStyleBackColor = True
+            Me.btnRotateCCW.Visible = False
             '
             'btnZoomIn
             '
