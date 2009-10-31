@@ -14,9 +14,11 @@ Public Module modMain
     Public Const MsgBoxSilverpakNotFoundMessage As String = "Camlift motor not found. Please check all connections."
     Public Const MsgBoxCameraNotFoundMessage = "No Camera Found. Please check all connections."
     Public Const MsgBoxTooManyCamerasMessage = "More than one camera found. Please make sure no other cameras are connected."
+    Public Const MsgBoxCameraDisconnectedMessage = "Camera was disconnected. Please try again."
     Public Const MsgBoxDeviceIsBusyMessage = "Camera device is busy. You can disconnect the power to force it to reset."
     Public Const MsgBoxCommPortBusy = "It appears another program is using the camera. Please close EOS Utility or any other application that is using it."
     Public Const MsgBoxLiveViewDisabled = "Live View is disabled in the camera. Please use EOS Utility to enable Live View."
+    Public Const MsgBoxTakePictureCardNg = "The camera was not be initialized properly. Please restart CamliftController."
 
     Public Const MsgBoxNoSavedAutorunSetups As String = "There are no saved Autorun Setups. You can save them by pressing Save and then they will be available."
     Public Const ConnectionLostResult = "Connection Lost"
@@ -57,27 +59,27 @@ Public Module modMain
 #End If
         Application.EnableVisualStyles()
 
-        Dim kludgemon As New System.Diagnostics.Process
-        kludgemon.StartInfo.FileName = "Kludgesaurus.exe"
-        kludgemon.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
-        kludgemon.Start()
-        kludgemon.WaitForExit(2000)
+        LaunchKlugesaurus()
 
         m_settings = New AllSettings
-        Using cam As New Camera, spm As New Silverpak(m_settings.Silverpak)
-            While True
-                Try
-                    spm.EstablishConnection()
-                    Exit While
-                Catch ex As SilverpakNotFoundException
-                    If MsgBox(MsgBoxSilverpakNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
-                End Try
-            End While
+        Try
+            Using cam As New Camera, spm As New Silverpak(m_settings.Silverpak)
+                While True
+                    Try
+                        spm.EstablishConnection()
+                        Exit While
+                    Catch ex As SilverpakNotFoundException
+                        If MsgBox(MsgBoxSilverpakNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle) = MsgBoxResult.Cancel Then Exit Sub
+                    End Try
+                End While
 
-            Dim form As New CamliftController.frmControls(m_settings, spm, cam)
+                Dim form As New CamliftController.frmControls(m_settings, spm, cam)
 
-            form.ShowDialog()
-        End Using
+                form.ShowDialog()
+            End Using
+        Catch ex As GtfoException
+            Exit Sub
+        End Try
     End Sub
     ''' <summary>Returns True iff you should try again.</summary>
     Public Function HandleCameraException(ByVal ex As Exception) As Boolean
@@ -85,6 +87,10 @@ Public Module modMain
             Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxCameraNotFoundMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
         ElseIf TypeOf ex Is TooManyCamerasFoundException Then
             Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxTooManyCamerasMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
+        ElseIf TypeOf ex Is CameraDisconnectedException Then
+            Dim result = Not (MsgBoxResult.Cancel = MsgBox(MsgBoxCameraDisconnectedMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
+            If result Then LaunchKlugesaurus()
+            Return result
         ElseIf TypeOf ex Is LiveViewFailedException Then
             MsgBox(MsgBoxLiveViewDisabled, MsgBoxStyle.Information, MsgBoxTitle)
             Return False
@@ -93,7 +99,12 @@ Public Module modMain
                 Case SdkErrors.DeviceBusy
                     Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxDeviceIsBusyMessage, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
                 Case SdkErrors.CommPortIsInUse
-                    Return Not (MsgBoxResult.Cancel = MsgBox(MsgBoxCommPortBusy, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
+                    Dim result = Not (MsgBoxResult.Cancel = MsgBox(MsgBoxCommPortBusy, MsgBoxStyle.RetryCancel + MsgBoxStyle.Critical, MsgBoxTitle))
+                    If result Then LaunchKlugesaurus()
+                    Return result
+                Case SdkErrors.TakePictureCardNg
+                    MsgBox(MsgBoxTakePictureCardNg, MsgBoxStyle.OkOnly + MsgBoxStyle.Critical, MsgBoxTitle)
+                    Return False
                 Case Else
                     Throw ex
             End Select
@@ -147,5 +158,17 @@ Public Module modMain
         MsgBox("An unexpected error occurred! A report has been made at """ & globalErrorLogFile & """.", MsgBoxStyle.Critical, MsgBoxTitle)
     End Sub
 
+    Public Sub LaunchKlugesaurus()
+        Dim klugemon As New System.Diagnostics.Process
+        klugemon.StartInfo.FileName = "Klugesaurus.exe"
+        klugemon.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
+        klugemon.Start()
+        klugemon.WaitForExit(2000)
+    End Sub
+
 End Module
 
+Public Class GtfoException
+    Inherits Exception
+
+End Class

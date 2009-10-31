@@ -72,6 +72,16 @@ Public Class Camera
             ResetState()
 
             CheckError(EdsInitializeSDK())
+
+            While True
+                Try
+                    EstablishSession()
+                    Exit While
+                Catch ex As Exception
+                    If HandleCameraException(ex) Then Continue While
+                    Throw New GtfoException ' Exit program
+                End Try
+            End While
         Else
             Throw New OnlyOneInstanceAllowedException
         End If
@@ -180,16 +190,22 @@ Public Class Camera
     End Sub
 
     Private Sub CheckError(ByVal Err As Integer)
-        ' check for disconnect
-        If Err = EDS_ERR_INVALID_HANDLE Then
-            ' camera was disconnected, clean up and then try to establish a session
-            ' clean up
-            ResetState()
-            EdsCloseSession(m_cam)
-            EdsRelease(m_cam)
+        ' check for special errors
+        Select Case Err
+            Case EDS_ERR_INVALID_HANDLE
+                ' camera was disconnected.
+                ' clean up
+                ResetState()
+                EdsCloseSession(m_cam)
+                EdsRelease(m_cam)
 
-            Throw New CameraDisconnectedException
-        End If
+                Throw New CameraDisconnectedException
+            Case EDS_ERR_COMM_PORT_IS_IN_USE
+                'EOSUtility got to it before we did.
+                ResetState()
+                EdsCloseSession(m_cam)
+                EdsRelease(m_cam)
+        End Select
         ' throw errors if necessary
         If Err <> EDS_ERR_OK Then Throw New SdkException(Err)
     End Sub
@@ -642,10 +658,10 @@ Public Class Camera
 
     End Sub
 
-    Protected Overrides Sub Finalize()
-        Dispose()
-        MyBase.Finalize()
-    End Sub
+    'Protected Overrides Sub Finalize()
+    '    Dispose()
+    '    MyBase.Finalize()
+    'End Sub
 
     ''' <summary>
     ''' size of the frames coming through live view. only valid once live view has started.

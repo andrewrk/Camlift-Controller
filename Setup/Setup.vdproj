@@ -15,7 +15,7 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_2C54F4137CF049A0A7A90CE67C840BF8"
+        "MsmKey" = "8:_03E5445893AA40AC8029E02076F04EF6"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -46,7 +46,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2C54F4137CF049A0A7A90CE67C840BF8"
+        "OwnerKey" = "8:_03E5445893AA40AC8029E02076F04EF6"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -822,9 +822,9 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_2C54F4137CF049A0A7A90CE67C840BF8"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_03E5445893AA40AC8029E02076F04EF6"
             {
-            "SourcePath" = "8:..\\Kludgesaurus\\obj\\Debug\\Kludgesaurus.exe"
+            "SourcePath" = "8:..\\Klugesaurus\\obj\\Debug\\Klugesaurus.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3B45A9E4E2A74A18BA3D5EACB0B2DAE0"
@@ -844,7 +844,7 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{CD226CA4-C7BD-4C12-AF14-B53721701A5F}"
+            "OutputProjectGuid" = "8:{A16CE18F-EED9-4028-9EBE-487CB03A0E30}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

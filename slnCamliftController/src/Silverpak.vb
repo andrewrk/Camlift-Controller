@@ -2,7 +2,7 @@
 Imports VisionaryDigital.Settings
 Imports System.Threading
 
-#Const USE_FAKE_SILVERPAK = False
+#Const USE_FAKE_SILVERPAK = True
 
 Public Class Silverpak
 #If USE_FAKE_SILVERPAK Then
@@ -63,14 +63,6 @@ Public Class Silverpak
         Catch ex As InvalidSilverpakOperationException
             Reconnect()
         End Try
-    End Sub
-
-    Protected Overrides Sub Finalize()
-        Try
-            Dispose()
-        Catch ex As Exception
-        End Try
-        MyBase.Finalize()
     End Sub
 End Class
 
