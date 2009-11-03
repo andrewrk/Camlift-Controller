@@ -29,7 +29,7 @@ Public Class Camera
 
     ' live view
     Private Const LiveViewDelay = 200
-    Private Const LiveViewFrameBufferSize = &H80000
+    Private Const LiveViewFrameBufferSize = &H800000
     Private m_liveViewThread As Thread
     Private m_liveViewOn As Boolean
     Private m_waitingToStartLiveView As Boolean
