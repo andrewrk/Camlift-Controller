@@ -148,7 +148,7 @@ Public Module modMain
 
     Public Sub GlobalCatch(ByVal ex As Exception)
         Dim outStr As String = "Exception time: " & Now.ToString & vbCrLf
-        outStr &= "Tpye: " & ex.GetType.ToString & vbCrLf
+        outStr &= "Version: " & Application.ProductVersion & vbCrLf
         outStr &= "Message: " & ex.Message & vbCrLf
         outStr &= ex.ToString & vbCrLf
         outStr &= vbCrLf

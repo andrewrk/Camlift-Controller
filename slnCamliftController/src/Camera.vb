@@ -599,7 +599,11 @@ Public Class Camera
         CoInitializeEx(0, 2)
         While Not m_stoppingLiveView
             nowPlusInterval = Now.Ticks + LiveViewDelay
-            ShowLiveViewFrame()
+            Try
+                ShowLiveViewFrame()
+            Catch ex As SdkException When ex.SdkError = SdkErrors.StreamWriteError
+                'that sucks. oh well.
+            End Try
             Thread.Sleep(Math.Max(nowPlusInterval - Now.Ticks, 0))
         End While
     End Sub
