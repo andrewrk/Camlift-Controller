@@ -34,6 +34,7 @@
             Me.btnZoomIn = New System.Windows.Forms.Button
             Me.btnZoomOut = New System.Windows.Forms.Button
             Me.picLiveView = New System.Windows.Forms.PictureBox
+            Me.chk5DMode = New System.Windows.Forms.CheckBox
             CType(Me.picLiveView, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
@@ -149,11 +150,22 @@
             Me.picLiveView.TabIndex = 8
             Me.picLiveView.TabStop = False
             '
+            'chk5DMode
+            '
+            Me.chk5DMode.AutoSize = True
+            Me.chk5DMode.Location = New System.Drawing.Point(510, 679)
+            Me.chk5DMode.Name = "chk5DMode"
+            Me.chk5DMode.Size = New System.Drawing.Size(70, 17)
+            Me.chk5DMode.TabIndex = 15
+            Me.chk5DMode.Text = "5D Mode"
+            Me.chk5DMode.UseVisualStyleBackColor = True
+            '
             'frmLiveView
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.ClientSize = New System.Drawing.Size(1032, 708)
+            Me.Controls.Add(Me.chk5DMode)
             Me.Controls.Add(Me.btnZoomOut)
             Me.Controls.Add(Me.btnRotateCW)
             Me.Controls.Add(Me.btnRotateCCW)
@@ -185,5 +197,6 @@
         Friend WithEvents chkGrid As System.Windows.Forms.CheckBox
         Friend WithEvents btnRotateCCW As System.Windows.Forms.Button
         Friend WithEvents btnRotateCW As System.Windows.Forms.Button
+        Friend WithEvents chk5DMode As System.Windows.Forms.CheckBox
     End Class
 End Namespace
