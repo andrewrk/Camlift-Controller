@@ -160,7 +160,7 @@ Public Module modMain
 
     Public Sub LaunchKlugesaurus()
         Dim klugemon As New System.Diagnostics.Process
-        klugemon.StartInfo.FileName = "Klugesaurus.exe"
+        klugemon.StartInfo.FileName = Application.StartupPath & "\Klugesaurus.exe"
         klugemon.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
         klugemon.Start()
         klugemon.WaitForExit(2000)
