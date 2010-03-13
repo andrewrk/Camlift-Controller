@@ -1,7 +1,11 @@
-
-Put motor.xml and settings index.xml into the installer so that uninstall is clean
+Version 2.1.0:
+* Automatically detect which camera is plugged in. It could be 40D, 5D, or 7D. Or at least provide a build for each camera.
+* Fix the zoom box for the 7D.
+* Integrate the real SDK.
+* Thoroughly test for problems.
 
 Version 3.0.0:
+* Put motor.xml and settings index.xml into the installer so that uninstall is clean
 * only attach live view to frmcontrols by default; otherwise remember in settings
 * save preset data with auto run. this involves saving step size settings with it
 
