@@ -8,27 +8,41 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Klugesaurus", "Klugesaurus\Klugesaurus.vbproj", "{A16CE18F-EED9-4028-9EBE-487CB03A0E30}"
 EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{33D1A02A-02B5-4A63-9F4B-B9BE391C9B4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{33D1A02A-02B5-4A63-9F4B-B9BE391C9B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33D1A02A-02B5-4A63-9F4B-B9BE391C9B4A}.Debug|x86.ActiveCfg = Debug|x86
+		{33D1A02A-02B5-4A63-9F4B-B9BE391C9B4A}.Debug|x86.Build.0 = Debug|x86
 		{33D1A02A-02B5-4A63-9F4B-B9BE391C9B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33D1A02A-02B5-4A63-9F4B-B9BE391C9B4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33D1A02A-02B5-4A63-9F4B-B9BE391C9B4A}.Release|x86.ActiveCfg = Release|x86
+		{33D1A02A-02B5-4A63-9F4B-B9BE391C9B4A}.Release|x86.Build.0 = Release|x86
 		{E5879B35-2D0A-4527-BD3E-C699A165549B}.Debug|Any CPU.ActiveCfg = Debug
+		{E5879B35-2D0A-4527-BD3E-C699A165549B}.Debug|x86.ActiveCfg = Debug
+		{E5879B35-2D0A-4527-BD3E-C699A165549B}.Debug|x86.Build.0 = Debug
 		{E5879B35-2D0A-4527-BD3E-C699A165549B}.Release|Any CPU.ActiveCfg = Release
+		{E5879B35-2D0A-4527-BD3E-C699A165549B}.Release|x86.ActiveCfg = Release
+		{E5879B35-2D0A-4527-BD3E-C699A165549B}.Release|x86.Build.0 = Release
 		{A16CE18F-EED9-4028-9EBE-487CB03A0E30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A16CE18F-EED9-4028-9EBE-487CB03A0E30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A16CE18F-EED9-4028-9EBE-487CB03A0E30}.Debug|x86.ActiveCfg = Debug|x86
+		{A16CE18F-EED9-4028-9EBE-487CB03A0E30}.Debug|x86.Build.0 = Debug|x86
 		{A16CE18F-EED9-4028-9EBE-487CB03A0E30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A16CE18F-EED9-4028-9EBE-487CB03A0E30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A16CE18F-EED9-4028-9EBE-487CB03A0E30}.Release|x86.ActiveCfg = Release|x86
+		{A16CE18F-EED9-4028-9EBE-487CB03A0E30}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
