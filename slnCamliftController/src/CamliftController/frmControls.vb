@@ -225,7 +225,12 @@ Namespace CamliftController
                 Catch ex As CameraIsBusyException
                     ' do nothing
                 Catch ex As DirectoryDoesNotExistException
-                    m_allSettings.SettingsIndex.SavePicturesFolder = My.Computer.FileSystem.SpecialDirectories.MyPictures
+                    Try
+                        m_allSettings.SettingsIndex.SavePicturesFolder = My.Computer.FileSystem.SpecialDirectories.MyPictures
+                    Catch ex2 As Exception
+                        ' no my pictures folder
+                        m_allSettings.SettingsIndex.SavePicturesFolder = My.Application.Deployment.DataDirectory
+                    End Try
                     MsgBox("Note: Your Save Pictures To folder is missing. Defaulting to " & m_allSettings.SettingsIndex.SavePicturesFolder & ". You can change this in Settings.", MsgBoxStyle.Information, MsgBoxTitle)
                     TryAgain = True
                 Catch ex As Exception
