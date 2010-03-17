@@ -125,7 +125,11 @@ Namespace CamliftController
             System.Diagnostics.Process.Start(HelpFileName)
         End Sub
         Private Sub AboutToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AboutToolStripMenuItem.Click
-            MsgBox(MsgBoxAboutMessage, MsgBoxStyle.Information, MsgBoxTitle)
+            Dim msg As String = MsgBoxAboutMessage
+
+            msg &= vbCrLf & m_cam.Name
+
+            MsgBox(msg, MsgBoxStyle.Information, MsgBoxTitle)
         End Sub
 
         Private Sub tkbPos_Scroll(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tkbPos.Scroll

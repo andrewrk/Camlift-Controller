@@ -76,11 +76,13 @@ Namespace CanonCamera
 
         Private Function GetZoomLoc() As Point
             Dim zoomCamLoc As Point = m_cam.ZoomPosition
-            If chk5DMode.Checked Then
+            If m_cam.Name = Camera.CameraName_5D Then
                 Const mx = 0.776595744680851, bx = -49.531914893617 / 1000 * MaxZoomWidth
                 zoomCamLoc.X = mx * zoomCamLoc.X + bx
                 Const _my = 0.77914110429447858, by = -27.239263803680984 / 660 * MaxZoomHeight
                 zoomCamLoc.Y = _my * zoomCamLoc.Y + by
+            ElseIf m_cam.Name = Camera.CameraName_7D Then
+
             End If
             Return New Point(zoomCamLoc.X / MaxZoomWidth * picLiveView.Width, _
                                              zoomCamLoc.Y / MaxZoomHeight * picLiveView.Height)
@@ -131,11 +133,13 @@ Namespace CanonCamera
             If newpt.Y < 0 Then newpt.Y = 0
             If newpt.Y + ZSize.Height > MaxZoomHeight Then newpt.Y = MaxZoomHeight - ZSize.Height
 
-            If chk5DMode.Checked Then
+            If m_cam.Name = Camera.CameraName_5D Then
                 Const mx = 1.2876712328767124, bx = 63.780821917808225 / 1000 * MaxZoomWidth
                 newpt.X = mx * newpt.X + bx
                 Const _my = 1.2834645669291338, by = 34.960629921259851 / 660 * MaxZoomHeight
                 newpt.Y = _my * newpt.Y + by
+            ElseIf m_cam.Name = Camera.CameraName_7D Then
+
             End If
 
             m_cam.ZoomPosition = newpt

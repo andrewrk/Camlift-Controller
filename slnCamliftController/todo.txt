@@ -1,4 +1,5 @@
 Version 2.1.0:
+* if my pictures doesn't exist, it crashes
 * Automatically detect which camera is plugged in. It could be 40D, 5D, or 7D. Or at least provide a build for each camera.
 * Fix the zoom box for the 7D.
 * Thoroughly test for problems.

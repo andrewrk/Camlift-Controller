@@ -17,6 +17,10 @@ End Enum
 Public Class Camera
     Implements IDisposable
 
+    Public Const CameraName_5D As String = "Canon EOS 5D"
+    Public Const CameraName_40D As String = "Canon EOS 40D"
+    Public Const CameraName_7D As String = "Canon EOS 7D"
+
     Private m_cam As IntPtr
     Private m_oeh As EdsObjectEventHandler
     Private m_seh As EdsStateEventHandler
@@ -168,6 +172,7 @@ Public Class Camera
 
         m_haveSession = True
     End Sub
+
 
     Private Sub ReleaseSession()
         'Debug.Assert(m_fastPictures = False)
@@ -407,7 +412,7 @@ Public Class Camera
 
         Dim haveSession As Boolean = m_haveSession
 
-        checkDirectory(OutFolder)
+        CheckDirectory(OutFolder)
 
         EstablishSession()
         CheckBusy()
@@ -711,6 +716,14 @@ Public Class Camera
             m_whiteBalance.Value = value
             m_pendingWhiteBalance = True
         End Set
+    End Property
+
+    Public ReadOnly Property Name() As String
+        Get
+            Dim deviceInfo As New EdsDeviceInfo
+            CheckError(EdsGetDeviceInfo(m_cam, deviceInfo))
+            Return deviceInfo.szDeviceDescription
+        End Get
     End Property
 
     Private Class StructurePointer(Of T As Structure)
