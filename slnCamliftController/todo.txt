@@ -1,5 +1,4 @@
 Version 2.2.1:
-* Fix the zoom box for the 7D.
 * Thoroughly test for problems.
 * Turn motor back on
 
