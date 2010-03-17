@@ -1,5 +1,4 @@
-Version 2.1.0:
-* Automatically detect which camera is plugged in. It could be 40D, 5D, or 7D. Or at least provide a build for each camera.
+Version 2.2.1:
 * Fix the zoom box for the 7D.
 * Thoroughly test for problems.
 * Turn motor back on
