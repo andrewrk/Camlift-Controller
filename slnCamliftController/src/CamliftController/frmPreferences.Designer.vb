@@ -28,7 +28,6 @@
             Me.grpStepSizes = New System.Windows.Forms.GroupBox
             Me.lblLabel9 = New System.Windows.Forms.Label
             Me.lblLabel8 = New System.Windows.Forms.Label
-            Me.lblLabel7 = New System.Windows.Forms.Label
             Me.lblLabelDefault6 = New System.Windows.Forms.Label
             Me.lblLabelDefault5 = New System.Windows.Forms.Label
             Me.lblLabelDefault4 = New System.Windows.Forms.Label
@@ -80,6 +79,8 @@
             Me.btnLoadProfile = New System.Windows.Forms.Button
             Me.btnSaveProfile = New System.Windows.Forms.Button
             Me.btnDeleteProfile = New System.Windows.Forms.Button
+            Me.lblLabelDefault7 = New System.Windows.Forms.Label
+            Me.txtLabel7 = New System.Windows.Forms.TextBox
             Me.grpStepSizes.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -97,7 +98,7 @@
             '
             Me.grpStepSizes.Controls.Add(Me.lblLabel9)
             Me.grpStepSizes.Controls.Add(Me.lblLabel8)
-            Me.grpStepSizes.Controls.Add(Me.lblLabel7)
+            Me.grpStepSizes.Controls.Add(Me.lblLabelDefault7)
             Me.grpStepSizes.Controls.Add(Me.lblLabelDefault6)
             Me.grpStepSizes.Controls.Add(Me.lblLabelDefault5)
             Me.grpStepSizes.Controls.Add(Me.lblLabelDefault4)
@@ -111,6 +112,7 @@
             Me.grpStepSizes.Controls.Add(Me.txtLabel5)
             Me.grpStepSizes.Controls.Add(Me.lblDefaultSizeLabel)
             Me.grpStepSizes.Controls.Add(Me.lblLabelLabel)
+            Me.grpStepSizes.Controls.Add(Me.txtLabel7)
             Me.grpStepSizes.Controls.Add(Me.txtLabel6)
             Me.grpStepSizes.Controls.Add(Me.btnRestoreDefaults)
             Me.grpStepSizes.Controls.Add(Me.lblDefault1)
@@ -166,15 +168,6 @@
             Me.lblLabel8.Size = New System.Drawing.Size(26, 13)
             Me.lblLabel8.TabIndex = 9
             Me.lblLabel8.Text = "CF2"
-            '
-            'lblLabel7
-            '
-            Me.lblLabel7.AutoSize = True
-            Me.lblLabel7.Location = New System.Drawing.Point(28, 88)
-            Me.lblLabel7.Name = "lblLabel7"
-            Me.lblLabel7.Size = New System.Drawing.Size(26, 13)
-            Me.lblLabel7.TabIndex = 13
-            Me.lblLabel7.Text = "CF2"
             '
             'lblLabelDefault6
             '
@@ -621,6 +614,23 @@
             Me.btnDeleteProfile.Text = "Delete"
             Me.btnDeleteProfile.UseVisualStyleBackColor = True
             '
+            'lblLabelDefault7
+            '
+            Me.lblLabelDefault7.AutoSize = True
+            Me.lblLabelDefault7.Location = New System.Drawing.Point(78, 88)
+            Me.lblLabelDefault7.Name = "lblLabelDefault7"
+            Me.lblLabelDefault7.Size = New System.Drawing.Size(33, 13)
+            Me.lblLabelDefault7.TabIndex = 18
+            Me.lblLabelDefault7.Text = "CF1B"
+            '
+            'txtLabel7
+            '
+            Me.txtLabel7.Location = New System.Drawing.Point(28, 86)
+            Me.txtLabel7.Name = "txtLabel7"
+            Me.txtLabel7.Size = New System.Drawing.Size(44, 20)
+            Me.txtLabel7.TabIndex = 17
+            Me.txtLabel7.Text = "CF 9"
+            '
             'frmPreferences
             '
             Me.AcceptButton = Me.btnOk
@@ -704,12 +714,13 @@
         Friend WithEvents lblLabelDefault1 As System.Windows.Forms.Label
         Friend WithEvents lblLabel9 As System.Windows.Forms.Label
         Friend WithEvents lblLabel8 As System.Windows.Forms.Label
-        Friend WithEvents lblLabel7 As System.Windows.Forms.Label
         Friend WithEvents Label1 As System.Windows.Forms.Label
         Friend WithEvents cboProfiles As System.Windows.Forms.ComboBox
         Friend WithEvents btnLoadProfile As System.Windows.Forms.Button
         Friend WithEvents btnSaveProfile As System.Windows.Forms.Button
         Friend WithEvents btnDeleteProfile As System.Windows.Forms.Button
+        Friend WithEvents lblLabelDefault7 As System.Windows.Forms.Label
+        Friend WithEvents txtLabel7 As System.Windows.Forms.TextBox
     End Class
 
 End Namespace

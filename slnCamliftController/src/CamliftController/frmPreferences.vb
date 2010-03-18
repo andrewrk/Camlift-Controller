@@ -61,7 +61,7 @@ Namespace CamliftController
                     lblDefault.Text = defaultStepSizes(i).Value
                 Else
                     Dim txtStep As TextBox = grpStepSizes.Controls("txtStep" & i + 1)
-                    AddHandler txtStep.TextChanged, AddressOf txtStep7_9_TextChanged
+                    AddHandler txtStep.TextChanged, AddressOf txtStep8_9_TextChanged
                     txtStep.Text = m_steps(i).Value
                     AddHandler txtStep.TextChanged, AddressOf txt_TextChanged
 
@@ -96,7 +96,7 @@ Namespace CamliftController
             Me.AcceptButton = btnApply
         End Sub
 
-        Private Sub txtStep7_9_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        Private Sub txtStep8_9_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
             Dim txtStep As TextBox = sender
             Dim lblLabel As Label = grpStepSizes.Controls("lblLabel" & txtStep.Name.Substring("txtStep".Length))
             If IsNumeric(txtStep.Text) AndAlso (txtStep.Text >= 1 And txtStep.Text <= Silverpak23CE.SilverpakManager.DefaultMaxPosition) Then
@@ -108,7 +108,7 @@ Namespace CamliftController
 
 
         Private Sub btnRestoreDefaults_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRestoreDefaults.Click
-            For i As Integer = 1 To 6
+            For i As Integer = 1 To 7
                 Dim txtLabel As TextBox = grpStepSizes.Controls("txtLabel" & i)
                 Dim lblLabelDefault As Label = grpStepSizes.Controls("lblLabelDefault" & i)
                 txtLabel.Text = lblLabelDefault.Text
@@ -118,7 +118,7 @@ Namespace CamliftController
                 txtStep.Text = lblDefault.Text
             Next
 
-            For i As Integer = 7 To 9
+            For i As Integer = 8 To 9
                 Dim txtStep As TextBox = grpStepSizes.Controls("txtStep" & i)
                 Dim lblDefault As Label = grpStepSizes.Controls("lblDefault" & i)
                 txtStep.Text = lblDefault.Text

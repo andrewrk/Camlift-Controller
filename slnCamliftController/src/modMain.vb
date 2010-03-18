@@ -41,7 +41,7 @@ Public Module modMain
     Public Const RolloverHelpNone As String = ""
 
     Public Const StepsCount = 9
-    Public Const LabeledStepsCount = 6
+    Public Const LabeledStepsCount = 7
 
 
 

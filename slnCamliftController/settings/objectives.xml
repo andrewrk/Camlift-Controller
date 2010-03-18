@@ -1,5 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <list>
+  <list name="CF1B">
+    <list name="P1">
+      <int name="I-3" value="750" />
+      <int name="I-4" value="900" />
+      <int name="I-5" value="1275" />
+      <int name="I-6" value="1800" />
+    </list>
+    <list name="P2">
+      <int name="I-3" value="600" />
+      <int name="I-4" value="750" />
+      <int name="I-5" value="900" />
+      <int name="I-6" value="1275" />
+    </list>
+    <list name="P3">
+      <int name="I-3" value="450" />
+      <int name="I-4" value="525" />
+      <int name="I-5" value="675" />
+      <int name="I-6" value="900" />
+    </list>
+  </list>
   <list name="CF2">
     <list name="P1">
       <int name="I-3" value="450" />

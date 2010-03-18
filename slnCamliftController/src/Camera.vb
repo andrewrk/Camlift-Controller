@@ -773,9 +773,15 @@ End Class
 Public Class Camera
     Implements IDisposable
 
+    Public Const CameraName_5D As String = "Canon EOS 5D"
+    Public Const CameraName_40D As String = "Canon EOS 40D"
+    Public Const CameraName_7D As String = "Canon EOS 7D"
+
+
     Private m_zoomRatio As Integer
     Private m_zoomPosition As Point
     Private m_whiteBalance As Integer
+    Private m_rotation As Drawing.RotateFlipType = RotateFlipType.RotateNoneFlipNone
 
     Public Sub Dispose() Implements IDisposable.Dispose
     End Sub
@@ -839,6 +845,27 @@ Public Class Camera
         m_zoomPosition = New Point(0, 0)
         m_zoomRatio = 1
     End Sub
+
+    Public ReadOnly Property Name() As String
+        Get
+            Return CameraName_40D
+        End Get
+    End Property
+
+    Public ReadOnly Property LiveViewImageSize() As Size
+        Get
+            Return New Size(640, 480)
+        End Get
+    End Property
+
+    Public Property Rotation() As Drawing.RotateFlipType
+        Get
+            Return m_rotation
+        End Get
+        Set(ByVal value As Drawing.RotateFlipType)
+            m_rotation = value
+        End Set
+    End Property
 End Class
 #End If
 
