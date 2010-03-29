@@ -17,7 +17,7 @@ End Enum
 Public Class Camera
     Implements IDisposable
 
-    Public Const CameraName_5D As String = "Canon EOS 5D"
+    Public Const CameraName_5D As String = "Canon EOS 5D Mark II"
     Public Const CameraName_40D As String = "Canon EOS 40D"
     Public Const CameraName_7D As String = "Canon EOS 7D"
 
@@ -773,7 +773,7 @@ End Class
 Public Class Camera
     Implements IDisposable
 
-    Public Const CameraName_5D As String = "Canon EOS 5D"
+    Public Const CameraName_5D As String = "Canon EOS 5D Mark II"
     Public Const CameraName_40D As String = "Canon EOS 40D"
     Public Const CameraName_7D As String = "Canon EOS 7D"
 
