@@ -28,6 +28,7 @@
             Me.grpStepSizes = New System.Windows.Forms.GroupBox
             Me.lblLabel9 = New System.Windows.Forms.Label
             Me.lblLabel8 = New System.Windows.Forms.Label
+            Me.lblLabelDefault7 = New System.Windows.Forms.Label
             Me.lblLabelDefault6 = New System.Windows.Forms.Label
             Me.lblLabelDefault5 = New System.Windows.Forms.Label
             Me.lblLabelDefault4 = New System.Windows.Forms.Label
@@ -41,6 +42,7 @@
             Me.txtLabel5 = New System.Windows.Forms.TextBox
             Me.lblDefaultSizeLabel = New System.Windows.Forms.Label
             Me.lblLabelLabel = New System.Windows.Forms.Label
+            Me.txtLabel7 = New System.Windows.Forms.TextBox
             Me.txtLabel6 = New System.Windows.Forms.TextBox
             Me.btnRestoreDefaults = New System.Windows.Forms.Button
             Me.lblDefault1 = New System.Windows.Forms.Label
@@ -79,8 +81,6 @@
             Me.btnLoadProfile = New System.Windows.Forms.Button
             Me.btnSaveProfile = New System.Windows.Forms.Button
             Me.btnDeleteProfile = New System.Windows.Forms.Button
-            Me.lblLabelDefault7 = New System.Windows.Forms.Label
-            Me.txtLabel7 = New System.Windows.Forms.TextBox
             Me.grpStepSizes.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -169,6 +169,15 @@
             Me.lblLabel8.TabIndex = 9
             Me.lblLabel8.Text = "CF2"
             '
+            'lblLabelDefault7
+            '
+            Me.lblLabelDefault7.AutoSize = True
+            Me.lblLabelDefault7.Location = New System.Drawing.Point(78, 88)
+            Me.lblLabelDefault7.Name = "lblLabelDefault7"
+            Me.lblLabelDefault7.Size = New System.Drawing.Size(33, 13)
+            Me.lblLabelDefault7.TabIndex = 18
+            Me.lblLabelDefault7.Text = "CF1B"
+            '
             'lblLabelDefault6
             '
             Me.lblLabelDefault6.AutoSize = True
@@ -210,9 +219,9 @@
             Me.lblLabelDefault2.AutoSize = True
             Me.lblLabelDefault2.Location = New System.Drawing.Point(78, 218)
             Me.lblLabelDefault2.Name = "lblLabelDefault2"
-            Me.lblLabelDefault2.Size = New System.Drawing.Size(33, 13)
+            Me.lblLabelDefault2.Size = New System.Drawing.Size(18, 13)
             Me.lblLabelDefault2.TabIndex = 38
-            Me.lblLabelDefault2.Text = "10x +"
+            Me.lblLabelDefault2.Text = "5x"
             '
             'lblLabelDefault1
             '
@@ -281,6 +290,14 @@
             Me.lblLabelLabel.TabIndex = 0
             Me.lblLabelLabel.Text = "Label"
             '
+            'txtLabel7
+            '
+            Me.txtLabel7.Location = New System.Drawing.Point(28, 86)
+            Me.txtLabel7.Name = "txtLabel7"
+            Me.txtLabel7.Size = New System.Drawing.Size(44, 20)
+            Me.txtLabel7.TabIndex = 17
+            Me.txtLabel7.Text = "CF 9"
+            '
             'txtLabel6
             '
             Me.txtLabel6.Location = New System.Drawing.Point(28, 112)
@@ -323,7 +340,7 @@
             Me.lblDefault3.Name = "lblDefault3"
             Me.lblDefault3.Size = New System.Drawing.Size(19, 13)
             Me.lblDefault3.TabIndex = 35
-            Me.lblDefault3.Text = "20"
+            Me.lblDefault3.Text = "40"
             '
             'lblDefault4
             '
@@ -357,9 +374,9 @@
             Me.lblDefault7.AutoSize = True
             Me.lblDefault7.Location = New System.Drawing.Point(189, 88)
             Me.lblDefault7.Name = "lblDefault7"
-            Me.lblDefault7.Size = New System.Drawing.Size(31, 13)
+            Me.lblDefault7.Size = New System.Drawing.Size(25, 13)
             Me.lblDefault7.TabIndex = 15
-            Me.lblDefault7.Text = "1250"
+            Me.lblDefault7.Text = "450"
             '
             'lblDefault8
             '
@@ -368,7 +385,7 @@
             Me.lblDefault8.Name = "lblDefault8"
             Me.lblDefault8.Size = New System.Drawing.Size(31, 13)
             Me.lblDefault8.TabIndex = 11
-            Me.lblDefault8.Text = "2500"
+            Me.lblDefault8.Text = "1250"
             '
             'lblDefault9
             '
@@ -377,7 +394,7 @@
             Me.lblDefault9.Name = "lblDefault9"
             Me.lblDefault9.Size = New System.Drawing.Size(31, 13)
             Me.lblDefault9.TabIndex = 7
-            Me.lblDefault9.Text = "5000"
+            Me.lblDefault9.Text = "2500"
             '
             'lblDefaultLabel
             '
@@ -613,23 +630,6 @@
             Me.btnDeleteProfile.TabIndex = 7
             Me.btnDeleteProfile.Text = "Delete"
             Me.btnDeleteProfile.UseVisualStyleBackColor = True
-            '
-            'lblLabelDefault7
-            '
-            Me.lblLabelDefault7.AutoSize = True
-            Me.lblLabelDefault7.Location = New System.Drawing.Point(78, 88)
-            Me.lblLabelDefault7.Name = "lblLabelDefault7"
-            Me.lblLabelDefault7.Size = New System.Drawing.Size(33, 13)
-            Me.lblLabelDefault7.TabIndex = 18
-            Me.lblLabelDefault7.Text = "CF1B"
-            '
-            'txtLabel7
-            '
-            Me.txtLabel7.Location = New System.Drawing.Point(28, 86)
-            Me.txtLabel7.Name = "txtLabel7"
-            Me.txtLabel7.Size = New System.Drawing.Size(44, 20)
-            Me.txtLabel7.TabIndex = 17
-            Me.txtLabel7.Text = "CF 9"
             '
             'frmPreferences
             '

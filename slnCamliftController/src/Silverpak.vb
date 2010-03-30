@@ -2,7 +2,7 @@
 Imports VisionaryDigital.Settings
 Imports System.Threading
 
-#Const USE_FAKE_SILVERPAK = False
+#Const USE_FAKE_SILVERPAK = True
 
 Public Class Silverpak
 #If USE_FAKE_SILVERPAK Then

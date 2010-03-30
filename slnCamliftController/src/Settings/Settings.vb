@@ -573,7 +573,7 @@ Namespace Settings
         Public Shared ReadOnly Property DefaultStepSizes() As List(Of KeyValuePair(Of String, Integer))
             Get
                 Static s_defaultStepLabels As String() = {"20x", "10x", "5x", "CF4", "CF3", "CF2", "CF1B", "", ""}
-                Static s_defaultStepSizes As Integer() = {5, 15, 40, 80, 190, 340, 450, 1250, 2400}
+                Static s_defaultStepSizes As Integer() = {5, 15, 40, 80, 190, 340, 450, 1250, 2500}
                 Static s_cache As List(Of KeyValuePair(Of String, Integer)) = _
                         (From i In Range(s_defaultStepLabels.Length) _
                          Select New KeyValuePair(Of String, Integer)(s_defaultStepLabels(i), s_defaultStepSizes(i))).ToList

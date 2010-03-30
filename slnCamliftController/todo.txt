@@ -1,7 +1,3 @@
-Version 2.2.1:
-* Thoroughly test for problems.
-* Turn motor back on
-
 Version 3.0.0:
 * Put motor.xml and settings index.xml into the installer so that uninstall is clean
 * only attach live view to frmcontrols by default; otherwise remember in settings
