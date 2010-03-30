@@ -1,3 +1,6 @@
+Version 2.2.0.2:
+* when previous settings exist it conflicts with cfb2
+
 Version 3.0.0:
 * Put motor.xml and settings index.xml into the installer so that uninstall is clean
 * only attach live view to frmcontrols by default; otherwise remember in settings

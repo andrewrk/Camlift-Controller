@@ -265,8 +265,8 @@
         "PackageCode" = "8:{AD784BFB-A77E-4103-BA50-A6E01BF81071}"
         "UpgradeCode" = "8:{83181A1B-70AD-4792-8752-BFCD870416A9}"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:TRUE"
-        "DetectNewerInstalledVersion" = "11:TRUE"
+        "RemovePreviousVersions" = "11:FALSE"
+        "DetectNewerInstalledVersion" = "11:FALSE"
         "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
         "Manufacturer" = "8:Visionary Digital"
@@ -397,7 +397,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_7FA1A653B9C645AD8CE2FA9D75C6A77D"
             {
-            "Name" = "8:Camlift Controller"
+            "Name" = "8:CamLift V2.2.0"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -824,7 +824,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_03E5445893AA40AC8029E02076F04EF6"
             {
-            "SourcePath" = "8:..\\Klugesaurus\\obj\\Debug\\Klugesaurus.exe"
+            "SourcePath" = "8:..\\Klugesaurus\\obj\\x86\\Debug\\Klugesaurus.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3B45A9E4E2A74A18BA3D5EACB0B2DAE0"
@@ -852,7 +852,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_4693370C54754FC2A874E417137CDEDA"
             {
-            "SourcePath" = "8:..\\slnCamliftController\\obj\\Debug\\Camlift Controller 2.exe"
+            "SourcePath" = "8:..\\slnCamliftController\\obj\\x86\\Debug\\Camlift Controller 2.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_3B45A9E4E2A74A18BA3D5EACB0B2DAE0"
