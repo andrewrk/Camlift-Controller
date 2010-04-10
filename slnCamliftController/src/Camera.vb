@@ -21,6 +21,15 @@ Public Class Camera
     Public Const CameraName_40D As String = "Canon EOS 40D"
     Public Const CameraName_7D As String = "Canon EOS 7D"
 
+    Public Structure CameraModelData
+        Public Zoom100MaxPosition As Point
+        Public Zoom500MaxPosition As Point
+        Public Zoom100ImageSize As Size
+        Public Zoom500ImageSize As Size
+        Public ZoomBoxSize As Size
+    End Structure
+    Private m_modelData As Dictionary(Of String, CameraModelData)
+
     Private m_cam As IntPtr
     Private m_oeh As EdsObjectEventHandler
     Private m_seh As EdsStateEventHandler
@@ -47,6 +56,7 @@ Public Class Camera
 
     Private m_zoomPosition As StructurePointer(Of EdsPoint)
     Private m_pendingZoomPosition As Boolean
+    Private m_pendingZoomPoint As StructurePointer(Of EdsPoint)
     Private m_zoomRatio As StructurePointer(Of Integer)
     Private m_pendingZoomRatio As Boolean
     Private m_whiteBalance As StructurePointer(Of Integer)
@@ -91,7 +101,48 @@ Public Class Camera
         End If
     End Sub
 
+    Public ReadOnly Property CameraSpecificData() As CameraModelData
+        Get
+            Dim myName As String = Me.Name()
+            If m_modelData.ContainsKey(myName) Then
+                Return m_modelData.Item(myName)
+            Else
+                Return m_modelData.Item(CameraName_40D)
+            End If
+        End Get
+    End Property
+
     Private Sub ResetState()
+        'camera specific information
+        m_modelData = New Dictionary(Of String, CameraModelData)
+        '40D
+        Dim data40D As CameraModelData
+        data40D.Zoom100ImageSize = New Size(1024, 680)
+        data40D.Zoom500ImageSize = New Size(768, 800)
+        data40D.Zoom100MaxPosition = New Point(3104, 2016)
+        data40D.Zoom500MaxPosition = New Point(3104, 2080)
+        data40D.ZoomBoxSize = New Size(204, 208)
+
+        '5D
+        Dim data5D As CameraModelData
+        data5D.Zoom100ImageSize = New Size(1024, 680)
+        data5D.Zoom500ImageSize = New Size(768, 800)
+        data5D.Zoom100MaxPosition = New Point(3104, 2016)
+        data5D.Zoom500MaxPosition = New Point(3104, 2080)
+        data5D.ZoomBoxSize = New Size(204, 208)
+
+        '7D
+        Dim data7D As CameraModelData
+        data7D.Zoom100ImageSize = New Size(1056, 704)
+        data7D.Zoom500ImageSize = New Size(1024, 680)
+        data7D.Zoom100MaxPosition = New Point(4136, 2754)
+        data7D.Zoom500MaxPosition = New Point(4136, 2754)
+        data7D.ZoomBoxSize = New Size(212, 144)
+
+        m_modelData.Add(CameraName_40D, data40D)
+        m_modelData.Add(CameraName_5D, data5D)
+        m_modelData.Add(CameraName_7D, data7D)
+
         m_waitingOnPic = False
         m_liveViewOn = False
         m_waitingToStartLiveView = False
@@ -107,6 +158,7 @@ Public Class Camera
         m_haveSession = False
 
         m_zoomPosition = New StructurePointer(Of EdsPoint)
+        m_pendingZoomPoint = New StructurePointer(Of EdsPoint)
         m_zoomRatio = New StructurePointer(Of Integer)
         m_whiteBalance = New StructurePointer(Of Integer)
 
@@ -628,7 +680,7 @@ Public Class Camera
             Exit Sub
         End Try
         Dim oldZoomRatio As Integer = m_zoomRatio.Value
-        Dim oldZoomPosition As EdsPoint = m_zoomPosition.Value
+        Dim oldZoomPoint As EdsPoint = m_pendingZoomPoint.Value
 
         ' get incidental data
         ' zoom ratio
@@ -643,8 +695,8 @@ Public Class Camera
             m_pendingZoomRatio = False
         End If
         If m_pendingZoomPosition Then
-            m_zoomPosition.Value = oldZoomPosition
-            CheckError(EdsSetPropertyData(m_cam, kEdsPropID_Evf_ZoomPosition, 0, m_zoomPosition.Size, m_zoomPosition.Value))
+            m_pendingZoomPoint.Value = oldZoomPoint
+            CheckError(EdsSetPropertyData(m_cam, kEdsPropID_Evf_ZoomPosition, 0, m_pendingZoomPoint.Size, m_pendingZoomPoint.Value))
             m_pendingZoomPosition = False
         End If
         If m_pendingWhiteBalance Then
@@ -689,11 +741,17 @@ Public Class Camera
             Return New Point(m_zoomPosition.Value.x, m_zoomPosition.Value.y)
         End Get
         Set(ByVal value As Point)
-            m_zoomPosition.Value = New EdsPoint() With {.x = value.X, .y = value.Y}
+            m_pendingZoomPoint.Value = New EdsPoint() With {.x = value.X, .y = value.Y}
             m_pendingZoomPosition = True
         End Set
     End Property
 
+    ''' <summary>
+    ''' Get the zoom factor of live view. Returns an integer which is a multiplier.
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
     Public Property ZoomRatio() As Integer
         Get
             Return m_zoomRatio.Value

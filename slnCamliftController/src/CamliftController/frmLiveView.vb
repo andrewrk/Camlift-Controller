@@ -13,15 +13,14 @@ Namespace CanonCamera
         Private ZoomRatios As Integer()
         Private m_zoomIndex As Integer
 
-        Private Const MaxZoomWidth = 3888
-        Private Const MaxZoomHeight = 2592
-
         Private m_mouseDownZoomLocation As Point
         Private m_mouseDownPt As Point
         Private m_mouseDown As Boolean
         Private m_zoomPosition As Point
 
         Private m_rotation As Drawing.RotateFlipType
+
+        Private m_modelData As Camera.CameraModelData
 
         Private Sub SetWhiteBalanceCombo(ByVal value As Integer)
             For i = 0 To WhiteBalanceValues.Length - 1
@@ -56,6 +55,8 @@ Namespace CanonCamera
             m_ShowGrid = False
             m_cam = cam
 
+            m_modelData = cam.CameraSpecificData
+
             m_cam.StartLiveView(Me.picLiveView)
 
             SetWhiteBalanceCombo(m_cam.WhiteBalance)
@@ -71,29 +72,43 @@ Namespace CanonCamera
             m_mouseDown = True
             m_mouseDownPt.X = e.X
             m_mouseDownPt.Y = e.Y
-            m_mouseDownZoomLocation = GetZoomLoc()
+            m_mouseDownZoomLocation = GetZoomBoxLoc()
         End Sub
 
-        Private Function GetZoomLoc() As Point
+        Private Function GetZoomBoxLoc() As Point
             Dim zoomCamLoc As Point = m_cam.ZoomPosition
-            If m_cam.Name = Camera.CameraName_5D Then
-                Const mx = 0.776595744680851, bx = -49.531914893617 / 1000 * MaxZoomWidth
-                zoomCamLoc.X = mx * zoomCamLoc.X + bx
-                Const _my = 0.77914110429447858, by = -27.239263803680984 / 660 * MaxZoomHeight
-                zoomCamLoc.Y = _my * zoomCamLoc.Y + by
-            ElseIf m_cam.Name = Camera.CameraName_7D Then
-                Const mx = 0.776595744680851, bx = -49.531914893617 / 1000 * MaxZoomWidth
-                zoomCamLoc.X = mx * zoomCamLoc.X + bx
-                Const _my = 0.77914110429447858, by = -27.239263803680984 / 660 * MaxZoomHeight
-                zoomCamLoc.Y = _my * zoomCamLoc.Y + by
-            End If
-            Return New Point(zoomCamLoc.X / MaxZoomWidth * picLiveView.Width, _
-                                             zoomCamLoc.Y / MaxZoomHeight * picLiveView.Height)
+            Dim displayedSize = GetDisplayedImageSize()
+            Dim displayedLoc As New Point(picLiveView.Width / 2 - displayedSize.Width / 2, picLiveView.Height / 2 - displayedSize.Height / 2)
+
+            Dim zoomBox = GetZoomBoxSize()
+            Return New Point(displayedLoc.X + zoomCamLoc.X / m_modelData.Zoom500MaxPosition.X * (displayedSize.Width - zoomBox.Width), _
+                             displayedLoc.Y + zoomCamLoc.Y / m_modelData.Zoom500MaxPosition.Y * (displayedSize.Height - zoomBox.Height))
         End Function
 
-        Private Function GetZoomSize() As Size
-            Dim ratio As Integer = ZoomRatios(Math.Max(m_zoomIndex, 1))
-            Return New Size(MaxZoomWidth / ratio, MaxZoomHeight / ratio)
+        Private Function GetZoomBoxSize() As Size
+            Dim displayedSize = GetDisplayedImageSize()
+            Dim origSize = m_modelData.ZoomBoxSize
+            Return New Size(origSize.Width * displayedSize.Width / m_cam.LiveViewImageSize.Width, _
+                            origSize.Height * displayedSize.Height / m_cam.LiveViewImageSize.Height)
+        End Function
+
+        Private Function GetDisplayedImageSize() As Size
+            Dim w = picLiveView.Width
+            Dim h = picLiveView.Height
+
+            Dim realWidth = m_cam.LiveViewImageSize.Width
+            Dim realHeight = m_cam.LiveViewImageSize.Height
+
+            Dim displayWidth As Integer, displayHeight As Integer
+            If w / h > realWidth / realHeight Then
+                displayWidth = realWidth / realHeight * h
+                displayHeight = h
+            Else
+                displayWidth = w
+                displayHeight = realHeight / realWidth * w
+            End If
+
+            Return New Size(displayWidth, displayHeight)
         End Function
 
         Private Sub picLiveView_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles picLiveView.MouseMove
@@ -102,57 +117,54 @@ Namespace CanonCamera
 
             Dim newpt As Point = m_mouseDownZoomLocation
 
+            Dim offX As Integer
+            Dim offY As Integer
             If m_zoomIndex = 0 Then
                 'move the little white box around
-                newpt.Offset(e.X - m_mouseDownPt.X, e.Y - m_mouseDownPt.Y)
+                offX = e.X - m_mouseDownPt.X
+                offY = e.Y - m_mouseDownPt.Y
             Else
                 'move the zoom position
-                Dim offX As Integer = m_mouseDownPt.X - e.X
-                Dim offY As Integer = m_mouseDownPt.Y - e.Y
-                Dim newX As Integer, newY As Integer
-                Select Case m_rotation
-                    Case RotateFlipType.RotateNoneFlipNone
-                        newX = offX
-                        newY = offY
-                    Case RotateFlipType.Rotate90FlipNone
-                        newX = offY
-                        newY = -offX
-                    Case RotateFlipType.Rotate180FlipNone
-                        newX = -offX
-                        newY = -offY
-                    Case RotateFlipType.Rotate270FlipNone
-                        newX = -offY
-                        newY = offX
-                End Select
-                newpt.Offset(newX, newY)
+                offX = m_mouseDownPt.X - e.X
+                offY = m_mouseDownPt.Y - e.Y
             End If
 
-            newpt.X = (newpt.X / picLiveView.Width) * MaxZoomWidth
-            newpt.Y = (newpt.Y / picLiveView.Height) * MaxZoomHeight
+            Dim newX As Integer, newY As Integer
+            Select Case m_rotation
+                Case RotateFlipType.RotateNoneFlipNone
+                    newX = offX
+                    newY = offY
+                Case RotateFlipType.Rotate90FlipNone
+                    newX = offY
+                    newY = -offX
+                Case RotateFlipType.Rotate180FlipNone
+                    newX = -offX
+                    newY = -offY
+                Case RotateFlipType.Rotate270FlipNone
+                    newX = -offY
+                    newY = offX
+            End Select
+            newpt.Offset(newX, newY)
 
-            Dim ZSize As Size = GetZoomSize()
+            Dim displayedImage = GetDisplayedImageSize()
+            Dim zoomBoxSize = GetZoomBoxSize()
+            newpt.X = newpt.X / (displayedImage.Width - zoomBoxSize.Width) * m_modelData.Zoom500MaxPosition.X
+            newpt.Y = newpt.Y / (displayedImage.Height - zoomBoxSize.Height) * m_modelData.Zoom500MaxPosition.Y
+
             If newpt.X < 0 Then newpt.X = 0
-            If newpt.X + ZSize.Width > MaxZoomWidth Then newpt.X = MaxZoomWidth - ZSize.Width
+            If newpt.X > m_modelData.Zoom500MaxPosition.X Then newpt.X = m_modelData.Zoom500MaxPosition.X
             If newpt.Y < 0 Then newpt.Y = 0
-            If newpt.Y + ZSize.Height > MaxZoomHeight Then newpt.Y = MaxZoomHeight - ZSize.Height
-
-            If m_cam.Name = Camera.CameraName_5D Then
-                Const mx = 1.2876712328767124, bx = 63.780821917808225 / 1000 * MaxZoomWidth
-                newpt.X = mx * newpt.X + bx
-                Const _my = 1.2834645669291338, by = 34.960629921259851 / 660 * MaxZoomHeight
-                newpt.Y = _my * newpt.Y + by
-            ElseIf m_cam.Name = Camera.CameraName_7D Then
-                Const mx = 1.2876712328767124, bx = 63.780821917808225 / 1000 * MaxZoomWidth
-                newpt.X = mx * newpt.X + bx
-                Const _my = 1.2834645669291338, by = 34.960629921259851 / 660 * MaxZoomHeight
-                newpt.Y = _my * newpt.Y + by
-            End If
+            If newpt.Y > m_modelData.Zoom500MaxPosition.Y Then newpt.Y = m_modelData.Zoom500MaxPosition.Y
 
             m_cam.ZoomPosition = newpt
         End Sub
 
         Private Sub picLiveView_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles picLiveView.MouseUp
             m_mouseDown = False
+
+            Dim zoomCamLoc = m_cam.ZoomPosition
+            Dim zoomCamSize = m_cam.LiveViewImageSize
+            Console.WriteLine("zoom position: " & zoomCamLoc.X & ", " & zoomCamLoc.Y & " zoom size: " & zoomCamSize.Width & ", " & zoomCamSize.Height)
         End Sub
 
         Private Sub picLiveView_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles picLiveView.Paint
@@ -178,15 +190,18 @@ Namespace CanonCamera
                 End Using
             End If
 
-            Dim MaxZoom As Integer = ZoomRatios(m_zoomIndex + 1)
             ' draw zoom
-            Dim zoomSize = New Size(m_cam.LiveViewImageSize.Width / MaxZoom, m_cam.LiveViewImageSize.Height / MaxZoom)
-            Dim zoomLoc As Point = GetZoomLoc()
+            Dim zoomSize = GetZoomBoxSize()
+            Dim zoomLoc As Point = GetZoomBoxLoc()
             Dim zoomRect = New Rectangle(zoomLoc, zoomSize)
             Using shadowPen As Pen = New Pen(Color.Black, 1)
                 Dim shadowRect As Rectangle = zoomRect
                 shadowRect.Offset(1, 1)
-                g.DrawRectangle(shadowPen, shadowRect)
+                Try
+                    g.DrawRectangle(shadowPen, shadowRect)
+                Catch ex As OverflowException
+                    Return
+                End Try
             End Using
             Using whitePen As Pen = New Pen(Color.White, 2)
                 g.DrawRectangle(whitePen, zoomRect)
