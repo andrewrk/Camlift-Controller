@@ -130,9 +130,11 @@ Public Class frmPosition
         If lvwPositions.SelectedItems.Count = 0 Then
             btnRemove.Enabled = False
             btnRename.Enabled = False
+            OK_Button.Enabled = (m_mode = DialogType.Save)
         Else
             btnRemove.Enabled = True
             btnRename.Enabled = True
+            OK_Button.Enabled = True
         End If
     End Sub
 
