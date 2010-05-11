@@ -195,7 +195,7 @@ Namespace SmartSteps
                 trySelectRadio(grpObjective, setup.Objective)
                 trySelectRadio(grpMag, setup.Mag)
                 trySelectRadio(grpIris, setup.Iris)
-                'nudOverlap.Value = setup.Overlap
+                nudOverlap.Value = setup.SliceOverlap
                 loadCalculatedStepSize()
             End If
         End Sub
@@ -218,16 +218,18 @@ Namespace SmartSteps
         Private Sub loadCalculatedStepSize()
             Dim stepSize As String
             If m_currentSetup.CalculateStepSize Then
-                stepSize = m_objectiveList.GetIris(m_selectedObjective.Key, m_selectedMag.Key, m_selectedIris.Key)
+                m_currentSetup.Objective = m_selectedObjective.Key
+                m_currentSetup.Mag = m_selectedMag.Key
+                m_currentSetup.Iris = m_selectedIris.Key
+                m_currentSetup.SliceOverlap = nudOverlap.Value
+                stepSize = m_currentSetup.CalculatedStepSize(m_objectiveList)
             ElseIf rdoStepSizePreset.Checked Then
-                stepSize = m_stepSizes(cboPreset.Items.Count - 1 - cboPreset.SelectedIndex).Value
+                m_currentSetup.SliceOverlap = nudOverlap.Value
+                stepSize = (1 - m_currentSetup.SliceOverlap / 100) * m_stepSizes(cboPreset.Items.Count - 1 - cboPreset.SelectedIndex).Value
             Else
                 Exit Sub
             End If
-
-            If stepSize <> "" Then
-                stepSize = Int(stepSize * (1 - nudOverlap.Value / 100))
-            End If
+            If stepSize <> "" Then stepSize = Int(stepSize)
             txtStepSize.Text = stepSize
         End Sub
         Private Shared ReadOnly firstLocation As New Point(6, 16)
@@ -468,7 +470,6 @@ Namespace SmartSteps
                 txtStepSize.Text = m_currentSetup.ManualStepSize
                 loadCalculatedStepSize()
             End If
-
         End Sub
     End Class
 End Namespace

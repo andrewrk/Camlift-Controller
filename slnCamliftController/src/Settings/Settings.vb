@@ -811,9 +811,11 @@ Namespace Settings
     Public Class AutorunSetupSettings
         Inherits SettingsDict
 
-        Public Function CalculatedStepSize(ByVal objectiveList As ObjectiveListSettings) As Integer
+        Public Function CalculatedStepSize(ByVal objectiveList As ObjectiveListSettings) As String
             If Not m_CalculateStepSize Then Return m_ManualStepSize
-            Return m_sliceOverlap * GetStepSize(objectiveList)
+            Dim baseStepSize As String = GetStepSize(objectiveList)
+            If baseStepSize = "" Then Return ""
+            Return (1 - m_sliceOverlap / 100) * baseStepSize
         End Function
 
         Private m_CalculateStepSize As Boolean = False
