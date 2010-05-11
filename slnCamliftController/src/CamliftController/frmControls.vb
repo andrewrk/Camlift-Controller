@@ -365,6 +365,7 @@ Namespace CamliftController
             resync(New Action(Of Integer)(AddressOf loadPosition_gui), value)
         End Sub
         Private Sub moveToPosition_safe(ByVal position As Integer, ByVal ParamArray array As String())
+            m_platonicPosition = position
             Try
                 m_silverpakManager.GoToPosition(position)
                 resync(New Action(AddressOf updateControlsEnabled_gui))
@@ -449,21 +450,19 @@ Namespace CamliftController
             Dim steps As Integer = m_stepSizes(tkbDist.Value - 1).Value
             updateStatusStrip_gui("Moving " & If(UpNotDown, "Up", "Down") & " " & steps & " steps...")
             m_movementMode = enuMovementMode.Absolute
-            m_platonicPosition += If(UpNotDown, -steps, steps)
-            clampPosition(m_platonicPosition)
-            moveToPosition_safe(m_platonicPosition)
+            Dim newPosition = m_platonicPosition + If(UpNotDown, -steps, steps)
+            moveToPosition_safe(clampPosition(newPosition))
         End Sub
         Private Sub moveAbsolute_gui(ByVal position As Integer)
             updateStatusStrip_gui("Moving to " & position & "...")
             m_movementMode = enuMovementMode.Absolute
-            m_platonicPosition = position
-            clampPosition(m_platonicPosition)
-            moveToPosition_safe(m_platonicPosition)
+            moveToPosition_safe(clampPosition(position))
         End Sub
-        Private Sub clampPosition(ByRef ref_position)
-            ref_position = Math.Max(ref_position, 0)
-            ref_position = Math.Min(ref_position, m_silverpakManager.MaxPosition)
-        End Sub
+        Private Function clampPosition(ByVal position As Integer) As Integer
+            position = Math.Max(position, 0)
+            position = Math.Min(position, m_silverpakManager.MaxPosition)
+            Return position
+        End Function
         Private Sub moveShutDown_gui()
             updateStatusStrip_gui("Shutting Down...")
             m_movementMode = enuMovementMode.ShutDown
