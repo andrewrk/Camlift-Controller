@@ -811,6 +811,11 @@ Namespace Settings
     Public Class AutorunSetupSettings
         Inherits SettingsDict
 
+        Public Function CalculatedStepSize(ByVal objectiveList As ObjectiveListSettings) As Integer
+            If Not m_CalculateStepSize Then Return m_ManualStepSize
+            Return m_sliceOverlap * GetStepSize(objectiveList)
+        End Function
+
         Private m_CalculateStepSize As Boolean = False
         Public Property CalculateStepSize() As Boolean
             Get
@@ -821,17 +826,17 @@ Namespace Settings
             End Set
         End Property
 
-        Private m_StepSize As String = ""
-        Public Property StepSize() As String
+        Private m_ManualStepSize As String = ""
+        Public Property ManualStepSize() As String
             Get
-                Return m_StepSize
+                Return m_ManualStepSize
             End Get
             Set(ByVal value As String)
-                m_StepSize = value
+                m_ManualStepSize = value
             End Set
         End Property
         Public Function HasValidStepSize() As Boolean
-            Return Not m_CalculateStepSize AndAlso isValidStepSize(m_StepSize)
+            Return Not m_CalculateStepSize AndAlso isValidStepSize(m_ManualStepSize)
         End Function
         Public Shared Function isValidStepSize(ByVal value As String) As Boolean
             Return value <> "" AndAlso IsNumeric(value) AndAlso 0 < value
