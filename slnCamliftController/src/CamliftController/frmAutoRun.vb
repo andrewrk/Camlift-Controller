@@ -190,12 +190,12 @@ Namespace SmartSteps
 
         Private Sub loadStepSize(ByVal setup As AutorunSetupSettings)
             If Not setup.CalculateStepSize Then
-                txtStepSize.Text = setup.StepSize
+                txtStepSize.Text = setup.ManualStepSize
             Else
                 trySelectRadio(grpObjective, setup.Objective)
                 trySelectRadio(grpMag, setup.Mag)
                 trySelectRadio(grpIris, setup.Iris)
-                'nudOverlap.Value = setup.Overlap
+                nudOverlap.Value = setup.SliceOverlap
                 loadCalculatedStepSize()
             End If
         End Sub
@@ -218,16 +218,18 @@ Namespace SmartSteps
         Private Sub loadCalculatedStepSize()
             Dim stepSize As String
             If m_currentSetup.CalculateStepSize Then
-                stepSize = m_objectiveList.GetIris(m_selectedObjective.Key, m_selectedMag.Key, m_selectedIris.Key)
+                m_currentSetup.Objective = m_selectedObjective.Key
+                m_currentSetup.Mag = m_selectedMag.Key
+                m_currentSetup.Iris = m_selectedIris.Key
+                m_currentSetup.SliceOverlap = nudOverlap.Value
+                stepSize = m_currentSetup.CalculatedStepSize(m_objectiveList)
             ElseIf rdoStepSizePreset.Checked Then
-                stepSize = m_stepSizes(cboPreset.Items.Count - 1 - cboPreset.SelectedIndex).Value
+                m_currentSetup.SliceOverlap = nudOverlap.Value
+                stepSize = (1 - m_currentSetup.SliceOverlap / 100) * m_stepSizes(cboPreset.Items.Count - 1 - cboPreset.SelectedIndex).Value
             Else
                 Exit Sub
             End If
-
-            If stepSize <> "" Then
-                stepSize = Int(stepSize * (1 - nudOverlap.Value / 100))
-            End If
+            If stepSize <> "" Then stepSize = Int(stepSize)
             txtStepSize.Text = stepSize
         End Sub
         Private Shared ReadOnly firstLocation As New Point(6, 16)
@@ -274,7 +276,7 @@ Namespace SmartSteps
         Private Sub storeCurrentSetup()
             m_currentSetup.CalculateStepSize = rdoStepSizeCalculated.Checked
             If Not m_currentSetup.CalculateStepSize Then
-                m_currentSetup.StepSize = getValidString(txtStepSize)
+                m_currentSetup.ManualStepSize = getValidString(txtStepSize)
             Else
                 m_currentSetup.Objective = GetSelectedRadioValue(grpObjective)
                 m_currentSetup.Mag = GetSelectedRadioValue(grpMag)
@@ -308,7 +310,7 @@ Namespace SmartSteps
                 If(Not m_currentSetup.CalculateStepSize, _
                    m_currentSetup.HasValidStepSize, _
                    m_currentSetup.HasValidStepSize(m_objectiveList))) Then
-                Dim stepSize As Integer = If(Not m_currentSetup.CalculateStepSize, m_currentSetup.StepSize, m_currentSetup.GetStepSize(m_objectiveList))
+                Dim stepSize As Integer = m_currentSetup.CalculatedStepSize(m_objectiveList)
                 If m_currentRun.UseStopPosition Then ' use stop position
                     'show slices
                     txtSlices.Text = Math.Ceiling((m_currentRun.AutorunStop - m_currentRun.AutorunStart) / stepSize) + 1
@@ -368,7 +370,7 @@ Namespace SmartSteps
             Me.Tag = m_smartStepsManager.GetAutorunStepper(locations, m_currentSetup.Dwell)
         End Sub
         Private Function getLocations() As IEnumerable(Of Integer)
-            Dim stepSize As Integer = If(Not m_currentSetup.CalculateStepSize, m_currentSetup.StepSize, m_currentSetup.GetStepSize(m_objectiveList))
+            Dim stepSize As Integer = m_currentSetup.CalculatedStepSize(m_objectiveList)
             Dim count As Integer
             If m_currentRun.UseStopPosition Then
                 ' number of moves after the first position plus the first location = number of slices
@@ -464,11 +466,10 @@ Namespace SmartSteps
 
         Private Sub cboPreset_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cboPreset.SelectedIndexChanged
             If rdoStepSizePreset.Checked Then
-                m_currentSetup.StepSize = m_stepSizes(m_stepSizes.Count - 1 - cboPreset.SelectedIndex).Value
-                txtStepSize.Text = m_currentSetup.StepSize
+                m_currentSetup.ManualStepSize = m_stepSizes(m_stepSizes.Count - 1 - cboPreset.SelectedIndex).Value
+                txtStepSize.Text = m_currentSetup.ManualStepSize
                 loadCalculatedStepSize()
             End If
-
         End Sub
     End Class
 End Namespace
