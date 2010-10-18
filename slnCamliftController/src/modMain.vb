@@ -15,7 +15,7 @@ Public Module modMain
     Public Const MsgBoxCameraNotFoundMessage = "No Camera Found. Please check all connections."
     Public Const MsgBoxTooManyCamerasMessage = "More than one camera found. Please make sure no other cameras are connected."
     Public Const MsgBoxCameraDisconnectedMessage = "Camera was disconnected. Please try again."
-    Public Const MsgBoxDeviceIsBusyMessage = "Camera device is busy. You can disconnect the power to force it to reset."
+    Public Const MsgBoxDeviceIsBusyMessage = "Camera device is refusing to respond. Unfortunately, you must open and close the battery door to force it to reset."
     Public Const MsgBoxCommPortBusy = "It appears another program is using the camera. Please close EOS Utility or any other application that is using it."
     Public Const MsgBoxLiveViewDisabled = "Live View is disabled in the camera. Please use EOS Utility to enable Live View."
     Public Const MsgBoxTakePictureCardNg = "The camera was not be initialized properly. Please restart CamliftController."
@@ -94,6 +94,8 @@ Public Module modMain
         ElseIf TypeOf ex Is LiveViewFailedException Then
             MsgBox(MsgBoxLiveViewDisabled, MsgBoxStyle.Information, MsgBoxTitle)
             Return False
+        ElseIf TypeOf ex Is TakePictureFailedException Then
+            Return True
         ElseIf TypeOf ex Is SdkException Then
             Select Case CType(ex, SdkException).SdkError
                 Case SdkErrors.DeviceBusy
@@ -123,8 +125,6 @@ Public Module modMain
             MsgBox("Value must be numeric.", MsgBoxStyle.Exclamation, MsgBoxTitle)
             textControl.Select()
             textControl.SelectAll()
-        Else
-
         End If
         Return False
     End Function

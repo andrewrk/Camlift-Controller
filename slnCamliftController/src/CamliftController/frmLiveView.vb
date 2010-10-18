@@ -99,6 +99,11 @@ Namespace CanonCamera
             Dim realWidth = m_cam.LiveViewImageSize.Width
             Dim realHeight = m_cam.LiveViewImageSize.Height
 
+            If realWidth = 0 Or realHeight = 0 Then
+                ' error
+                Return New Size(0, 0)
+            End If
+
             Dim displayWidth As Integer, displayHeight As Integer
             If w / h > realWidth / realHeight Then
                 displayWidth = realWidth / realHeight * h
